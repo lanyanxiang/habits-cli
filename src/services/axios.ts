@@ -15,3 +15,15 @@ export const mainApi = axios.create({
   baseURL: config.baseURL,
   timeout: 20 * 1000,
 });
+
+// Set `isError` on return object.
+mainApi.interceptors.response.use(
+  (response) => {
+    response.isError = false;
+    return response;
+  },
+  (error) => {
+    error.isError = true;
+    return Promise.reject(error);
+  }
+);
