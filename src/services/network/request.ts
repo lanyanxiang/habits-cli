@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { RegularRequestOptions } from "../../types";
 import { spinners } from "../spinners";
 import { silentRequest } from "./silentRequest";
+import { logError } from "./logError";
 
 /**
  * Send a request using `instance` and based on `requestOptions`.
@@ -38,5 +39,6 @@ export const request = async (
   }
   spinner.fail(failureMsg);
   if (!disableErrorLog) {
+    logError(response);
   }
 };
