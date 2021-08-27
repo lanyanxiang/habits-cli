@@ -1,6 +1,6 @@
 export type SerializedHttpError = { message: string; cause?: string };
 
-export interface SuccessResponse {
+export interface SuccessPayload {
   success: true;
   time?: string;
   /**
@@ -11,7 +11,7 @@ export interface SuccessResponse {
   payload?: object;
 }
 
-export interface ErrorResponse {
+export interface ErrorPayload {
   success: false;
   time?: string;
   /**
