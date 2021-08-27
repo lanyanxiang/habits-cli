@@ -16,4 +16,4 @@ const start = (text: string, options?: StartSpinnerOptions) => {
   return ora({ text, ...options }).start();
 };
 
-export const spinner = { start };
+export const spinners = { start };
