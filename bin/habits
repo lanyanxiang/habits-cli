@@ -1,12 +1,4 @@
 #!/usr/bin/env node
 
 require = require("esm")(module /*, options */);
-const path = require("path");
-
-require('ts-node').register({
-  project: path.resolve(__dirname, '../tsconfig.json'),
-  ignore: [
-    'node_modules/'
-  ]
-});
 require("../src/index");
