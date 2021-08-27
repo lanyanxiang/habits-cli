@@ -41,4 +41,5 @@ export const request = async (
   if (!disableErrorLog) {
     logError(response);
   }
+  return response;
 };
