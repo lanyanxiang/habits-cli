@@ -36,4 +36,10 @@ export type RegularRequestOptions = SilentRequestOptions & {
   /** Text to display when the request fails. Or `description` if this is not
    * specified.*/
   failureMsg?: string;
+  /** By default, `network.request` function reports error from `response.data.payload.error`
+   * to the user. If this field is set to true, no message will be logged to the user when
+   * request fails. */
+  disableErrorLog?: boolean;
+  /** Indicates whether the spinner should be cleared on successful request */
+  shouldClearSpinner?: boolean;
 };
