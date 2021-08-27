@@ -20,3 +20,7 @@ export interface DataRequestConfig extends RequestConfigBase {
   method: RequestMethod.POST | RequestMethod.PATCH | RequestMethod.PUT;
   data?: any;
 }
+
+export interface DataFreeRequestConfig extends RequestConfigBase {
+  method: RequestMethod.GET | RequestMethod.DELETE | RequestMethod.OPTIONS;
+}
