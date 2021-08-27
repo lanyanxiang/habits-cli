@@ -3,18 +3,29 @@
   "version": "0.0.1",
   "description": "Habits cli",
   "main": "src/index.ts",
+  "bin": {
+    "habits": "bin/habits"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "node -r ts-node/register src/index.ts",
     "build": "tsc -p .",
     "lint": "tsc -p . --noEmit && eslint \\\"**/*.{js,ts}\\\" --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "cli",
+    "habits"
+  ],
   "author": "Jimmy @lanyanxiang",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
     "commander": "^8.1.0",
     "eslint": "^7.32.0",
+    "esm": "^3.2.25",
     "ora": "^6.0.0",
     "ts-node": "^10.2.1"
   },
