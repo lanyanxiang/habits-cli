@@ -9,25 +9,25 @@ export enum RequestMethod {
   OPTIONS = "options",
 }
 
-interface RequestConfigBase {
+interface RequestOptionsBase {
   /** URI that this request should be sent to. */
   uri: string;
   method: RequestMethod;
   config: AxiosRequestConfig;
 }
 
-export interface DataRequestConfig extends RequestConfigBase {
+export interface DataRequestOptions extends RequestOptionsBase {
   method: RequestMethod.POST | RequestMethod.PATCH | RequestMethod.PUT;
   data?: any;
 }
 
-export interface DataFreeRequestConfig extends RequestConfigBase {
+export interface DataFreeRequestOptions extends RequestOptionsBase {
   method: RequestMethod.GET | RequestMethod.DELETE | RequestMethod.OPTIONS;
 }
 
-export type SilentRequestConfig = DataRequestConfig | DataFreeRequestConfig;
+export type SilentRequestOptions = DataRequestOptions | DataFreeRequestOptions;
 
-export type RegularRequestConfig = SilentRequestConfig & {
+export type RegularRequestOptions = SilentRequestOptions & {
   /** Description of this request to be displayed while awaiting for response. */
   description: string;
   /** Text to display when the request is fulfilled. Or `description` if this is
