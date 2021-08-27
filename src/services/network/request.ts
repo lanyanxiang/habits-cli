@@ -1,5 +1,9 @@
 import { AxiosInstance } from "axios";
-import { RegularRequestOptions } from "../../types";
+import {
+  ErrorResponse,
+  RegularRequestOptions,
+  SuccessResponse,
+} from "../../types";
 import { spinners } from "../spinners";
 import { silentRequest } from "./silentRequest";
 import { logError } from "./logError";
@@ -16,7 +20,7 @@ import { logError } from "./logError";
 export const request = async (
   instance: AxiosInstance,
   requestOptions: RegularRequestOptions
-) => {
+): Promise<SuccessResponse | ErrorResponse> => {
   const {
     description,
     successMsg,
