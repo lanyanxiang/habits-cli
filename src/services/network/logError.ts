@@ -1,6 +1,9 @@
 import { ErrorResponse } from "../../types";
 import { StringParser } from "../../utils";
 
+/**
+ * Log network error to the console.
+ */
 export const logError = (error: ErrorResponse) => {
   const errorStatus = error.response?.status || "local";
   const errorTitle = StringParser.capitalize(
