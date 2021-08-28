@@ -33,6 +33,7 @@ export abstract class Command {
   static commandName: string;
   /** Description of this command to show in help message. */
   static description: string;
+  static aliases: string[];
 
   /* *************************************
    * Inputs
@@ -67,6 +68,20 @@ export abstract class Command {
     // Save param values
     this.rawArgs = rawArgs;
 
+    Command._validateCommand();
+    Command._adaptCommanderCommand();
+  };
+
+  private static _validateCommand() {
+    if (!this.commandName) {
+      throw new Error("The `commandName` property for a command is required.");
+    }
+    if (!this.description) {
+      throw new Error("The `description` property for a command is required.");
+    }
+  }
+
+  private static _adaptCommanderCommand() {
     // Registers definitions of this command to the commander command instance.
     this._command.name(this.name);
     this._command.description(this.description);
@@ -102,7 +117,7 @@ export abstract class Command {
     // When the `from` option is set to "user", commander do not
     // skip the first 1 - 2 items in the `rawArgs` array.
     this._command.parse(this.rawArgs, { from: "user" });
-  };
+  }
 
   /* *************************************
    * Class methods
