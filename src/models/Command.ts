@@ -21,43 +21,53 @@ export interface HelpText {
  */
 export abstract class Command {
   /* *************************************
+   * Reserved
+   ************************************* */
+  private static _command: CommanderCommand = new CommanderCommand();
+  protected static rawArgs: string[];
+
+  /* *************************************
    * Signature
    ************************************* */
-  /** Name and argument for this command. */
-  abstract name: string;
+  /** Name  for this command. */
+  static commandName: string;
   /** Description of this command to show in help message. */
-  abstract description: string;
+  static description: string;
 
   /* *************************************
    * Inputs
    ************************************* */
   /** Options that this command accepts. */
-  acceptOpts: Option[] = [];
+  static acceptOpts: Option[] = [];
   /** Arguments that this command accepts. */
-  acceptArgs: Argument[] = [];
+  static acceptArgs: Argument[] = [];
 
   /* *************************************
    * Other configurations
    ************************************* */
   /** Allow more arguments than specified in the `acceptArgs` property. */
-  allowExcessArguments: boolean = false;
+  static allowExcessArguments: boolean = false;
   /** Override help command's name or description or both. */
-  helpCommand: HelpCommand | undefined = undefined;
+  static helpCommand: HelpCommand | undefined = undefined;
   /** Flags and a description to override the help flags and help description
    * Pass in false to disable the built-in help option. */
-  helpOption: HelpOption | undefined = undefined;
-  helpTexts: HelpText[] | undefined = undefined;
+  static helpOption: HelpOption | undefined = undefined;
+  /** Extra help texts to display for this command. */
+  static helpTexts: HelpText[] | undefined = undefined;
 
-  /* Constructor */
-  protected constructor(
-    private _command: CommanderCommand,
-    protected rawArgs: string[]
-  ) {}
+  /**
+   * Initialize the current command with `rawArgs`.
+   * You should not worry about calling this if this command is passed
+   * into a command collection (i.e., this is a sub-command).
+   * If this command is used on the top level, then rawArgs will be
+   * `process.argv.slice(2)`, since the first item in `argv` will be
+   * a path to node, and the second item will be the program name.
+   */
+  static init = (rawArgs: string[]) => {
+    // Save param values
+    this.rawArgs = rawArgs;
 
-  protected adaptCommanderCommand = () => {
-    // This method serves as an adaptor to commander commands.
-    // This method registers definitions a command to the commander
-    // command instance.
+    // Registers definitions of this command to the commander command instance.
     this._command.name(this.name);
     this._command.description(this.description);
 
@@ -84,9 +94,9 @@ export abstract class Command {
       );
     }
     if (this.helpTexts) {
-      this.helpTexts.forEach((helpText) =>
-        this._addHelpText(helpText.position, helpText.text)
-      );
+      this.helpTexts.forEach(({ position, text }) => {
+        this._command.addHelpText(position, text);
+      });
     }
 
     // When the `from` option is set to "user", commander do not
@@ -94,24 +104,21 @@ export abstract class Command {
     this._command.parse(this.rawArgs, { from: "user" });
   };
 
-  private _addHelpText(position: HelpTextPosition, text: string) {
-    this._command.addHelpText(position, text);
-  }
-
   /* *************************************
    * Class methods
    ************************************* */
 
   /** Object of valid options passed into this command.
    * Remember to declare `acceptOptions` for this to work. */
-  protected get opts(): OptionValues {
+  protected static get opts(): OptionValues {
     return this._command.opts();
   }
 
   /** Get arguments passed into this command. */
-  protected get args(): string[] {
+  protected static get args(): string[] {
     return this._command.args;
   }
 
-  public abstract run(): void | Promise<void>;
+  /** Entry point to this command. */
+  public static run(): void | Promise<void> {}
 }
