@@ -48,7 +48,39 @@ export abstract class Command {
   helpOption: HelpOption | undefined = undefined;
 
   /* Constructor */
-  protected constructor(private _command: CommanderCommand) {}
+  protected constructor(private _command: CommanderCommand) {
+    this._adaptCommanderCommand();
+  }
+
+  private _adaptCommanderCommand() {
+    // This method serves as an adaptor to commander commands.
+    // This method registers definitions a command to the commander
+    // command instance.
+    this._command.name(this.name);
+    this._command.description(this.description);
+
+    // Options and arguments
+    this.acceptOpts.forEach((opt) => {
+      this._command.addOption(opt);
+    });
+    this.acceptArgs.forEach((arg) => {
+      this._command.addArgument(arg);
+    });
+
+    this._command.allowExcessArguments(this.allowExcessArguments);
+    if (this.helpCommand) {
+      this._command.addHelpCommand(
+        this.helpCommand.enableOrNameAndArgs,
+        this.helpCommand.description
+      );
+    }
+    if (this.helpOption) {
+      this._command.helpOption(
+        this.helpOption.flags,
+        this.helpOption.description
+      );
+    }
+  }
 
   /* *************************************
    * Class methods
