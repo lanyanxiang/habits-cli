@@ -48,7 +48,10 @@ export abstract class Command {
   helpOption: HelpOption | undefined = undefined;
 
   /* Constructor */
-  protected constructor(private _command: CommanderCommand) {
+  protected constructor(
+    private _command: CommanderCommand,
+    protected rawArgs: string[]
+  ) {
     this._adaptCommanderCommand();
   }
 
@@ -80,6 +83,10 @@ export abstract class Command {
         this.helpOption.description
       );
     }
+
+    // When the `from` option is set to "user", commander do not
+    // skip the first 1 - 2 items in the `rawArgs` array.
+    this._command.parse(this.rawArgs, { from: "user" });
   }
 
   /* *************************************
