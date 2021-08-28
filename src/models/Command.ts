@@ -48,10 +48,7 @@ export abstract class Command {
   helpOption: HelpOption | undefined = undefined;
 
   /* Constructor */
-  protected constructor(
-    private _command: CommanderCommand,
-    protected rawArgs: string[]
-  ) {
+  constructor(private _command: CommanderCommand, protected rawArgs: string[]) {
     this._adaptCommanderCommand();
   }
 
