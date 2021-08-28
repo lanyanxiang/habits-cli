@@ -1,15 +1,17 @@
 import { Command } from "commander";
+import { AuthCommand } from "./commands/auth";
 
-const program = new Command("habits");
-program.version("0.0.1");
+console.log(process.argv);
 
-// Example options
-program.option("-d, --description", "display a description of this cli");
+const start = () => {
+  if (process.argv.length < 3) {
+    return;
+  }
 
-program.parse(process.argv);
+  if (process.argv[2] === "auth") {
+    const command = new AuthCommand(new Command(), process.argv.slice(3));
+    command.run();
+  }
+};
 
-const options = program.opts();
-if (options.description) {
-  console.log("A habits cli.");
-}
-console.log("Bye!");
+start();
