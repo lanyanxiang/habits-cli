@@ -1,4 +1,4 @@
-import { Command } from "../../models/Command";
+import { Command } from "../../models";
 
 export class AuthCommand extends Command {
   description: string = "authenticate";
