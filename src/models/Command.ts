@@ -1,19 +1,19 @@
-import {
-  Argument,
-  Option,
-  Command as CommanderCommand,
-  OptionValues,
-} from "commander";
-import { HelpTextPosition } from "../types";
+import { Argument, Option, OptionValues } from "commander";
+import { CommanderCommand, HelpTextPosition } from "../types";
 
-interface HelpCommand {
+export interface HelpCommand {
   enableOrNameAndArgs?: string | boolean | undefined;
   description?: string | undefined;
 }
 
-interface HelpOption {
+export interface HelpOption {
   flags?: string;
   description: string;
+}
+
+export interface HelpText {
+  position: HelpTextPosition;
+  text: string;
 }
 
 /**
@@ -46,13 +46,15 @@ export abstract class Command {
   /** Flags and a description to override the help flags and help description
    * Pass in false to disable the built-in help option. */
   helpOption: HelpOption | undefined = undefined;
+  helpTexts: HelpText[] | undefined = undefined;
 
   /* Constructor */
-  constructor(private _command: CommanderCommand, protected rawArgs: string[]) {
-    this._adaptCommanderCommand();
-  }
+  protected constructor(
+    private _command: CommanderCommand,
+    protected rawArgs: string[]
+  ) {}
 
-  private _adaptCommanderCommand() {
+  protected adaptCommanderCommand = () => {
     // This method serves as an adaptor to commander commands.
     // This method registers definitions a command to the commander
     // command instance.
@@ -68,6 +70,7 @@ export abstract class Command {
     });
 
     this._command.allowExcessArguments(this.allowExcessArguments);
+
     if (this.helpCommand) {
       this._command.addHelpCommand(
         this.helpCommand.enableOrNameAndArgs,
@@ -80,18 +83,24 @@ export abstract class Command {
         this.helpOption.description
       );
     }
+    if (this.helpTexts) {
+      this.helpTexts.forEach((helpText) =>
+        this._addHelpText(helpText.position, helpText.text)
+      );
+    }
 
     // When the `from` option is set to "user", commander do not
     // skip the first 1 - 2 items in the `rawArgs` array.
     this._command.parse(this.rawArgs, { from: "user" });
+  };
+
+  private _addHelpText(position: HelpTextPosition, text: string) {
+    this._command.addHelpText(position, text);
   }
 
   /* *************************************
    * Class methods
    ************************************* */
-  protected addHelpText(position: HelpTextPosition, text: string) {
-    this._command.addHelpText(position, text);
-  }
 
   /** Object of valid options passed into this command.
    * Remember to declare `acceptOptions` for this to work. */
