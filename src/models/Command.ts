@@ -29,11 +29,11 @@ export abstract class Command {
   /* *************************************
    * Signature
    ************************************* */
-  /** Name  for this command. */
+  /** Name for this command. */
   abstract name: string;
   /** Description of this command to show in help message. */
   abstract description: string;
-  /** Only works when passed into a command collection. If this command
+  /** Only works when passed into a command group. If this command
    * is the top-most command, then no alias is possible. */
   aliases: string[] = [];
 
@@ -65,7 +65,7 @@ export abstract class Command {
   /**
    * Initialize the current command with `rawArgs`.
    * You should not worry about calling this if this command is passed
-   * into a command collection (i.e., this is a sub-command).
+   * into a command group (i.e., this is a sub-command).
    * If this command is used on the top level, then rawArgs will be
    * `process.argv.slice(2)`, since the first item in `argv` will be
    * a path to node, and the second item will be the program name.

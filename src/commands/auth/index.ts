@@ -5,7 +5,11 @@ export class AuthCommand extends Command {
   name: string = "auth";
   description: string = "authenticate";
 
-  acceptOpts = [new Option("-a"), new Option("-b"), new Option("-c")];
+  acceptOpts = [
+    new Option("-a").hideHelp(true),
+    new Option("-b"),
+    new Option("-c"),
+  ];
 
   run(): void | Promise<void> {
     console.log(this.args);
