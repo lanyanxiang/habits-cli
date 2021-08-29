@@ -52,6 +52,8 @@ export abstract class Command {
   allowExcessArguments: boolean = false;
   /** Allow unknown option and surpass options validation. */
   allowUnknownOption: boolean = false;
+  /** Display help message after error. */
+  showHelpAfterError: boolean = false;
   /** Override help command's name or description or both. */
   helpCommand: HelpCommand | undefined = undefined;
   /** Flags and a description to override the help flags and help description
@@ -115,6 +117,7 @@ export abstract class Command {
         this._command.addHelpText(position, text);
       });
     }
+    this._command.showHelpAfterError(this.showHelpAfterError);
 
     // When the `from` option is set to "user", commander do not
     // skip the first 1 - 2 items in the `rawArgs` array.
@@ -124,6 +127,10 @@ export abstract class Command {
   /* *************************************
    * Class methods
    ************************************* */
+  /** Print help message for this command. */
+  protected printHelp() {
+    this._command.outputHelp();
+  }
 
   /** Object of valid options passed into this command.
    * Remember to declare `acceptOptions` for this to work. */
@@ -131,7 +138,8 @@ export abstract class Command {
     return this._command.opts();
   }
 
-  /** Get arguments passed into this command. */
+  /** Get arguments passed into this command. Arguments are in
+   * the order of the `acceptArgs` array. */
   protected get args(): string[] {
     return this._command.args;
   }
