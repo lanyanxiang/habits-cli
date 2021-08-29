@@ -4,10 +4,13 @@ import { Argument } from "commander";
 
 export class CommandGroup extends Command {
   private _subcommands: Command[] = [];
+  /** A mapping of subcommand name (or alias) to subcommand itself.
+   * This map is used to speed-up command lookups at runtime. */
+  private _subcommands_map: { [name: string]: Command } = {};
 
-  // This class represents a group of commands (or even group of group of commands)
-  // so excess arguments and excess options should be passed to the commands handling
-  // them.
+  // This class represents a group of commands (or even group of
+  // group of commands), so excess arguments and excess options
+  // should be passed to the commands handling them.
   allowExcessArguments: boolean = true;
   allowUnknownOption: boolean = true;
 
@@ -39,6 +42,19 @@ export class CommandGroup extends Command {
     ];
   }
 
+  /** Build a subcommands map using `this._subcommands` and write directly
+   * to `this._subcommands_map`. */
+  private _build_subcommands_map() {
+    // Override old map
+    this._subcommands_map = {};
+    this._subcommands.forEach((subcommand) => {
+      this._subcommands_map[subcommand.name] = subcommand;
+      subcommand.aliases.forEach((alias) => {
+        this._subcommands_map[alias] = subcommand;
+      });
+    });
+  }
+
   public get subcommands(): Command[] {
     return this._subcommands;
   }
@@ -47,6 +63,7 @@ export class CommandGroup extends Command {
     this._subcommands = _subcommands;
     this._validateSubcommands();
     this._updateAcceptArgs();
+    this._build_subcommands_map();
   }
 
   // Some convenient helpers to enable faster chain configuration
@@ -61,7 +78,16 @@ export class CommandGroup extends Command {
   }
 
   run(): void | Promise<void> {
-    console.log(this.args);
-    return undefined;
+    const subcommandName = this.args[0]; // By argument definition.
+    const subcommandArgs = this.rawArgs.slice(1);
+
+    if (!(subcommandName in this._subcommands_map)) {
+      throw new Error(
+        `Subcommand ${subcommandName} could not be found in subcommands map.` +
+          "Please double-check `_build_subcommands_map` in class `CommandGroup`."
+      );
+    }
+    const subcommand = this._subcommands_map[subcommandName];
+    subcommand.init(subcommandArgs).run();
   }
 }
