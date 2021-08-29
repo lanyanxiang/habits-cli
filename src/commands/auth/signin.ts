@@ -2,8 +2,9 @@ import inquirer, { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { Command } from "../../models";
 import { mainApi, network, spinners, storage } from "../../services";
-import { validation } from "../../utils";
+import { requiredValidator, validation } from "../../utils";
 import { RequestMethod, SecretType, SuccessResponse } from "../../types";
+import { BasicAuthCommand } from "./BasicAuthCommand";
 
 interface PromptAnswers {
   email: string;
@@ -27,25 +28,20 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     name: "password",
     message: "Password:",
     mask: "*",
-    validate: (input, _) => {
-      if (input?.length) {
-        return true;
-      }
-      return "Please enter a password.";
-    },
+    validate: requiredValidator,
   },
 ];
 
-export class SignInCommand extends Command {
+export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
   name: string = "signin";
   description: string = "sign in to your habits account";
   aliases: string[] = ["login"];
 
-  private userInput: Partial<PromptAnswers> | undefined;
+  protected promptQuestions = promptQuestions;
 
   acceptOpts = [new Option("-e, --email <email>", "email of user")];
 
-  private _processOptions() {
+  protected processOptions() {
     if (this.opts.email && validation.isEmail(this.opts.email)) {
       this.userInput = {
         email: this.opts.email,
@@ -53,48 +49,12 @@ export class SignInCommand extends Command {
     }
   }
 
-  private async _promptForCredentials() {
-    this.userInput = await inquirer.prompt<PromptAnswers>(
-      promptQuestions,
-      this.userInput
-    );
-  }
-
-  private async _sendSignInRequest() {
+  protected async sendRequest() {
     return await network.request(mainApi, {
       uri: "/users/signin",
       method: RequestMethod.POST,
       data: this.userInput,
       description: "Authenticate user",
     });
-  }
-
-  private async _storeAuthTokens(response: SuccessResponse) {
-    const spinner = spinners.start("Persist secure session");
-
-    const { accessToken, refreshToken } = response.data.payload!;
-    try {
-      await Promise.all([
-        storage.secrets.set(SecretType.accessToken, accessToken),
-        storage.secrets.set(SecretType.refreshToken, refreshToken),
-      ]);
-    } catch (error: unknown) {
-      spinner.fail();
-      console.error("[Error] Could not persist your session.");
-      throw error;
-    }
-
-    spinner.succeed();
-  }
-
-  async run(): Promise<void> {
-    this._processOptions();
-    await this._promptForCredentials();
-
-    const response = await this._sendSignInRequest();
-    if (response.isError) {
-      return;
-    }
-    await this._storeAuthTokens(response);
   }
 }
