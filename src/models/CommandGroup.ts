@@ -46,6 +46,17 @@ export class CommandGroup extends Command {
     this._updateAcceptArgs();
   }
 
+  // Some convenient helpers to enable faster chain configuration
+  public withSubcommands(subcommands: Command[]) {
+    this.subcommands = subcommands;
+    return this;
+  }
+
+  public withAliases(aliases: string[]) {
+    this.aliases = aliases;
+    return this;
+  }
+
   run(): void | Promise<void> {
     return undefined;
   }
