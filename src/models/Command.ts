@@ -7,12 +7,12 @@ import {
 } from "commander";
 import { CommanderCommand, HelpTextPosition } from "../types";
 
-export interface HelpCommand {
+export interface CommandOverride {
   enableOrNameAndArgs?: string | boolean | undefined;
   description?: string | undefined;
 }
 
-export interface HelpOption {
+export interface OptionOverride {
   flags?: string;
   description: string;
 }
@@ -42,6 +42,10 @@ export abstract class Command {
   /** Only works when passed into a command group. If this command
    * is the top-most command, then no alias is possible. */
   aliases: string[] = [];
+  /** Version of command. */
+  version: string | undefined;
+  /** The option used to display version. Defaults to `-V` and `--version`. */
+  versionOption: OptionOverride | undefined;
 
   /* *************************************
    * Inputs
@@ -61,12 +65,12 @@ export abstract class Command {
   /** Display help message after error. */
   showHelpAfterError: boolean = false;
   /** Override help command's name or description or both. */
-  helpCommand: HelpCommand | undefined = undefined;
+  helpCommand: CommandOverride | undefined;
   /** Flags and a description to override the help flags and help description
    * Pass in false to disable the built-in help option. */
-  helpOption: HelpOption | undefined = undefined;
+  helpOption: OptionOverride | undefined;
   /** Extra help texts to display for this command. */
-  helpTexts: HelpText[] | undefined = undefined;
+  helpTexts: HelpText[] | undefined;
 
   constructor() {
     return this;
@@ -97,6 +101,13 @@ export abstract class Command {
     this._command.name(this.name);
     this._command.description(this.description);
     this._command.aliases(this.aliases);
+    if (this.version) {
+      this._command.version(
+        this.version,
+        this.versionOption?.flags,
+        this.versionOption?.description
+      );
+    }
 
     // Options and arguments
     this.acceptOpts.forEach((opt) => {
