@@ -19,17 +19,18 @@ export class CommandGroup extends Command {
 
   /** Update accept args based on `this.subcommands` field. */
   private _updateAcceptArgs() {
-    this.acceptArgs = [];
+    const subcommandNames: string[] = [];
     this._subcommands.forEach((subcommand) => {
-      this.acceptArgs.push(
-        new Argument(subcommand.name, subcommand.description).argOptional()
-      );
+      subcommandNames.push(subcommand.name);
       subcommand.aliases.forEach((alias) => {
-        this.acceptArgs.push(
-          new Argument(alias, `alias for "${subcommand.name}"`).argOptional()
-        );
+        subcommandNames.push(alias);
       });
     });
+    this.acceptArgs = [
+      new Argument("[sub]", `subcommand of ${this.name}`)
+        .argRequired()
+        .choices(subcommandNames),
+    ];
   }
 
   public get subcommands(): Command[] {
@@ -54,6 +55,7 @@ export class CommandGroup extends Command {
   }
 
   run(): void | Promise<void> {
+    console.log(this.args);
     return undefined;
   }
 }
