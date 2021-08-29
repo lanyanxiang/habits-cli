@@ -36,7 +36,7 @@ export class CommandGroup extends Command {
       });
     });
     this.acceptArgs = [
-      new Argument("[sub]", `subcommand of ${this.name}`)
+      new Argument(`${this.name} command`, `subcommand of ${this.name}`)
         .argRequired()
         .choices(subcommandNames),
     ];
