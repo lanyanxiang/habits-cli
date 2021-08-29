@@ -50,6 +50,8 @@ export abstract class Command {
    ************************************* */
   /** Allow more arguments than specified in the `acceptArgs` property. */
   allowExcessArguments: boolean = false;
+  /** Allow unknown option and surpass options validation. */
+  allowUnknownOption: boolean = false;
   /** Override help command's name or description or both. */
   helpCommand: HelpCommand | undefined = undefined;
   /** Flags and a description to override the help flags and help description
@@ -94,6 +96,7 @@ export abstract class Command {
     });
 
     this._command.allowExcessArguments(this.allowExcessArguments);
+    this._command.allowUnknownOption(this.allowUnknownOption);
 
     if (this.helpCommand) {
       this._command.addHelpCommand(

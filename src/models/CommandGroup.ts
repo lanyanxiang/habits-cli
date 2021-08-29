@@ -5,6 +5,9 @@ import { Argument } from "commander";
 export class CommandGroup extends Command {
   private _subcommands: Command[] = [];
 
+  allowExcessArguments: boolean = true;
+  allowUnknownOption: boolean = true;
+
   constructor(public name: string, public description: string) {
     super();
     return this;
