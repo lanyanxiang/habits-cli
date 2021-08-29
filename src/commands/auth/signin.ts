@@ -67,7 +67,7 @@ export class SignInCommand extends Command {
       uri: "/users/signin",
       method: RequestMethod.POST,
       data: this.userInput,
-      description: "authenticate user",
+      description: "Authenticate user",
     });
     if (response.isError) {
       return;
