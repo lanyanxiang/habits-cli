@@ -63,7 +63,9 @@ export abstract class Command {
   }
 
   /**
-   * Initialize the current command with `rawArgs`.
+   * Initialize the current command with `rawArgs` and the current
+   * class properties. Call this method after configuration on this
+   * command is completed, and shortly before `run`.
    * You should not worry about calling this if this command is passed
    * into a command group (i.e., this is a sub-command).
    * If this command is used on the top level, then rawArgs will be
