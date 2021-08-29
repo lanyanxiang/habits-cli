@@ -72,7 +72,6 @@ export class SignInCommand extends Command {
     if (response.isError) {
       return;
     }
-    console.log(response.data.payload);
     return undefined;
   }
 }
