@@ -33,6 +33,8 @@ export abstract class Command {
   abstract name: string;
   /** Description of this command to show in help message. */
   abstract description: string;
+  /** Only works when passed into a command collection. If this command
+   * is the top-most command, then no alias is possible. */
   aliases: string[] = [];
 
   /* *************************************
