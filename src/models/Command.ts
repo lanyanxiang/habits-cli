@@ -23,38 +23,42 @@ export abstract class Command {
   /* *************************************
    * Reserved
    ************************************* */
-  private static _command: CommanderCommand = new CommanderCommand();
-  protected static rawArgs: string[];
+  private _command: CommanderCommand = new CommanderCommand();
+  protected rawArgs: string[] = [];
 
   /* *************************************
    * Signature
    ************************************* */
   /** Name  for this command. */
-  static commandName: string;
+  abstract name: string;
   /** Description of this command to show in help message. */
-  static description: string;
-  static aliases: string[];
+  abstract description: string;
+  aliases: string[] = [];
 
   /* *************************************
    * Inputs
    ************************************* */
   /** Options that this command accepts. */
-  static acceptOpts: Option[] = [];
+  acceptOpts: Option[] = [];
   /** Arguments that this command accepts. */
-  static acceptArgs: Argument[] = [];
+  acceptArgs: Argument[] = [];
 
   /* *************************************
    * Other configurations
    ************************************* */
   /** Allow more arguments than specified in the `acceptArgs` property. */
-  static allowExcessArguments: boolean = false;
+  allowExcessArguments: boolean = false;
   /** Override help command's name or description or both. */
-  static helpCommand: HelpCommand | undefined = undefined;
+  helpCommand: HelpCommand | undefined = undefined;
   /** Flags and a description to override the help flags and help description
    * Pass in false to disable the built-in help option. */
-  static helpOption: HelpOption | undefined = undefined;
+  helpOption: HelpOption | undefined = undefined;
   /** Extra help texts to display for this command. */
-  static helpTexts: HelpText[] | undefined = undefined;
+  helpTexts: HelpText[] | undefined = undefined;
+
+  constructor() {
+    return this;
+  }
 
   /**
    * Initialize the current command with `rawArgs`.
@@ -64,24 +68,14 @@ export abstract class Command {
    * `process.argv.slice(2)`, since the first item in `argv` will be
    * a path to node, and the second item will be the program name.
    */
-  static init = (rawArgs: string[]) => {
+  public readonly init = (rawArgs: string[]) => {
     // Save param values
     this.rawArgs = rawArgs;
-
-    Command._validateCommand();
-    Command._adaptCommanderCommand();
+    this._adaptCommanderCommand();
+    return this;
   };
 
-  private static _validateCommand() {
-    if (!this.commandName) {
-      throw new Error("The `commandName` property for a command is required.");
-    }
-    if (!this.description) {
-      throw new Error("The `description` property for a command is required.");
-    }
-  }
-
-  private static _adaptCommanderCommand() {
+  private _adaptCommanderCommand() {
     // Registers definitions of this command to the commander command instance.
     this._command.name(this.name);
     this._command.description(this.description);
@@ -125,15 +119,15 @@ export abstract class Command {
 
   /** Object of valid options passed into this command.
    * Remember to declare `acceptOptions` for this to work. */
-  protected static get opts(): OptionValues {
+  protected get opts(): OptionValues {
     return this._command.opts();
   }
 
   /** Get arguments passed into this command. */
-  protected static get args(): string[] {
+  protected get args(): string[] {
     return this._command.args;
   }
 
   /** Entry point to this command. */
-  public static run(): void | Promise<void> {}
+  public abstract run(): void | Promise<void>;
 }
