@@ -12,6 +12,7 @@ export class CommandGroup extends Command {
       !subcommands.includes(this),
       "Cannot pass a command group into `subcommands` of itself."
     );
+    return this;
   }
 
   run(): void | Promise<void> {
