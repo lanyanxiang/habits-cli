@@ -13,7 +13,7 @@ interface RequestOptionsBase {
   /** URI that this request should be sent to. */
   uri: string;
   method: RequestMethod;
-  config: AxiosRequestConfig;
+  config?: AxiosRequestConfig;
 }
 
 export interface DataRequestOptions extends RequestOptionsBase {

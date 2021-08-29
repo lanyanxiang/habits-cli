@@ -1,8 +1,9 @@
 import inquirer, { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { Command } from "../../models";
-import { network } from "../../services";
+import { mainApi, network } from "../../services";
 import { validation } from "../../utils";
+import { RequestMethod } from "../../types";
 
 interface PromptAnswers {
   email: string;
@@ -62,6 +63,16 @@ export class SignInCommand extends Command {
   async run(): Promise<void> {
     this._processOptions();
     await this._promptForCredentials();
+    const response = await network.request(mainApi, {
+      uri: "/users/signin",
+      method: RequestMethod.POST,
+      data: this.userInput,
+      description: "authenticate user",
+    });
+    if (response.isError) {
+      return;
+    }
+    console.log(response.data.payload);
     return undefined;
   }
 }
