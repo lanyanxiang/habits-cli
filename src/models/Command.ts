@@ -1,4 +1,10 @@
-import { Argument, Option, OptionValues } from "commander";
+import {
+  Argument,
+  Option,
+  OptionValues,
+  Help,
+  OutputConfiguration,
+} from "commander";
 import { CommanderCommand, HelpTextPosition } from "../types";
 
 export interface HelpCommand {
@@ -80,6 +86,8 @@ export abstract class Command {
     // Save param values
     this.rawArgs = rawArgs;
     this._adaptCommanderCommand();
+    this.configureHelp(this._command.configureHelp());
+    this.configureOutput(this._command.configureOutput());
     return this;
   };
 
@@ -123,6 +131,16 @@ export abstract class Command {
     // skip the first 1 - 2 items in the `rawArgs` array.
     this._command.parse(this.rawArgs, { from: "user" });
   }
+
+  /* *************************************
+   * Life-cycle methods
+   ************************************* */
+  /** Method called on initialization of command.
+   * Update members and/or methods in `help` directly. */
+  protected configureHelp(help: Partial<Help>): void {}
+  /** Method called on initialization of command.
+   * Update members and/or methods in `output` directly. */
+  protected configureOutput(output: OutputConfiguration): void {}
 
   /* *************************************
    * Class methods
