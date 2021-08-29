@@ -77,6 +77,14 @@ export class CommandGroup extends Command {
     return this;
   }
 
+  protected filterParsingArgs(): string[] {
+    // We only want to process the first argument.
+    // The CommandGroup is a special case, because we want
+    // to pass the remaining options and arguments to the
+    // subcommand handling them.
+    return this.rawArgs.slice(0, 1);
+  }
+
   run(): void | Promise<void> {
     const subcommandName = this.args[0]; // By argument definition.
     const subcommandArgs = this.rawArgs.slice(1);
