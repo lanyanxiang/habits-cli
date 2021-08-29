@@ -5,6 +5,9 @@ import { Argument } from "commander";
 export class CommandGroup extends Command {
   private _subcommands: Command[] = [];
 
+  // This class represents a group of commands (or even group of group of commands)
+  // so excess arguments and excess options should be passed to the commands handling
+  // them.
   allowExcessArguments: boolean = true;
   allowUnknownOption: boolean = true;
 
