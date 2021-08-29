@@ -1,9 +1,9 @@
 import inquirer, { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { Command } from "../../models";
-import { mainApi, network, storage } from "../../services";
+import { mainApi, network, spinners, storage } from "../../services";
 import { validation } from "../../utils";
-import { RequestMethod, SuccessResponse } from "../../types";
+import { RequestMethod, SecretType, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   email: string;
@@ -69,7 +69,23 @@ export class SignInCommand extends Command {
     });
   }
 
-  private async _storeAuthTokens(response: SuccessResponse) {}
+  private async _storeAuthTokens(response: SuccessResponse) {
+    const spinner = spinners.start("Persist secure session");
+
+    const { accessToken, refreshToken } = response.data.payload!;
+    try {
+      await Promise.all([
+        storage.secrets.set(SecretType.accessToken, accessToken),
+        storage.secrets.set(SecretType.refreshToken, refreshToken),
+      ]);
+    } catch (error: unknown) {
+      spinner.fail();
+      console.error("[Error] Could not persist your session.");
+      throw error;
+    }
+
+    spinner.succeed();
+  }
 
   async run(): Promise<void> {
     this._processOptions();
@@ -80,6 +96,5 @@ export class SignInCommand extends Command {
       return;
     }
     await this._storeAuthTokens(response);
-
   }
 }
