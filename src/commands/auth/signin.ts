@@ -3,7 +3,7 @@ import { Option } from "commander";
 import { Command } from "../../models";
 import { mainApi, network, storage } from "../../services";
 import { validation } from "../../utils";
-import { RequestMethod } from "../../types";
+import { RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   email: string;
@@ -60,21 +60,26 @@ export class SignInCommand extends Command {
     );
   }
 
+  private async _sendSignInRequest() {
+    return await network.request(mainApi, {
+      uri: "/users/signin",
+      method: RequestMethod.POST,
+      data: this.userInput,
+      description: "Authenticate user",
+    });
+  }
+
+  private async _storeAuthTokens(response: SuccessResponse) {}
+
   async run(): Promise<void> {
     this._processOptions();
-    storage.local.set("hi", "there");
-    storage.local.set("hi2", "there2");
-    storage.local.set("hi3", "there3");
-    console.log(storage.local.get("hi"));
     await this._promptForCredentials();
-    // const response = await network.request(mainApi, {
-    //   uri: "/users/signin",
-    //   method: RequestMethod.POST,
-    //   data: this.userInput,
-    //   description: "Authenticate user",
-    // });
-    // if (response.isError) {
-    //   return;
-    // }
+
+    const response = await this._sendSignInRequest();
+    if (response.isError) {
+      return;
+    }
+    await this._storeAuthTokens(response);
+
   }
 }
