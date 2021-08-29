@@ -1,2 +1,2 @@
-export * from "./StringParser";
+export * from "./stringParser";
 export * from "./validation";
