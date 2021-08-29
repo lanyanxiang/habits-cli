@@ -1,7 +1,11 @@
-import { AuthCommand } from "./commands/auth";
+import { LoginCommand, LogoutCommand } from "./commands/auth";
+import { CommandGroup } from "./models";
 
 const start = () => {
-  new AuthCommand().init(process.argv.slice(2)).run();
+  const auth = new CommandGroup("auth", "authenticate")
+    .withSubcommands([new LoginCommand(), new LogoutCommand()])
+    .init(process.argv.slice(2))
+    .run();
 };
 
 start();

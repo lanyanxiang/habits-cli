@@ -3,14 +3,10 @@ import { Command } from "./Command";
 import { Argument } from "commander";
 
 export class CommandGroup extends Command {
-  constructor(
-    public name: string,
-    public description: string,
-    private _subcommands: Command[]
-  ) {
+  private _subcommands: Command[] = [];
+
+  constructor(public name: string, public description: string) {
     super();
-    this._validateSubcommands();
-    this._updateAcceptArgs();
     return this;
   }
 
@@ -26,11 +22,11 @@ export class CommandGroup extends Command {
     this.acceptArgs = [];
     this._subcommands.forEach((subcommand) => {
       this.acceptArgs.push(
-        new Argument(subcommand.name, subcommand.description)
+        new Argument(subcommand.name, subcommand.description).argOptional()
       );
       subcommand.aliases.forEach((alias) => {
         this.acceptArgs.push(
-          new Argument(alias, `alias for "${subcommand.name}"`)
+          new Argument(alias, `alias for "${subcommand.name}"`).argOptional()
         );
       });
     });
