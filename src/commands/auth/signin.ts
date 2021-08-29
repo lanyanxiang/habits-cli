@@ -1,4 +1,4 @@
-import inquirer from "inquirer";
+import inquirer, { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { Command } from "../../models";
 import { network } from "../../services";
@@ -8,6 +8,32 @@ interface PromptAnswers {
   email: string;
   password: string;
 }
+
+const promptQuestions: QuestionCollection<PromptAnswers> = [
+  {
+    type: "input",
+    name: "email",
+    message: "Email:",
+    validate: (input, _) => {
+      if (validation.isEmail(input)) {
+        return true;
+      }
+      return "Please enter a valid email address.";
+    },
+  },
+  {
+    type: "password",
+    name: "password",
+    message: "Password:",
+    mask: "*",
+    validate: (input, _) => {
+      if (input?.length) {
+        return true;
+      }
+      return "Please enter a password.";
+    },
+  },
+];
 
 export class SignInCommand extends Command {
   name: string = "signin";
@@ -28,31 +54,7 @@ export class SignInCommand extends Command {
 
   private async _promptForCredentials() {
     this.userInput = await inquirer.prompt<PromptAnswers>(
-      [
-        {
-          type: "input",
-          name: "email",
-          message: "Email:",
-          validate: (input, _) => {
-            if (validation.isEmail(input)) {
-              return true;
-            }
-            return "Please enter a valid email address.";
-          },
-        },
-        {
-          type: "password",
-          name: "password",
-          message: "Password:",
-          mask: "*",
-          validate: (input, _) => {
-            if (input?.length) {
-              return true;
-            }
-            return "Please enter a password.";
-          },
-        },
-      ],
+      promptQuestions,
       this.userInput
     );
   }
