@@ -77,10 +77,10 @@ export abstract class Command {
   }
 
   /**
-   * Initialize the current command with `rawArgs` and the current
-   * class properties. Call this method after configuration on this
-   * command is completed, and shortly before `run`.
-   * You should not worry about calling this if this command is passed
+   * Initialize the current command and the current class properties
+   * with `rawArgs`. Call this method after configuration of this command,
+   * just shortly before `run`.
+   * You should not worry about calling this method if the command is passed
    * into a command group (i.e., this is a sub-command).
    * If this command is used on the top level, then rawArgs will be
    * `process.argv.slice(2)`, since the first item in `argv` will be
