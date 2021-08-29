@@ -1,18 +1,18 @@
 import { ErrorResponse } from "../../types";
-import { StringParser } from "../../utils";
+import { stringParser } from "../../utils";
 
 /**
  * Log network error to the console.
  */
 export const logError = (error: ErrorResponse) => {
   const errorStatus = error.response?.status || "local";
-  const errorTitle = StringParser.capitalize(
+  const errorTitle = stringParser.capitalize(
     error.response?.statusText || "An error occurred"
   );
   const errorMessages = error.response?.data.errors?.map((error) => {
     let msg = `[Error] ${error.message}`;
     if (error.cause) {
-      const cause = StringParser.camelToSpaceSeparated(error.cause);
+      const cause = stringParser.camelToSpaceSeparated(error.cause);
       msg += `\n> Caused by ${cause}`;
     }
     return msg;
