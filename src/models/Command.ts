@@ -88,6 +88,7 @@ export abstract class Command {
     this._adaptCommanderCommand();
     this.configureHelp(this._command.configureHelp());
     this.configureOutput(this._command.configureOutput());
+    this._parseArgs();
     return this;
   };
 
@@ -126,10 +127,15 @@ export abstract class Command {
       });
     }
     this._command.showHelpAfterError(this.showHelpAfterError);
+  }
+
+  /** Parse command arguments */
+  private _parseArgs() {
+    const argsToParse = this.filterParsingArgs();
 
     // When the `from` option is set to "user", commander do not
     // skip the first 1 - 2 items in the `rawArgs` array.
-    this._command.parse(this.rawArgs, { from: "user" });
+    this._command.parse(argsToParse, { from: "user" });
   }
 
   /* *************************************
@@ -141,6 +147,12 @@ export abstract class Command {
   /** Method called on initialization of command.
    * Update members and/or methods in `output` directly. */
   protected configureOutput(output: OutputConfiguration): void {}
+  /** Return arguments that should be used/considered for command parsing.
+   * Please start with `this.rawArgs`. By default, we parse all args passed
+   * into this command. This method is called on initialization of command. */
+  protected filterParsingArgs(): string[] {
+    return this.rawArgs;
+  }
 
   /* *************************************
    * Class methods
