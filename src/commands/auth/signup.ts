@@ -1,7 +1,9 @@
-import { Command } from "../../models";
-import inquirer, { QuestionCollection } from "inquirer";
+import { QuestionCollection } from "inquirer";
 import { requiredValidator, validation } from "../../utils";
 import { Option } from "commander";
+import { BasicAuthCommand } from "./BasicAuthCommand";
+import { mainApi, network } from "../../services";
+import { RequestMethod } from "../../types";
 
 interface PromptAnswers {
   email: string;
@@ -55,11 +57,11 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-export class SignUpCommand extends Command {
+export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
   name: string = "signup";
   description: string = "create a new habits account";
 
-  private _userInput: Partial<PromptAnswers> | undefined;
+  protected promptQuestions = promptQuestions;
 
   acceptOpts = [
     new Option("-e, --email <email>", "email of new user"),
@@ -67,7 +69,7 @@ export class SignUpCommand extends Command {
     new Option("-l, --last-name <lastName>", "last name of new user"),
   ];
 
-  private _processOptions() {
+  protected processOptions() {
     const userInput: Partial<PromptAnswers> = {};
     if (this.opts.email && validation.isEmail(this.opts.email)) {
       userInput.email = this.opts.email;
@@ -78,17 +80,15 @@ export class SignUpCommand extends Command {
     if (this.opts.lastName.length) {
       userInput.lastName = this.opts.lastName;
     }
-    this._userInput = userInput;
+    this.userInput = userInput;
   }
 
-  private async _promptForCredentials() {
-    this._userInput = await inquirer.prompt<PromptAnswers>(
-      promptQuestions,
-      this._userInput
-    );
-  }
-
-  run(): void | Promise<void> {
-    return undefined;
+  protected async sendRequest() {
+    return network.request(mainApi, {
+      uri: "/users/signup",
+      method: RequestMethod.POST,
+      data: this.userInput,
+      description: "Sign up user",
+    });
   }
 }
