@@ -3,6 +3,9 @@ import inquirer, { QuestionCollection } from "inquirer";
 import { ErrorResponse, SecretType, SuccessResponse } from "../../types";
 import { spinners, storage } from "../../services";
 
+/** Basic authentication command blueprint to be used for commands that
+ * authenticates the user and requires to store access and refresh tokens.
+ * Please pass in the structure of user input (key-value) as T. */
 export abstract class BasicAuthCommand<
   T extends Record<string, any>
 > extends Command {
