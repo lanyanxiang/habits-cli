@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { Ora } from "ora";
 import {
   ErrorResponse,
   RegularRequestOptions,
@@ -7,7 +8,6 @@ import {
 import { spinners } from "../spinners";
 import { silentRequest } from "./silentRequest";
 import { logError } from "./logError";
-import { Ora } from "ora";
 
 const _handleSuccess = (
   spinner: Ora,
