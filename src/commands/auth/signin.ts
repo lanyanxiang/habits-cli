@@ -1,7 +1,7 @@
 import inquirer, { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { Command } from "../../models";
-import { mainApi, network } from "../../services";
+import { mainApi, network, storage } from "../../services";
 import { validation } from "../../utils";
 import { RequestMethod } from "../../types";
 
@@ -62,16 +62,19 @@ export class SignInCommand extends Command {
 
   async run(): Promise<void> {
     this._processOptions();
+    storage.local.set("hi", "there");
+    storage.local.set("hi2", "there2");
+    storage.local.set("hi3", "there3");
+    console.log(storage.local.get("hi"));
     await this._promptForCredentials();
-    const response = await network.request(mainApi, {
-      uri: "/users/signin",
-      method: RequestMethod.POST,
-      data: this.userInput,
-      description: "Authenticate user",
-    });
-    if (response.isError) {
-      return;
-    }
-    return undefined;
+    // const response = await network.request(mainApi, {
+    //   uri: "/users/signin",
+    //   method: RequestMethod.POST,
+    //   data: this.userInput,
+    //   description: "Authenticate user",
+    // });
+    // if (response.isError) {
+    //   return;
+    // }
   }
 }
