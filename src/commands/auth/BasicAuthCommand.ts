@@ -15,7 +15,7 @@ export abstract class BasicAuthCommand<
   /** Send a request to the endpoint, using `this.userInput`, and return response. */
   protected abstract sendRequest(): Promise<SuccessResponse | ErrorResponse>;
 
-  protected async promptForCredentials() {
+  protected async promptForQuestions() {
     this.userInput = await inquirer.prompt<T>(
       this.promptQuestions,
       this.userInput
@@ -42,7 +42,7 @@ export abstract class BasicAuthCommand<
 
   async run(): Promise<void> {
     this.processOptions();
-    await this.promptForCredentials();
+    await this.promptForQuestions();
 
     const response = await this.sendRequest();
     if (response.isError) {
