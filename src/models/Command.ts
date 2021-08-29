@@ -96,8 +96,8 @@ export abstract class Command {
     return this;
   };
 
+  /** Register definitions of this command to the commander command instance. */
   private _adaptCommanderCommand() {
-    // Registers definitions of this command to the commander command instance.
     this._command.name(this.name);
     this._command.description(this.description);
     this._command.aliases(this.aliases);
