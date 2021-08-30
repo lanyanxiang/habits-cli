@@ -1,8 +1,16 @@
 import { Option } from "commander";
 import { Command } from "../../models";
 import { argParser } from "../../utils";
-import { mainApi, network } from "../../services";
+import { mainApi, network, Table } from "../../services";
 import { RequestMethod, SuccessResponse } from "../../types";
+
+type ListResponsePayload = {
+  id: string;
+  title: string;
+  pointsChange: number;
+  createdAt: string;
+  updatedAt: string;
+}[];
 
 export class ListCommand extends Command {
   name: string = "list";
@@ -38,7 +46,15 @@ export class ListCommand extends Command {
   }
 
   private static _displayTransactions(response: SuccessResponse) {
-    console.log(response.data.payload);
+    const transactions = response.data.payload as ListResponsePayload;
+    const table = new Table({
+      head: ["ID", "Title", "Change in Points", "Time"],
+      colWidths: [100, 200, 100, 200],
+    });
+    transactions.forEach(({ id, title, pointsChange, createdAt }) => {
+      table.push([id, title, pointsChange, createdAt]);
+    });
+    console.log(table.toString());
   }
 
   async run(): Promise<void> {
