@@ -1,5 +1,11 @@
-import { ErrorPayload, ErrorResponse, SuccessResponse } from "../../types";
+import {
+  ErrorPayload,
+  ErrorResponse,
+  SecretType,
+  SuccessResponse,
+} from "../../types";
 import { AxiosError, AxiosResponse } from "axios";
+import { storage } from "../storage";
 
 // Handle X-Refresh-Token and X-Access-Token in response header.
 // See https://lanyanxiang.github.io/node-authentication-starter/#/api/authentication.
@@ -15,11 +21,14 @@ const _storeTokens = async <T extends SuccessResponse | ErrorResponse>(
     return _response;
   }
   if ("x-access-token" in response.headers) {
-    console.log("Received x-access-token", response.headers["x-access-token"]);
+    await storage.secrets.set(
+      SecretType.accessToken,
+      response.headers["x-access-token"]
+    );
   }
   if ("x-refresh-token" in response.headers) {
-    console.log(
-      "Received x-refresh-token",
+    await storage.secrets.set(
+      SecretType.refreshToken,
       response.headers["x-refresh-token"]
     );
   }
