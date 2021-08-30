@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { config } from "../config";
-import { ErrorPayload, ErrorResponse, SuccessResponse } from "../types";
+import { config } from "../../config";
+import { ErrorPayload, ErrorResponse, SuccessResponse } from "../../types";
 
 declare module "axios" {
   interface AxiosResponse {
