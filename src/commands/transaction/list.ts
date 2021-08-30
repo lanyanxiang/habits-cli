@@ -2,7 +2,7 @@ import { Option } from "commander";
 import { Command } from "../../models";
 import { argParser } from "../../utils";
 import { mainApi, network } from "../../services";
-import { RequestMethod } from "../../types";
+import { RequestMethod, SuccessResponse } from "../../types";
 
 export class ListCommand extends Command {
   name: string = "list";
@@ -33,7 +33,12 @@ export class ListCommand extends Command {
         },
       },
       description: "Fetch transactions",
+      shouldClearSpinner: true,
     });
+  }
+
+  private _displayTransactions(response: SuccessResponse) {
+    console.log(response.data.payload);
   }
 
   async run(): Promise<void> {
@@ -41,5 +46,6 @@ export class ListCommand extends Command {
     if (response.isError) {
       return;
     }
+    this._displayTransactions(response);
   }
 }
