@@ -10,7 +10,7 @@ export interface SuccessPayload {
    * from the server. This attribute will not be set if
    * request fails.
    */
-  payload?: Record<string, any>;
+  payload?: any;
 }
 
 export interface ErrorPayload {
