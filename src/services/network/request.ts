@@ -13,10 +13,12 @@ const _handleSuccess = (
   spinner: Ora,
   requestOptions: RegularRequestOptions
 ) => {
-  spinner.succeed(requestOptions.successMsg);
   if (requestOptions.shouldClearSpinner) {
+    spinner.stop();
     spinner.clear();
+    return;
   }
+  spinner.succeed(requestOptions.successMsg);
 };
 
 const _handleFailure = (
