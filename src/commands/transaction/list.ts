@@ -37,7 +37,7 @@ export class ListCommand extends Command {
     });
   }
 
-  private _displayTransactions(response: SuccessResponse) {
+  private static _displayTransactions(response: SuccessResponse) {
     console.log(response.data.payload);
   }
 
@@ -46,6 +46,6 @@ export class ListCommand extends Command {
     if (response.isError) {
       return;
     }
-    this._displayTransactions(response);
+    ListCommand._displayTransactions(response);
   }
 }
