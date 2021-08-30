@@ -36,6 +36,7 @@ const handleInt = (field?: string, config?: NumberConstraint) => {
   return (value: string, _: unknown) => {
     const parsedValue = parseInt(value);
     checkNumericValue(fieldName, parsedValue, config);
+    return parsedValue;
   };
 };
 
@@ -44,6 +45,7 @@ const handleFloat = (field?: string, config?: NumberConstraint) => {
   return (value: string, _: unknown) => {
     const parsedValue = parseInt(value);
     checkNumericValue(fieldName, parsedValue, config);
+    return parsedValue;
   };
 };
 
