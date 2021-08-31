@@ -69,7 +69,7 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
     new Option("-l, --last-name <lastName>", "last name of new user"),
   ];
 
-  protected processOptions() {
+  protected mapOptionsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
     if (this.opts.email && validation.isEmail(this.opts.email)) {
       userInput.email = this.opts.email;

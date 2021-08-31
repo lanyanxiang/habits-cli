@@ -11,10 +11,10 @@ export abstract class QuestionCommand<T extends Record<string, any>> extends Com
   protected abstract promptQuestions: QuestionCollection<T>;
 
   /** Process `this.opts` and set `this.userInput`. */
-  protected mapOptionsToInputs = (): void | Promise<void> => {}
+  protected mapOptionsToInputs(): void | Promise<void> {}
 
   /** Display `promptQuestions` with `this.userInput` as the default. */
-  protected async promptForUserInput() {
+  protected async promptForInputs() {
     this.userInput = await inquirer.prompt<T>(
         this.promptQuestions,
         this.userInput
