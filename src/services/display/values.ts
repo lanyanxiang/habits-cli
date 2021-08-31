@@ -11,7 +11,7 @@ import chalk from "chalk";
  */
 const formatPointsChange = (pointsChange: number) => {
   return pointsChange < 0
-    ? chalk.red(`(${pointsChange})`)
+    ? chalk.red(`(${Math.abs(pointsChange)})`)
     : chalk.green(`+${pointsChange}`);
 };
 
