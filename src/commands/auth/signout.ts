@@ -14,6 +14,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "confirm",
     name: "shouldContinue",
     message: "Confirm sign out?",
+    default: false,
   },
 ];
 
@@ -45,7 +46,7 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
   async run(): Promise<void> {
     this.mapOptionsToInputs();
     await this.promptForInputs();
-    if (!this.opts.yes) {
+    if (!this.userInput?.shouldContinue) {
       console.log(
         chalk.red(
           "[Error] User cancelled sign out process. (You are NOT signed out)"
