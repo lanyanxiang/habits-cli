@@ -1,6 +1,6 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
-import { requiredValidator } from "../../utils";
+import { pointsChangeValidator, requiredValidator } from "../../utils";
 import { Option } from "commander";
 import { mainApi, network } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
@@ -21,16 +21,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: (input: any) => {
-      if (Number(input) != 0) {
-        return true;
-      }
-      return (
-        "Change in points cannot be 0. Enter a positive " +
-        "number to add points, and a negative number to reduce " +
-        "points."
-      );
-    },
+    validate: pointsChangeValidator,
   },
 ];
 
