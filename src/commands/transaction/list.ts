@@ -14,8 +14,8 @@ type ListResponsePayload = {
 }[];
 
 export class ListCommand extends Command {
-  name: string = "list";
-  description: string = "list recent transactions";
+  name = "list";
+  description = "list recent transactions";
   aliases = ["ls"];
 
   acceptOpts = [

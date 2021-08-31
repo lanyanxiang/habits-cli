@@ -58,8 +58,8 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
 ];
 
 export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
-  name: string = "signup";
-  description: string = "create a new habits account";
+  name = "signup";
+  description = "create a new habits account";
 
   protected promptQuestions = promptQuestions;
 
