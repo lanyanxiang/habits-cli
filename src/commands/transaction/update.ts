@@ -1,6 +1,7 @@
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
 import { pointsChangeValidator, requiredValidator } from "../../utils";
+import { Argument, Option } from "commander";
 
 interface PromptAnswers {
   transactionId: string;
@@ -33,6 +34,21 @@ export class UpdateCommand extends QuestionCommand<any> {
   aliases = ["change"];
 
   protected promptQuestions = promptQuestions;
+
+  acceptArgs = [
+    new Argument(
+      "transactionId",
+      "object id of the transaction to be updated"
+    ).argOptional(),
+  ];
+  acceptOpts = [
+    new Option("-t, --title <title>", "new title for the target transaction"),
+    new Option("-p, --points <pointsChange>", "new value for change in points"),
+  ];
+
+  protected mapOptionsToInputs(): void | Promise<void> {
+    return super.mapOptionsToInputs();
+  }
 
   run(): void | Promise<void> {
     return undefined;
