@@ -1,9 +1,8 @@
-import inquirer, { QuestionCollection } from "inquirer";
+import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
-import { Command } from "../../models";
-import { mainApi, network, spinners, storage } from "../../services";
+import { mainApi, network } from "../../services";
 import { requiredValidator, validation } from "../../utils";
-import { RequestMethod, SecretType, SuccessResponse } from "../../types";
+import { RequestMethod } from "../../types";
 import { BasicAuthCommand } from "./BasicAuthCommand";
 
 interface PromptAnswers {

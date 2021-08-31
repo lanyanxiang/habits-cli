@@ -1,5 +1,4 @@
 import {QuestionCommand} from "../../models";
-import inquirer, {QuestionCollection} from "inquirer";
 import {ErrorResponse, SecretType, SuccessResponse} from "../../types";
 import {spinners, storage} from "../../services";
 
