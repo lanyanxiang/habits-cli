@@ -1,47 +1,63 @@
 import { Argument } from "commander";
-import { QuestionCollection } from "inquirer";
 import { requiredValidator } from "../../utils";
 import { QuestionCommand } from "../../models";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import { RequestMethod } from "../../types";
 import { mainApi, network } from "../../services";
 
 interface PromptAnswers {
-  transactionId: string;
+  /** Transaction IDs to perform delete on. */
+  transactionIds: string[];
 }
 
-const promptQuestions: QuestionCollection<PromptAnswers> = [
-  {
-    type: "input",
-    name: "transactionId",
-    message: "Transaction ID:",
-    // TODO Add validation for object IDs
-    validate: requiredValidator,
-  },
-];
+const getPromptQuestions = (self: RemoveCommand) => {
+  return [
+    {
+      type: "input",
+      name: "transactionIds",
+      message: "Transaction ID:",
+      // TODO Add validation for object IDs
+      validator: requiredValidator,
+      filter: (input: any, answers: PromptAnswers) => {
+        if (!input?.length) {
+          // If the user enters an empty value, stop asking for
+          // more transaction IDs.
+          self.shouldContinuePrompting = false;
+          return answers.transactionIds;
+        }
+        return [...answers.transactionIds, input];
+      },
+    },
+  ];
+};
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   name = "remove";
-  description = "remove a transaction";
+  description = "remove one or more transactions";
   aliases = ["delete", "rm"];
   acceptArgs = [
-    new Argument("transactionId", "object id of the transaction to be removed"),
+    new Argument(
+      "<transactionId...>",
+      "object IDs of the transaction to be removed"
+    ).argOptional(),
   ];
-  protected promptQuestions = promptQuestions;
+
+  /** The remove command will continue to prompt for more transaction IDs and
+   * set user input when this value is `true`. */
+  shouldContinuePrompting = true;
+  protected promptQuestions = getPromptQuestions(this);
 
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
 
     if (this.args.length) {
-      userInput.transactionId = this.args[0];
+      userInput.transactionIds = this.args;
     }
 
     this.userInput = userInput;
   }
 
-  private async _sendRequest(): Promise<
-    SuccessResponse | ErrorResponse | never
-  > {
-    if (!this.userInput?.transactionId) {
+  private async _sendRequest(): Promise<void> {
+    if (!this.userInput?.transactionIds) {
       console.error("[Error] Please specify a transaction ID.");
       // TODO Create a central error handler and a special type of error to
       //  indicate command termination. Add a method to `Command` to throw this
@@ -49,11 +65,16 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
       throw new Error("No transaction ID");
     }
 
-    return await network.request(mainApi, {
-      uri: `/transactions/${this.userInput.transactionId}`,
-      method: RequestMethod.DELETE,
-      description: `Delete transaction ${this.userInput.transactionId}`,
-    });
+    for (const transactionId of this.userInput.transactionIds) {
+      const response = await network.request(mainApi, {
+        uri: `/transactions/${transactionId}`,
+        method: RequestMethod.DELETE,
+        description: `Remove transaction ${transactionId}`,
+      });
+      if (response.isError) {
+        return;
+      }
+    }
   }
 
   async run(): Promise<void> {
