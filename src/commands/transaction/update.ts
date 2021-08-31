@@ -2,6 +2,8 @@ import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
 import { pointsChangeValidator, requiredValidator } from "../../utils";
 import { Argument, Option } from "commander";
+import { mainApi, network } from "../../services";
+import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   transactionId: string;
@@ -70,5 +72,32 @@ export class UpdateCommand extends QuestionCommand<any> {
     this.userInput = userInput;
   }
 
-  async run(): Promise<void> {}
+  async run(): Promise<void> {
+    this.mapArgumentsToInputs();
+    this.mapOptionsToInputs();
+    await this.promptForInputs();
+    await this._sendRequest();
+  }
+
+  private async _sendRequest(): Promise<
+    SuccessResponse | ErrorResponse | never
+  > {
+    if (!this.userInput?.transactionId) {
+      console.error("[Error] Please specify a transaction ID.");
+      // TODO Create a central error handler and a special type of error to
+      //  indicate command termination. Add a method to `Command` to throw this
+      //  new special error.
+      throw new Error("No transaction ID");
+    }
+
+    return await network.request(mainApi, {
+      uri: "/transactions/" + this.userInput.transactionId,
+      method: RequestMethod.PATCH,
+      data: {
+        ...this.userInput,
+        transactionId: undefined,
+      },
+      description: "",
+    });
+  }
 }
