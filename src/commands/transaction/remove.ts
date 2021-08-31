@@ -3,31 +3,25 @@ import { requiredValidator } from "../../utils";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
 import { mainApi, network } from "../../services";
+import { inquirer } from "../../services/inquirer";
+import chalk from "chalk";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
   transactionIds: string[];
 }
 
-const getPromptQuestions = (self: RemoveCommand) => {
-  return [
-    {
-      type: "input",
-      name: "transactionIds",
-      message: "Transaction ID:",
-      // TODO Add validation for object IDs
-      validator: requiredValidator,
-      filter: (input: any, answers: PromptAnswers) => {
-        if (!input?.length) {
-          // If the user enters an empty value, stop asking for
-          // more transaction IDs.
-          self.shouldContinuePrompting = false;
-          return answers.transactionIds;
-        }
-        return [...answers.transactionIds, input];
-      },
-    },
-  ];
+// TODO Add validation for object IDs
+const transactionIdQuestion = {
+  type: "input",
+  // Note the missing "s", in comparison to the `transactionIds`
+  // key in `PromptAnswers`.
+  name: "transactionId",
+  message: "Transaction ID:",
+};
+const transactionIdRequiredQuestion = {
+  ...transactionIdQuestion,
+  validate: requiredValidator,
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
@@ -41,16 +35,63 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     ).argOptional(),
   ];
 
-  /** The remove command will continue to prompt for more transaction IDs and
-   * set user input when this value is `true`. */
-  shouldContinuePrompting = true;
-  protected promptQuestions = getPromptQuestions(this);
+  // We do not use the default prompt questions method here, so we pass
+  // in empty array.
+  protected promptQuestions = [];
 
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
 
     if (this.args.length) {
       userInput.transactionIds = this.args;
+    }
+
+    this.userInput = userInput;
+  }
+
+  private _printInstructions() {
+    console.log(
+      "Please enter the IDs of the transactions that you would like to remove.\n"
+    );
+    console.log(chalk.italic(chalk.bold("Instructions: ")));
+    console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
+    console.log(
+      `- Press ${chalk.cyan(
+        chalk.bold("enter")
+      )} without entering anything to finish.`
+    );
+    console.log(
+      `- Enter ${chalk.cyan(
+        chalk.bold("at least one")
+      )} transaction ID to remove.`
+    );
+  }
+
+  protected async promptForInputs(): Promise<void> {
+    if (this.userInput?.transactionIds) {
+      // This means transaction IDs were passed in using variadic arguments
+      return;
+    }
+
+    this._printInstructions();
+    console.log();
+    const userInput = this.userInput || {};
+    const { transactionId: initialTranId } = await inquirer.prompt([
+      transactionIdRequiredQuestion,
+    ]);
+    userInput.transactionIds = [initialTranId];
+
+    /** The remove command will continue to prompt for more transaction IDs and
+     * set user input when this value is `true`. */
+    let shouldContinuePrompting = true;
+    while (shouldContinuePrompting) {
+      const { transactionId } = await inquirer.prompt([transactionIdQuestion]);
+      if (!transactionId?.length) {
+        // An empty transaction ID will make the program stop asking for more.
+        shouldContinuePrompting = false;
+        break;
+      }
+      userInput.transactionIds.push(transactionId);
     }
 
     this.userInput = userInput;
