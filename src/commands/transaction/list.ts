@@ -2,7 +2,7 @@ import { Option } from "commander";
 import { Command } from "../../models";
 import { argParser } from "../../utils";
 import { display, mainApi, network } from "../../services";
-import { RequestMethod, SuccessResponse } from "../../types";
+import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import chalk from "chalk";
 
 type ListResponsePayload = {
@@ -28,7 +28,7 @@ export class ListCommand extends Command {
     ).argParser(argParser.handleInt("limit", { min: 1 })),
   ];
 
-  private async _sendRequest() {
+  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
 
