@@ -60,7 +60,12 @@ export class ListCommand extends Command {
           content: chalk.cyan(`Transaction ${id}`),
         },
       ]);
-      table.push([index, title, pointsChange, createdAt]);
+      table.push([
+        index,
+        title,
+        pointsChange,
+        display.datetime.format(new Date(createdAt)),
+      ]);
     });
     display.table.print(table);
   }
