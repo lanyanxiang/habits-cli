@@ -64,7 +64,7 @@ export class ListCommand extends Command {
       table.push([
         index,
         title,
-        display.values.formatPoints(pointsChange),
+        display.values.formatPointsChange(pointsChange),
         display.datetime.format(new Date(createdAt)),
       ]);
     });
