@@ -70,7 +70,5 @@ export class UpdateCommand extends QuestionCommand<any> {
     this.userInput = userInput;
   }
 
-  run(): void | Promise<void> {
-    return undefined;
-  }
+  async run(): Promise<void> {}
 }
