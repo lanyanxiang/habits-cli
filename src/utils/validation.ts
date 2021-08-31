@@ -14,9 +14,6 @@ export const requiredValidator = (input: string | undefined) => {
 };
 
 export const pointsChangeValidator = (input: any) => {
-  if (isNaN(Number(input))) {
-    return "Please enter a valid number.";
-  }
   if (Number(input) != 0) {
     return true;
   }

@@ -7,6 +7,7 @@ import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   transactionId: string;
+
   title?: string;
   pointsChange?: number;
 }
@@ -24,7 +25,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     validate: requiredValidator,
   },
   {
-    type: "input",
+    type: "number",
     name: "pointsChange",
     validate: pointsChangeValidator,
   },
