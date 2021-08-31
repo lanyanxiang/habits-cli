@@ -5,9 +5,14 @@ import { Argument, Option } from "commander";
 import { mainApi, network } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
+enum UpdateChoices {
+  title = "title",
+  pointsChange = "change in points",
+}
+
 interface PromptAnswers {
   transactionId: string;
-
+  updateChoices: UpdateChoices[];
   title?: string;
   pointsChange?: number;
 }
@@ -20,14 +25,27 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     validate: requiredValidator,
   },
   {
+    type: "checkbox",
+    name: "updateChoices",
+    message: "What would you like to update? (multiple select)",
+    choices: Object.values(UpdateChoices),
+    validate: requiredValidator,
+  },
+  {
     type: "input",
     name: "title",
     validate: requiredValidator,
+    when: (answers) => {
+      return answers.updateChoices.includes(UpdateChoices.title);
+    },
   },
   {
     type: "number",
     name: "pointsChange",
     validate: pointsChangeValidator,
+    when: (answers) => {
+      return answers.updateChoices.includes(UpdateChoices.pointsChange);
+    },
   },
 ];
 

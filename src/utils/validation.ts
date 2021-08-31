@@ -10,7 +10,7 @@ export const requiredValidator = (input: string | undefined) => {
   if (input?.length) {
     return true;
   }
-  return "Please enter a value.";
+  return "This field is required.";
 };
 
 export const pointsChangeValidator = (input: any) => {
