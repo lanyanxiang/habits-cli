@@ -26,5 +26,6 @@ export abstract class QuestionCommand<
       this.promptQuestions,
       this.userInput
     );
+    console.log(this.userInput);
   }
 }
