@@ -49,8 +49,8 @@ export class ListCommand extends Command {
   private static _displayTransactions(response: SuccessResponse) {
     const transactions = response.data.payload as ListResponsePayload;
     const table = display.table.create({
-      head: ["NO.", "Title", "Points", "Time"],
-      colWidths: [5, 20, 10, 20],
+      head: ["NO.", "Title", "Points", "Created At"],
+      colWidths: [5, 20, 10, 18],
     });
     transactions.forEach(({ id, title, pointsChange, createdAt }, index) => {
       table.push([
