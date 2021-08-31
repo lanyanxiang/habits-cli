@@ -47,6 +47,19 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
     ),
   ];
 
+  protected mapOptionsToInputs(): void | Promise<void> {
+    const userInput: Partial<PromptAnswers> = {};
+
+    if (this.opts.title) {
+      userInput.title = this.opts.title;
+    }
+    if (this.opts.pointsChange) {
+      userInput.pointsChange = this.opts.pointsChange;
+    }
+
+    this.userInput = userInput;
+  }
+
   run(): void | Promise<void> {
     return undefined;
   }
