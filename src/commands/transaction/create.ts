@@ -2,6 +2,8 @@ import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
 import { requiredValidator } from "../../utils";
 import { Option } from "commander";
+import { mainApi, network } from "../../services";
+import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   title: string;
@@ -60,7 +62,18 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  run(): void | Promise<void> {
-    return undefined;
+  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+    return await network.request(mainApi, {
+      uri: "/transactions",
+      method: RequestMethod.POST,
+      data: this.userInput,
+      description: "Create transaction",
+    });
+  }
+
+  async run(): Promise<void> {
+    this.mapOptionsToInputs();
+    await this.promptForInputs();
+    await this._sendRequest();
   }
 }
