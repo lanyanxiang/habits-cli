@@ -57,7 +57,7 @@ export class ListCommand extends Command {
         {
           colSpan: 4,
           hAlign: "center",
-          content: chalk.cyan(`Transaction ${id}`),
+          content: chalk.cyan(`Transaction ID ${id}`),
         },
       ]);
       table.push([
