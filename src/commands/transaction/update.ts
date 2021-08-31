@@ -27,7 +27,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "checkbox",
     name: "updateChoices",
-    message: "What would you like to update? (multiple select)",
+    message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
     validate: requiredValidator,
   },
@@ -79,15 +79,22 @@ export class UpdateCommand extends QuestionCommand<any> {
 
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
+    const updateChoices: UpdateChoices[] = [];
 
     if (this.opts.title) {
       userInput.title = this.opts.title;
+      updateChoices.push(UpdateChoices.title);
     }
 
     if (this.opts.pointsChange) {
       userInput.pointsChange = this.opts.pointsChange;
+      updateChoices.push(UpdateChoices.pointsChange);
     }
 
+    if (updateChoices.length) {
+      // This will also mute the question for `updateChoices`.
+      userInput.updateChoices = updateChoices;
+    }
     this.userInput = userInput;
   }
 
