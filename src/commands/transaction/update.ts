@@ -27,4 +27,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-export class UpdateCommand extends QuestionCommand<any> {}
+export class UpdateCommand extends QuestionCommand<any> {
+  name = "update";
+  description = "update a transaction";
+  aliases = ["change"];
+
+  protected promptQuestions = promptQuestions;
+
+  run(): void | Promise<void> {
+    return undefined;
+  }
+}
