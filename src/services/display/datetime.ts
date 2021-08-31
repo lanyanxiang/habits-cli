@@ -1,3 +1,7 @@
+/*
+ * Methods for easy datetime display.
+ */
+
 import * as dateFns from "date-fns";
 
 const format = (date: Date, format?: string) => {

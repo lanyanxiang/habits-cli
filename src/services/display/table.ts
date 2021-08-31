@@ -1,3 +1,7 @@
+/*
+ * Construction and display methods for table.
+ */
+
 import Table from "cli-table3";
 
 const create = (options?: Partial<Table.TableOptions>) => {
