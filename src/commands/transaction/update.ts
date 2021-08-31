@@ -21,6 +21,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "transactionId",
+    message: "Transaction ID:",
     // TODO Add validation for object IDs
     validate: requiredValidator,
   },
@@ -34,6 +35,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "title",
+    message: "Title",
     validate: requiredValidator,
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
@@ -42,6 +44,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "number",
     name: "pointsChange",
+    message: "Change in points:",
     validate: pointsChangeValidator,
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.pointsChange);
