@@ -5,14 +5,16 @@
 import chalk from "chalk";
 
 /**
- * Get string for `points` that can be output by `console.log` or
+ * Get string for `pointsChange` that can be output by `console.log` or
  * equivalent.
- * @param points Points to display.
+ * @param pointsChange Points to display.
  */
-const formatPoints = (points: number) => {
-  return points < 0 ? chalk.red(`(${points})`) : chalk.green(`+${points}`);
+const formatPointsChange = (pointsChange: number) => {
+  return pointsChange < 0
+    ? chalk.red(`(${pointsChange})`)
+    : chalk.green(`+${pointsChange}`);
 };
 
 export const values = {
-  formatPoints,
+  formatPointsChange,
 };
