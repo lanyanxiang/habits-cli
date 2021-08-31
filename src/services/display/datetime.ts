@@ -15,7 +15,7 @@ const formatTime = (date: Date, showSeconds?: boolean) => {
 };
 
 const formatRelative = (date: Date, currentDate: Date = new Date()) => {
-  return dateFns.formatDistance(currentDate, date, { addSuffix: true });
+  return dateFns.formatRelative(currentDate, date);
 };
 
 export const datetime = {
