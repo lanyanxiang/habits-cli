@@ -64,7 +64,7 @@ export class UpdateCommand extends QuestionCommand<any> {
   ];
   acceptOpts = [
     new Option("-t, --title <title>", "new title for the target transaction"),
-    new Option("-p, --points <pointsChange>", "new value for change in points"),
+    new Option("-p, --points <points>", "new value for change in points"),
   ];
 
   protected mapArgumentsToInputs(): void | Promise<void> {
@@ -86,8 +86,8 @@ export class UpdateCommand extends QuestionCommand<any> {
       updateChoices.push(UpdateChoices.title);
     }
 
-    if (this.opts.pointsChange) {
-      userInput.pointsChange = this.opts.pointsChange;
+    if (this.opts.points) {
+      userInput.pointsChange = Number(this.opts.points);
       updateChoices.push(UpdateChoices.pointsChange);
     }
 
