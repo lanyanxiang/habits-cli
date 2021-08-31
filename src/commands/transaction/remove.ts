@@ -107,14 +107,11 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     }
 
     for (const transactionId of this.userInput.transactionIds) {
-      const response = await network.request(mainApi, {
+      await network.request(mainApi, {
         uri: `/transactions/${transactionId}`,
         method: RequestMethod.DELETE,
         description: `Remove transaction ${transactionId}`,
       });
-      if (response.isError) {
-        return;
-      }
     }
   }
 
