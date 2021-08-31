@@ -1,6 +1,9 @@
 import dateFns from "date-fns";
 
-const format = (date: Date, format: string) => {
+const format = (date: Date, format?: string) => {
+  if (!format) {
+    return `${formatDate(date)} (${formatRelative(date)})`;
+  }
   return dateFns.format(date, format);
 };
 
