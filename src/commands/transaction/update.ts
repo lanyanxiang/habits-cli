@@ -46,8 +46,28 @@ export class UpdateCommand extends QuestionCommand<any> {
     new Option("-p, --points <pointsChange>", "new value for change in points"),
   ];
 
+  protected mapArgumentsToInputs(): void | Promise<void> {
+    const userInput: Partial<PromptAnswers> = this.userInput || {};
+
+    if (this.args.length) {
+      userInput.transactionId = this.args[0];
+    }
+
+    this.userInput = userInput;
+  }
+
   protected mapOptionsToInputs(): void | Promise<void> {
-    return super.mapOptionsToInputs();
+    const userInput: Partial<PromptAnswers> = this.userInput || {};
+
+    if (this.opts.title) {
+      userInput.title = this.opts.title;
+    }
+
+    if (this.opts.pointsChange) {
+      userInput.pointsChange = this.opts.pointsChange;
+    }
+
+    this.userInput = userInput;
   }
 
   run(): void | Promise<void> {
