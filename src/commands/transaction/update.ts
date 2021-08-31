@@ -24,7 +24,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     validate: requiredValidator,
   },
   {
-    type: "number",
+    type: "input",
     name: "pointsChange",
     validate: pointsChangeValidator,
   },
