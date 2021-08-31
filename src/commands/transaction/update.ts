@@ -72,13 +72,6 @@ export class UpdateCommand extends QuestionCommand<any> {
     this.userInput = userInput;
   }
 
-  async run(): Promise<void> {
-    this.mapArgumentsToInputs();
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
-    await this._sendRequest();
-  }
-
   private async _sendRequest(): Promise<
     SuccessResponse | ErrorResponse | never
   > {
@@ -91,13 +84,20 @@ export class UpdateCommand extends QuestionCommand<any> {
     }
 
     return await network.request(mainApi, {
-      uri: "/transactions/" + this.userInput.transactionId,
+      uri: `/transactions/${this.userInput.transactionId}`,
       method: RequestMethod.PATCH,
       data: {
         ...this.userInput,
         transactionId: undefined,
       },
-      description: "",
+      description: `Update transaction ${this.userInput.transactionId}`,
     });
+  }
+
+  async run(): Promise<void> {
+    this.mapArgumentsToInputs();
+    this.mapOptionsToInputs();
+    await this.promptForInputs();
+    await this._sendRequest();
   }
 }
