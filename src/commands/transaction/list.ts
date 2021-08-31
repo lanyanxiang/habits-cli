@@ -51,6 +51,7 @@ export class ListCommand extends Command {
     const table = display.table.create({
       head: ["NO.", "Title", "Points", "Created At"],
       colWidths: [5, 20, 10, 18],
+      colAligns: ["left", "left", "right", "left"],
     });
     transactions.forEach(({ id, title, pointsChange, createdAt }, index) => {
       table.push([
@@ -63,7 +64,7 @@ export class ListCommand extends Command {
       table.push([
         index,
         title,
-        pointsChange,
+        display.values.formatPoints(pointsChange),
         display.datetime.format(new Date(createdAt)),
       ]);
     });

@@ -10,12 +10,7 @@ import chalk from "chalk";
  * @param points Points to display.
  */
 const formatPoints = (points: number) => {
-  const pointsLocalStr = points.toLocaleString(undefined, {
-    maximumFractionDigits: 2,
-  });
-  return points < 0
-    ? chalk.red(`(${pointsLocalStr})`)
-    : chalk.green(`+${pointsLocalStr}`);
+  return points < 0 ? chalk.red(`(${points})`) : chalk.green(`+${points}`);
 };
 
 export const values = {
