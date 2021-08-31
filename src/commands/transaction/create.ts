@@ -42,7 +42,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   protected promptQuestions = promptQuestions;
 
   acceptOpts = [
-    new Option("-t, --title, -m, --message <title>", "title this transaction"),
+    new Option("-t, --title <title>", "title this transaction"),
     new Option(
       "-p, --points <pointsChange>",
       "change in points for this transaction"
