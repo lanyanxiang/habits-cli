@@ -2,8 +2,8 @@ import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
 import chalk from "chalk";
-import { mainApi, network } from "../../services";
-import { RequestMethod } from "../../types";
+import { mainApi, network, storage } from "../../services";
+import { RequestMethod, SecretType } from "../../types";
 
 interface PromptAnswers {
   shouldContinue: boolean;
@@ -43,6 +43,12 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
+  // Remove stored tokens
+  private async _removeTokens() {
+    await storage.secrets.remove(SecretType.accessToken);
+    await storage.secrets.remove(SecretType.refreshToken);
+  }
+
   async run(): Promise<void> {
     this.mapOptionsToInputs();
     await this.promptForInputs();
@@ -54,6 +60,9 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
       );
       return;
     }
-    await this._sendRequest();
+    const response = await this._sendRequest();
+    if (!response.isError) {
+      await this._removeTokens();
+    }
   }
 }
