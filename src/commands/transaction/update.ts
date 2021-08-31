@@ -1,5 +1,5 @@
-import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
+import { QuestionCommand } from "../../models";
 import { pointsChangeValidator, requiredValidator } from "../../utils";
 
 interface PromptAnswers {
