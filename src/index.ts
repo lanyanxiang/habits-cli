@@ -1,7 +1,5 @@
 import { CommandGroup } from "./models";
-import { auth } from "./commands/auth";
-import { transaction } from "./commands/transaction";
-import { property } from "./commands/property";
+import { auth, property, transaction } from "./commands";
 
 const start = () => {
   const rawArgs = process.argv.slice(2);
