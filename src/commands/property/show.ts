@@ -40,6 +40,8 @@ export class ShowCommand extends Command {
       "Transactions",
       chalk.bold(chalk.cyan(`${numTransactions} / ${maxTransactions}`)),
     ]);
+    // Print an empty line before table
+    console.log();
     display.table.print(table);
   }
 
