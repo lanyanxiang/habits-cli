@@ -24,6 +24,7 @@ export class ShowCommand extends Command {
       uri: "/properties",
       method: RequestMethod.GET,
       description: "Fetch properties",
+      shouldClearSpinner: true,
     });
   }
 
