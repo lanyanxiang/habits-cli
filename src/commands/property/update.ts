@@ -34,7 +34,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
 
-    if (this.opts.points) {
+    if (this.opts.points !== undefined) {
       userInput.points = this.opts.points;
     }
 
