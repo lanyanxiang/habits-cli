@@ -14,6 +14,7 @@ const start = () => {
     property,
   ]);
   habits.version = version;
+  habits.showHelpAfterError = true;
   habits.init(rawArgs).run();
 };
 
