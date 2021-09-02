@@ -47,7 +47,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
       userInput.title = this.opts.title;
     }
     if (this.opts.points) {
-      userInput.pointsChange = this.opts.pointsChange;
+      userInput.pointsChange = this.opts.points;
     }
 
     this.userInput = userInput;
