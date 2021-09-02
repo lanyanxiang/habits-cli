@@ -1,8 +1,8 @@
-import { CommandGroup } from "./models";
-import { auth, property, transaction } from "./commands";
-
 // @ts-ignore
 import { version } from "../package.json";
+
+import { CommandGroup } from "./models";
+import { auth, property, transaction } from "./commands";
 
 const start = () => {
   const rawArgs = process.argv.slice(2);
