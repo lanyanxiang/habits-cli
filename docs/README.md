@@ -1,29 +1,38 @@
-# Habits Rest API
+# Habits CLI
 
 ?> Author: Jimmy Lan
 
 ---
 
-> In this article, we will go over some high-level details of this repository. If you are currently reading this document on GitHub, please note that you could [read this documentation on our website](https://lanyanxiang.github.io/habits-restapi/) for better experience.
+In this article, we will go over some high-level details of this repository. If you are currently reading this document on GitHub, please note that you could [read this documentation on our website](https://lanyanxiang.github.io/habits-cli/) for better experience.
+
 > We will explore:
 >
 > - [Overview](#overview)
 > - [License and Contribution Note](#license-and-contribution-note)
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
-> - [Configurations](#configurations)
 > - [Next Steps](#next-steps)
 
 ## Overview
 
-> This project is bootstrapped using [node authentication starter](https://github.com/lanyanxiang/node-authentication-starter) written by me.
-> For more information on this starter code, please visit https://lanyanxiang.github.io/node-authentication-starter.
+### Purpose
+The habits application seeks to help individuals build up healthy habits.
 
-This repository includes a [Node.js](https://nodejs.org/en/) server for the habits application.
+### Background
+Based on existing psychological research, one feels more motivated when the reward of keeping healthy habits and completing daily tasks is quantified. Further, one's desire to complete a TODO item might become higher when some randomness of rewards is involved.
 
-The server is capable to perform basic authentication strategy, bearer authentication strategy (through refresh tokens), <strike>and [OAuth](https://oauth.net/2/) </strike> (not yet available in this version of code).
+### The habits app
+The habits application allows individuals to define custom digital properties. Users may use the application to reward themselves with digital properties whenever they achieve goals, complete tasks, etc. Optionally, the user may also deduct some digital assets whenever they perform bad habits. The user may define the exchange rate between digital properties and real-world items.
 
-[Rate limiting](https://en.wikipedia.org/wiki/Rate_limiting) techniques are also implemented and will be explained in [this page](onboard/rate-limiters.md) of this documentation.
+### The habits CLI
+Before I turn this README.md text that you randomly found on GitHub into an academic paper, let's talk about the Habits command-line interface. (Let me assure you, this is not a school project. As we know, I always like to find some weird reasons when I want to code some stuff in my leisure time XD)
+
+The Habits CLI allows one to use the Habits app from the command line (isn't this obvious? :D). It is especially useful for developers or people using their command lines who do not want to switch to a browser or pick up their phone.
+
+Running simple commands such as `habits transaction add` and `habits property update`, individuals can apply rewards to themselves without leaving their comfortable command line window.
+The data will be synced across all Habits app clients (e.g., mobile app and web app).
+
 
 ## License and Contribution Note
 
