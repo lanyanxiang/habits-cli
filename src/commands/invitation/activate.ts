@@ -67,16 +67,16 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
     table.push(["Email", chalk.cyan(email)]);
     table.push([
       "Session Start Time",
-      display.datetime.format(testSessionStartAt),
+      chalk.cyan(display.datetime.format(new Date(testSessionStartAt))),
     ]);
     if (testSessionExpireAt) {
       table.push([
         "Session Expire At",
-        chalk.red(display.datetime.format(testSessionExpireAt)),
+        chalk.red(display.datetime.format(new Date(testSessionExpireAt))),
       ]);
     }
-    table.push(["Test Phase", testPhase]);
-    table.push(["Server Name", serverName]);
+    table.push(["Test Phase", chalk.green(testPhase)]);
+    table.push(["Server Name", chalk.green(serverName)]);
     table.push(["Server Location", chalk.cyan(serverLocation)]);
     display.table.print(table);
     console.log();
