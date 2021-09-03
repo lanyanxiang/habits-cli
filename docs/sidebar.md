@@ -5,6 +5,7 @@
 **Onboard**
 
 - [Overview](/README.md)
+- [Installation](/installation.md)
 - [Setup Guide](/setup.md)
 
 **Change Logs**
