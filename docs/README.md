@@ -36,13 +36,12 @@ The data will be synced across all Habits app clients (e.g., mobile app and web 
 
 ## License and Contribution Note
 
-According to the decision made in an internal Poly Team meeting, this repository will become open-source and will be released under GNU General Public License v3.0 starting May 3rd, 2021.
+This repository is released under the GNU General Public License v3.0.
 Please find more information in the file named `LICENSE` or `LICENSE.md` in the root repository.
 
-Despite usable, this project is currently under development process.
-Due to this, although we decided to make this project open-sourced, we will not accept any contributions (pull requests) from outside of Poly Team Solutions during this time.
-This decision may or may not change in the future.
-However, you are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms outlined in the `LICENSE` file described above.
+You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms outlined in the `LICENSE` file described above.
+
+It is your responsibility to properly read and understand the terms and conditions from the license file prior to using any part, or parts, of code from this repository.
 
 ## Onboard this Project
 
