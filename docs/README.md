@@ -39,7 +39,7 @@ The data will be synced across all Habits app clients (e.g., mobile app and web 
 This repository is released under the GNU General Public License v3.0.
 Please find more information in the file named `LICENSE` or `LICENSE.md` in the root repository.
 
-You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms outlined in the `LICENSE` file described above.
+You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms and conditions outlined in the `LICENSE` file described above.
 
 It is your responsibility to properly read and understand the terms and conditions from the license file prior to using any part, or parts, of code from this repository.
 
@@ -47,12 +47,12 @@ It is your responsibility to properly read and understand the terms and conditio
 
 Are you reading this page on GitHub? Consider viewing the documentation from a website for better experience.
 Clone this repository and run `npm run doc` to read the documentation locally on your machine.
-Alternatively, you can use the following link: https://lanyanxiang.github.io/node-authentication-starter/.
+Alternatively, you can use the following link: https://lanyanxiang.github.io/habits-cli.
 
 If you don't find the set-up process intuitive enough, please have a look at this [setup guide](setup.md).
 Joining or extending a project may be a challenging experience for some.
 That's why I aim to provide a good documentation so that you can get up to speed regardless of your prior experience.
-Please read some more documentation pages in the `onboard` folder in case of need.
+Please read some more documentation pages in the documentation site if you require further support.
 
 ## Commands
 
