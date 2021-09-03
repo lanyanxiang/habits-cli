@@ -81,7 +81,7 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
     display.table.print(table);
     console.log();
     console.log("Your invitation has been successfully activated. Please run");
-    console.log(chalk.green("habits auth signup --e " + email));
+    console.log(chalk.green("habits auth signup --email " + email));
     console.log("...to complete your registration process.");
     console.log();
     console.log(chalk.cyan("Happy hacking!"));

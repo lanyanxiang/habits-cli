@@ -1,6 +1,6 @@
 {
   "name": "habits-cli",
-  "version": "v0.1.237-alpha",
+  "version": "v0.1.239-alpha",
   "description": "Habits cli",
   "main": "src/index.ts",
   "bin": {
