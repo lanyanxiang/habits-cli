@@ -3,6 +3,7 @@ import { version } from "../package.json";
 
 import { CommandGroup } from "./models";
 import { auth, property, transaction } from "./commands";
+import { invitation } from "./commands/invitation";
 
 const start = () => {
   const rawArgs = process.argv.slice(2);
@@ -12,6 +13,7 @@ const start = () => {
     auth,
     transaction,
     property,
+    invitation,
   ]);
   habits.version = version;
   habits.showHelpAfterError = true;
