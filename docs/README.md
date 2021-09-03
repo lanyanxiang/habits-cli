@@ -12,7 +12,6 @@ In this article, we will go over some high-level details of this repository. If 
 > - [License and Contribution Note](#license-and-contribution-note)
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
-> - [Next Steps](#next-steps)
 
 ## Overview
 
@@ -65,19 +64,16 @@ Therefore, I strongly encourage you to become familiar with them as soon as poss
 npm install
 ```
 
-### Start server
+### Build CLI
+
+```bash
+npm run build
+```
+
+### Start CLI build
 
 ```bash
 npm start
-```
-
-### Automatic rebuilds
-
-```bash
-# TS Node Dev
-npm run dev
-# TSC Watch
-npm run watch-ts
 ```
 
 ### Start documentation site
@@ -86,49 +82,4 @@ npm run watch-ts
 npm run doc
 ```
 
-### Run tests
-
-```bash
-# Run test in regular watch mode
-npm run test
-
-# Run test and show test coverage
-npm run testc
-```
-
 Please look at `package.json` for other available scripts.
-
-## Configurations
-
-### Environment variables
-
-A `.env.example` file is provided under the **root directory** to show example environment variables.
-
-However, not all variables are required for the service to run.
-You can find a list of required environment variables by looking into the file `src/index.ts`.
-
-Close to the top of the file `src/index.ts`, you will observe an array with the name `requiredVariables`.
-This array lists the names of the environment variables that the server depends on.
-An error will be thrown, causing the process to halt if one or more of these variables are not defined.
-
-**For example,**
-
-```
-> node-authentication-starter@1.0.0 dev
-> ts-node-dev src/index.ts
-
-[INFO] 17:24:09 ts-node-dev ver. 1.1.6 (using ts-node ver. 9.1.1, typescript ver. 4.2.2)
-17:24:14 [Server] Missing environment Variables: DB_URI, ACCESS_SECRET, REFRESH_SECRET, REDIS_URI
-17:24:14 [Server] Process exiting.
-```
-
-### dotenv
-
-In development mode, I recommend the use of `dotenv` package.
-This template has `dotenv` installed as a development dependency, and variables will be drawn from the `.env` file under **development** mode.
-
-A recommended approach to set up the environment variables is to copy the file `.env.example` and rename the copy `.env`, then start changing the values inside the file based on your project needs.
-
-## Next Steps
-
-Coming soon
