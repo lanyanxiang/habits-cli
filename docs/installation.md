@@ -6,7 +6,7 @@
 
 > In this article, we will install the habits CLI.
 
-## Installing via npm
+## Installation
 
 Run:
 ```bash
