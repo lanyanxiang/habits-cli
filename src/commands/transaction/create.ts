@@ -7,7 +7,7 @@ import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   title: string;
-  pointsChange: string;
+  pointsChange: number;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
@@ -35,7 +35,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   acceptOpts = [
     new Option("-t, --title <title>", "title this transaction"),
     new Option(
-      "-p, --points <pointsChange>",
+      "-p, --points <points>",
       "change in points for this transaction"
     ),
   ];
@@ -46,8 +46,8 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
     if (this.opts.title) {
       userInput.title = this.opts.title;
     }
-    if (this.opts.pointsChange) {
-      userInput.pointsChange = this.opts.pointsChange;
+    if (this.opts.points) {
+      userInput.pointsChange = Number(this.opts.points);
     }
 
     this.userInput = userInput;
