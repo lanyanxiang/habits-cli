@@ -1,6 +1,6 @@
 # Habits CLI
 
-?> Author: Jimmy Lan
+> Author: Jimmy Lan
 
 ---
 
@@ -9,6 +9,7 @@ In this article, we will go over some high-level details of this repository. If 
 > We will explore:
 >
 > - [Overview](#overview)
+> - [Manuals and Logs](#manuals-and-logs)
 > - [License and Contribution Note](#license-and-contribution-note)
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
@@ -31,6 +32,13 @@ The Habits CLI allows one to use the Habits app from the command line (isn't thi
 
 Running simple commands such as `habits transaction add` and `habits property update`, individuals can apply rewards to themselves without leaving their comfortable command line window.
 The data will be synced across all Habits app clients (e.g., mobile app and web app).
+
+
+## Manuals and Logs
+
+**09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](docs/release-plans/v0.2.md) for more information :D
+
+Please refer to the most updated [change logs](docs/change-logs) and [testing manuals](docs/testing) for more information.
 
 
 ## License and Contribution Note
