@@ -2,8 +2,6 @@
 
 > Author: Jimmy Lan
 
----
-
 ## Pinned
 * Habits CLI `v0.1-alpha` release testing will conclude by 22:00 on September 6th, 2021.
 * We have released the next steps in [Habits CLI Release Plan v0.2](docs/release-plans/v0.2.md).
