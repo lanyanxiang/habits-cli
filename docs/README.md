@@ -4,6 +4,13 @@
 
 ---
 
+## Pinned
+* Habits CLI `v0.1-alpha` release testing will conclude by 22:00 on September 6th, 2021.
+* We have released the next steps in [Habits CLI Release Plan v0.2](docs/release-plans/v0.2.md).
+* If you encounter an issue during testing, please [open an issue](https://github.com/lanyanxiang/habits-cli/issues). If you wish to stay anonymous, please contact Jimmy ([@lanyanxiang](https://github.com/lanyanxiang)). We will create the tickets for you as  a result. Have fun testing!
+
+---
+
 In this article, we will go over some high-level details of this repository. If you are currently reading this document on GitHub, please note that you could [read this documentation on our website](https://lanyanxiang.github.io/habits-cli/) for better experience.
 
 > We will explore:
