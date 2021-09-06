@@ -41,9 +41,9 @@ The data will be synced across all Habits app clients (e.g., mobile app and web 
 
 ## Manuals and Logs
 
-**09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](docs/release-plans/v0.2.md) for more information :D
+**09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](release-plans/v0.2.md) for more information :D
 
-Please refer to the most updated [change logs](docs/change-logs) and [testing manuals](docs/testing) for more information.
+Please refer to the most updated [change logs](change-logs) and [testing manuals](testing) for more information.
 
 
 ## License and Contribution Note
