@@ -43,7 +43,7 @@ const handleInt = (field?: string, config?: NumberConstraint) => {
 const handleFloat = (field?: string, config?: NumberConstraint) => {
   const fieldName = _getFieldName(field);
   return (value: string, _: unknown) => {
-    const parsedValue = parseInt(value);
+    const parsedValue = parseFloat(value);
     checkNumericValue(fieldName, parsedValue, config);
     return parsedValue;
   };
