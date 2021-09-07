@@ -5,6 +5,6 @@
  */
 
 export const config = {
-  baseURL: "http://habits.test.jimmy-lan.com/api/v1",
+  baseURL: "http://localhost:5000/api/v1",
   service: "habits",
 };
