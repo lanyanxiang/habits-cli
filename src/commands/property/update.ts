@@ -28,7 +28,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     new Option(
       "-p, --points <points>",
       "new points value to be stored"
-    ).argParser(argParser.handleInt("points")),
+    ).argParser(argParser.handleFloat("points")),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
