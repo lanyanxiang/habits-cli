@@ -16,6 +16,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     name: "title",
     message: "Transaction title:",
     validate: requiredValidator,
+    default: "Untitled transaction",
   },
   {
     type: "number",
