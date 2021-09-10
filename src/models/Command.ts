@@ -6,13 +6,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import {
-  Argument,
-  Help,
-  Option,
-  OptionValues,
-  OutputConfiguration,
-} from "commander";
+import { Argument, Help, Option, OptionValues, OutputConfiguration } from "commander";
 import { CommanderCommand, HelpTextPosition } from "../types";
 
 export interface CommandOverride {
@@ -203,7 +197,8 @@ export abstract class Command {
   protected abstract run(): void | Promise<void>;
 
   /**
-   * Start this command with argument list `rawArgs`.<br />
+   * Start this command with argument list `rawArgs`. This method should
+   * only be called outside of the `Command` class.<br />
    *
    * You should not worry about calling this method if the command is passed
    * into a command group (i.e., this is a sub-command). <br/>
