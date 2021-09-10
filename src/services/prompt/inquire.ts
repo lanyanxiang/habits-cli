@@ -2,7 +2,7 @@ import { inquirer } from "./inquirer";
 
 const prompt = inquirer.createPromptModule();
 
-export const ask = <T>(
+export const inquire = <T>(
   questions: inquirer.QuestionCollection<T>,
   initialAnswers?: Partial<T>
 ) => {

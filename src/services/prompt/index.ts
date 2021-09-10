@@ -1,5 +1,5 @@
-import { ask } from "./ask";
+import { inquire } from "./inquire";
 
 export const prompt = {
-  ask,
+  ask: inquire,
 };
