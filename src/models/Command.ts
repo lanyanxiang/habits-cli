@@ -208,7 +208,11 @@ export abstract class Command {
    * a path to node, and the second item will be the program name.
    */
   public readonly start = (rawArgs: string[]): void => {
+    this.commandWillInit(rawArgs);
     this.init(rawArgs);
+    this.commandDidInit();
+    this.commandWillRun();
     this.run();
+    this.commandDidRun();
   };
 }
