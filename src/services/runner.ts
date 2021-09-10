@@ -5,7 +5,9 @@ import { Command } from "../models";
  * @param command Command or command group to start.
  * @param args Raw arguments list to be passed into `command`.
  */
-const start = (command: Command, args: string[]) => {};
+const start = (command: Command, args: string[]) => {
+  command.init(args).run();
+};
 
 /**
  * Command runner to initialize and run a command based on arguments
