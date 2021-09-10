@@ -1,8 +1,16 @@
+/*
+ * This file contains an abstract class.
+ * Some life-cycle methods are called for child class flexibility, so the
+ * not-allowing empty function eslint rule is disabled for this file.
+ */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {
   Argument,
+  Help,
   Option,
   OptionValues,
-  Help,
   OutputConfiguration,
 } from "commander";
 import { CommanderCommand, HelpTextPosition } from "../types";
@@ -59,11 +67,11 @@ export abstract class Command {
    * Other configurations
    ************************************* */
   /** Allow more arguments than specified in the `acceptArgs` property. */
-  allowExcessArguments: boolean = false;
+  allowExcessArguments = false;
   /** Allow unknown option and surpass options validation. */
-  allowUnknownOption: boolean = false;
+  allowUnknownOption = false;
   /** Display help message after error. */
-  showHelpAfterError: boolean = false;
+  showHelpAfterError = false;
   /** Override help command's name or description or both. */
   helpCommand: CommandOverride | undefined;
   /** Flags and a description to override the help flags and help description
@@ -80,13 +88,8 @@ export abstract class Command {
    * Initialize the current command and the current class properties
    * with `rawArgs`. Call this method after configuration of this command,
    * just shortly before `run`.
-   * You should not worry about calling this method if the command is passed
-   * into a command group (i.e., this is a sub-command).
-   * If this command is used on the top level, then rawArgs will be
-   * `process.argv.slice(2)`, since the first item in `argv` will be
-   * a path to node, and the second item will be the program name.
    */
-  public readonly init = (rawArgs: string[]) => {
+  protected readonly init = (rawArgs: string[]) => {
     // Save param values
     this.rawArgs = rawArgs;
     this._adaptCommanderCommand();
@@ -185,6 +188,8 @@ export abstract class Command {
     return this._command.args;
   }
 
-  /** Entry point to this command. */
-  public abstract run(): void | Promise<void>;
+  /** Entry point to this command. This method should contain the core business
+   * logic for the command. In this method, you may get options and arguments
+   * passed into this command through `this.opts` and `this.args`. */
+  protected abstract run(): void | Promise<void>;
 }

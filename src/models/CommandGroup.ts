@@ -11,8 +11,8 @@ export class CommandGroup extends Command {
   // This class represents a group of commands (or even group of
   // group of commands), so excess arguments and excess options
   // should be passed to the commands handling them.
-  allowExcessArguments: boolean = true;
-  allowUnknownOption: boolean = true;
+  allowExcessArguments = true;
+  allowUnknownOption = true;
 
   constructor(public name: string, public description: string) {
     super();
