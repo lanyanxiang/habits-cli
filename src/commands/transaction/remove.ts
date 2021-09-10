@@ -3,7 +3,7 @@ import { requiredValidator } from "../../utils";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
 import { mainApi, network } from "../../services";
-import { inquirer } from "../../services/inquirer";
+import { inquirer } from "../../services/prompt/inquirer";
 import chalk from "chalk";
 
 interface PromptAnswers {
