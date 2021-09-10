@@ -1,6 +1,6 @@
 import { Command } from "../models";
 
-const start = (command: Command, argv: string[]) => {};
+const start = (command: Command, args: string[]) => {};
 
 /**
  * Command runner to initialize and run a command based on arguments
