@@ -1,10 +1,9 @@
 import { Argument } from "commander";
+import chalk from "chalk";
 import { requiredValidator } from "../../utils";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
-import { mainApi, network } from "../../services";
-import { inquirer } from "../../services/prompt/inquirer";
-import chalk from "chalk";
+import { mainApi, network, prompt } from "../../services";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
@@ -76,7 +75,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this._printInstructions();
     console.log();
     const userInput = this.userInput || {};
-    const { transactionId: initialTranId } = await inquirer.prompt([
+    const { transactionId: initialTranId } = await prompt.show([
       transactionIdRequiredQuestion,
     ]);
     userInput.transactionIds = [initialTranId];
@@ -85,7 +84,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
      * set user input when this value is `true`. */
     let shouldContinuePrompting = true;
     while (shouldContinuePrompting) {
-      const { transactionId } = await inquirer.prompt([transactionIdQuestion]);
+      const { transactionId } = await prompt.show([transactionIdQuestion]);
       if (!transactionId?.length) {
         // An empty transaction ID will make the program stop asking for more.
         shouldContinuePrompting = false;
