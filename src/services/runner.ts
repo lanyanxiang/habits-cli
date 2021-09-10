@@ -1,5 +1,10 @@
 import { Command } from "../models";
 
+/**
+ * Initialize and run `command` with `args`.
+ * @param command Command or command group to start.
+ * @param args Raw arguments list to be passed into `command`.
+ */
 const start = (command: Command, args: string[]) => {};
 
 /**
