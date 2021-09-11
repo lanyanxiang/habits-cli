@@ -5,8 +5,7 @@ import { BaseSchema } from "yup";
  * on validation successes, and a string stating the error on validation
  * failures.
  * @param schema Validation schema for this value. Construct this schema
- * using `yup` exported from the `service` folder. Do not import `yup` directly
- * from its package.
+ * using `vschema` exported from the `service` folder.
  */
 const construct = (schema: BaseSchema) => {
   return async (value: any) => {
