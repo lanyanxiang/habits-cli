@@ -1,7 +1,6 @@
 import { Option } from "commander";
 import { Command } from "../../models";
-import { argParser } from "../../utils";
-import { display, mainApi, network } from "../../services";
+import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import chalk from "chalk";
 
@@ -20,12 +19,14 @@ export class ListCommand extends Command {
 
   acceptOpts = [
     new Option("-s, --skip <skip>", "number of transactions to skip").argParser(
-      argParser.handleInt("skip", { min: 1 })
+      validation.argParser(vschema.number().integer().label("skip").min(1))
     ),
     new Option(
       "-l, --limit <limit>",
       "number of transactions to display"
-    ).argParser(argParser.handleInt("limit", { min: 1 })),
+    ).argParser(
+      validation.argParser(vschema.number().integer().label("limit").min(1))
+    ),
   ];
 
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
