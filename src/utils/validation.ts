@@ -5,10 +5,3 @@ export const validation = {
     return re.test(String(email).toLowerCase());
   },
 };
-
-export const requiredValidator = (input: string | undefined) => {
-  if (input?.length) {
-    return true;
-  }
-  return "This field is required.";
-};
