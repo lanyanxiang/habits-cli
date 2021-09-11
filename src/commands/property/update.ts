@@ -1,9 +1,8 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
-import { argParser } from "../../utils";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { mainApi, network } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 
 interface PromptAnswers {
   points: number;
@@ -26,7 +25,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     new Option(
       "-p, --points <points>",
       "new points value to be stored"
-    ).argParser(argParser.handleFloat("points")),
+    ).argParser(validation.argParser(vschema.number())),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {

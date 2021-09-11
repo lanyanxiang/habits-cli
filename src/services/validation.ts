@@ -1,5 +1,6 @@
 import { BaseSchema } from "yup";
 import { InvalidArgumentError } from "commander";
+import { stringParser } from "../utils";
 
 /**
  * Construct a validator function that takes a value and returns `true`
@@ -9,12 +10,12 @@ import { InvalidArgumentError } from "commander";
  * using `vschema` exported from the `services` folder.
  */
 const validator = (schema: BaseSchema) => {
-  return async (value: any) => {
+  return (value: any) => {
     try {
-      await schema.validate(value);
+      schema.validateSync(value);
       return true;
     } catch (error: any) {
-      return error.message;
+      return stringParser.capitalize(error.message);
     }
   };
 };
@@ -27,11 +28,11 @@ const validator = (schema: BaseSchema) => {
  * using `vschema` exported from the `services` folder.
  */
 const argParser = (schema: BaseSchema) => {
-  return async (value: any) => {
+  return (value: any) => {
     try {
-      await schema.validate(value);
+      schema.validateSync(value);
     } catch (error: any) {
-      throw new InvalidArgumentError(error.message);
+      throw new InvalidArgumentError(stringParser.capitalize(error.message));
     }
     return schema.cast(value);
   };
