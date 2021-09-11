@@ -29,7 +29,9 @@ export abstract class QuestionCommand<
   /** Display `questions` with `this.userInput` as the default.
    * Set the answers to `this.userInput`. If you want to manage how
    * the prompt result is used, please refer to the `prompt` api directly. */
-  protected async promptForInputs(questions: QuestionCollection<T>) {
+  protected async promptForInputs(
+    questions: QuestionCollection<T>
+  ): Promise<void> {
     this.userInput = await prompt.show<T>(questions, this.userInput);
   }
 }
