@@ -12,14 +12,3 @@ export const requiredValidator = (input: string | undefined) => {
   }
   return "This field is required.";
 };
-
-export const pointsChangeValidator = (input: any) => {
-  if (Number(input) != 0) {
-    return true;
-  }
-  return (
-    "Change in points cannot be 0. Enter a positive " +
-    "number to add points, and a negative number to reduce " +
-    "points."
-  );
-};
