@@ -96,6 +96,6 @@ export class CommandGroup extends Command {
       );
     }
     const subcommand = this._subcommands_map[subcommandName];
-    subcommand.init(subcommandArgs).run();
+    subcommand.start(subcommandArgs);
   }
 }
