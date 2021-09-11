@@ -8,7 +8,7 @@ import { prompt } from "../services";
  * <br/> Please pass in the structure of user input (key-value) as T.
  */
 export abstract class QuestionCommand<
-  T extends Record<string, any>
+  T extends Record<string, any> = {}
 > extends Command {
   protected userInput: Partial<T> | undefined;
 
@@ -29,7 +29,7 @@ export abstract class QuestionCommand<
   /** Display `questions` with `this.userInput` as the default.
    * Set the answers to `this.userInput`. If you want to manage how
    * the prompt result is used, please refer to the `prompt` api directly. */
-  protected async promptForInput(questions: QuestionCollection<T>) {
+  protected async promptForInputs(questions: QuestionCollection<T>) {
     this.userInput = await prompt.show<T>(questions, this.userInput);
   }
 }
