@@ -28,11 +28,9 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
   name = "activate";
   description = "activate your invitation";
 
-  protected promptQuestions = promptQuestions;
-
   acceptArgs = [new Argument("email").argOptional()];
 
-  protected mapArgumentsToInput() {
+  protected mapArgumentsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
 
     if (this.args.length) {
@@ -88,8 +86,7 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInput();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     const response = await this._sendRequest();
     if (response.isError) {
       return;
