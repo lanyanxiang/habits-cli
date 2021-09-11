@@ -41,4 +41,4 @@ function propertyChange(this: yup.NumberSchema) {
 yup.addMethod(yup.string, "objectId", objectId);
 yup.addMethod(yup.number, "propertyChange", propertyChange);
 
-export { yup as vschema };
+export { yup as schema };
