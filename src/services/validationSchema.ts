@@ -26,4 +26,4 @@ function propertyChange(this: yup.NumberSchema) {
 
 yup.addMethod(yup.number, "propertyChange", propertyChange);
 
-export { yup as schema };
+export { yup as vschema };
