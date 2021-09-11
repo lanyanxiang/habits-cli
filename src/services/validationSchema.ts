@@ -1,6 +1,6 @@
-import * as vschema from "yup";
+import * as yup from "yup";
 
-vschema.setLocale({
+yup.setLocale({
   mixed: {
     required: "This field is required.",
   },
@@ -16,7 +16,7 @@ declare module "yup" {
   }
 }
 
-function propertyChange(this: vschema.NumberSchema) {
+function propertyChange(this: yup.NumberSchema) {
   return this.notOneOf(
     [0],
     "Change in property value cannot be 0. Enter a positive " +
@@ -24,6 +24,6 @@ function propertyChange(this: vschema.NumberSchema) {
   );
 }
 
-vschema.addMethod(vschema.number, "propertyChange", propertyChange);
+yup.addMethod(yup.number, "propertyChange", propertyChange);
 
-export { vschema };
+export { yup as schema };
