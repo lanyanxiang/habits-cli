@@ -1,9 +1,11 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
-import { pointsChangeValidator, requiredValidator } from "../../utils";
+import { requiredValidator } from "../../utils";
 import { Option } from "commander";
 import { mainApi, network } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import { validator } from "../../utils/validator";
+import { yup } from "../../services/yup";
 
 interface PromptAnswers {
   title: string;
@@ -22,7 +24,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: pointsChangeValidator,
+    validate: validator.construct(yup.number().propertyChange()),
   },
 ];
 

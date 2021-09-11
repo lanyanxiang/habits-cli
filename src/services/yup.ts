@@ -1,6 +1,6 @@
-import yup, { NumberSchema, setLocale } from "yup";
+import * as yup from "yup";
 
-setLocale({
+yup.setLocale({
   string: {
     email: "'${value} is not a valid email address.",
   },
@@ -13,7 +13,7 @@ declare module "yup" {
   }
 }
 
-function propertyChange(this: NumberSchema) {
+function propertyChange(this: yup.NumberSchema) {
   return this.notOneOf(
     [0],
     "Change in property value cannot be 0. Enter a positive " +
@@ -21,6 +21,6 @@ function propertyChange(this: NumberSchema) {
   );
 }
 
-yup.addMethod(yup.number, "pointsChange", propertyChange);
+yup.addMethod(yup.number, "propertyChange", propertyChange);
 
 export { yup };
