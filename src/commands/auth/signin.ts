@@ -35,7 +35,10 @@ export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
   acceptOpts = [new Option("-e, --email <email>", "email of user")];
 
   protected mapOptionsToInputs() {
-    if (this.opts.email && vschema.string().email().isValid(this.opts.email)) {
+    if (
+      this.opts.email &&
+      vschema.string().email().isValidSync(this.opts.email)
+    ) {
       this.userInput = {
         email: this.opts.email,
       };
