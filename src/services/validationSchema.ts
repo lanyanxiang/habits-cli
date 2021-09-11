@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { ObjectId } from "bson";
 
 yup.setLocale({
   mixed: {
@@ -11,13 +12,22 @@ yup.setLocale({
 
 /* == Additional validation methods == */
 declare module "yup" {
-  interface StringScchema {
+  interface StringSchema {
     objectId(): this;
   }
 
   interface NumberSchema {
     propertyChange(): this;
   }
+}
+
+function objectId(this: yup.StringSchema) {
+  return this.transform(function (value) {
+    if (!value || ObjectId.isValid(value)) {
+      return value;
+    }
+    throw new yup.ValidationError("Please enter a valid object ID.", value);
+  });
 }
 
 function propertyChange(this: yup.NumberSchema) {
@@ -28,6 +38,7 @@ function propertyChange(this: yup.NumberSchema) {
   );
 }
 
+yup.addMethod(yup.string, "objectId", objectId);
 yup.addMethod(yup.number, "propertyChange", propertyChange);
 
 export { yup as vschema };
