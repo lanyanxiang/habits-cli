@@ -2,7 +2,7 @@ import { Argument } from "commander";
 import chalk from "chalk";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
-import { mainApi, network, prompt, validator, vschema } from "../../services";
+import { mainApi, network, prompt, validation, vschema } from "../../services";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
@@ -15,11 +15,11 @@ const transactionIdQuestion = {
   // key in `PromptAnswers`.
   name: "transactionId",
   message: "Transaction ID:",
-  validate: validator.construct(vschema.string().objectId()),
+  validate: validation.construct(vschema.string().objectId()),
 };
 const transactionIdRequiredQuestion = {
   ...transactionIdQuestion,
-  validate: validator.construct(vschema.string().objectId().required()),
+  validate: validation.construct(vschema.string().objectId().required()),
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {

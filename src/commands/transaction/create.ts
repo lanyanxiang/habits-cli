@@ -1,7 +1,7 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
-import { mainApi, network, validator, vschema } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
@@ -14,14 +14,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "title",
     message: "Transaction title:",
-    validate: validator.construct(vschema.string().required()),
+    validate: validation.construct(vschema.string().required()),
     default: "Untitled transaction",
   },
   {
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validator.construct(vschema.number().propertyChange()),
+    validate: validation.construct(vschema.number().propertyChange()),
   },
 ];
 

@@ -1,6 +1,6 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
-import { mainApi, network, validator, vschema } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod } from "../../types";
 import { BasicAuthCommand } from "./BasicAuthCommand";
 
@@ -14,14 +14,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: validator.construct(vschema.string().email().required()),
+    validate: validation.construct(vschema.string().email().required()),
   },
   {
     type: "password",
     name: "password",
     message: "Password:",
     mask: "*",
-    validate: validator.construct(vschema.string().required()),
+    validate: validation.construct(vschema.string().required()),
   },
 ];
 

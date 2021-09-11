@@ -1,7 +1,7 @@
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
 import { Argument, Option } from "commander";
-import { mainApi, network, validator, vschema } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 enum UpdateChoices {
@@ -21,14 +21,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "transactionId",
     message: "Transaction ID:",
-    validate: validator.construct(vschema.string().objectId().required()),
+    validate: validation.construct(vschema.string().objectId().required()),
   },
   {
     type: "checkbox",
     name: "updateChoices",
     message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
-    validate: validator.construct(
+    validate: validation.construct(
       vschema.string().oneOf(Object.values(UpdateChoices)).required()
     ),
   },
@@ -36,7 +36,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "title",
     message: "Title",
-    validate: validator.construct(vschema.string().required()),
+    validate: validation.construct(vschema.string().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
     },
@@ -45,7 +45,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validator.construct(vschema.number().propertyChange()),
+    validate: validation.construct(vschema.number().propertyChange()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.pointsChange);
     },

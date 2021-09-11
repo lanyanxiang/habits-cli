@@ -37,4 +37,4 @@ const constructArgParser = (schema: BaseSchema) => {
   };
 };
 
-export const validator = { construct };
+export const validation = { construct };
