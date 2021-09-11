@@ -31,8 +31,6 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   description = "create a new transaction";
   aliases = ["add"];
 
-  protected promptQuestions = promptQuestions;
-
   acceptOpts = [
     new Option("-t, --title <title>", "title this transaction"),
     new Option(
@@ -64,8 +62,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     await this._sendRequest();
   }
 }
