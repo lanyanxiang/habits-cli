@@ -5,4 +5,3 @@ export * from "./prompt";
 export * from "./storage";
 export * from "./display";
 export * from "./validation";
-export * from "./validationSchema";
