@@ -57,8 +57,6 @@ export class UpdateCommand extends QuestionCommand<any> {
   description = "update a transaction";
   aliases = ["change"];
 
-  protected promptQuestions = promptQuestions;
-
   acceptArgs = [
     new Argument(
       "transactionId",
@@ -124,9 +122,7 @@ export class UpdateCommand extends QuestionCommand<any> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInputs();
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     await this._sendRequest();
   }
 }
