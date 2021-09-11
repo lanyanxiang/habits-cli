@@ -9,7 +9,7 @@ import { prompt } from "../services";
  * <br/> Please pass in the structure of user input (key-value) as T.
  */
 export abstract class QuestionCommand<
-  T extends Record<string, any> = {}
+  T extends Record<string, any> = any
 > extends Command {
   protected userInput: Partial<T> | undefined;
 
