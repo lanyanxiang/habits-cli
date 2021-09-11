@@ -22,8 +22,6 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   description = "update your properties";
   aliases = ["change"];
 
-  protected promptQuestions = promptQuestions;
-
   acceptOpts = [
     new Option(
       "-p, --points <points>",
@@ -51,8 +49,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     await this._sendRequest();
   }
 }
