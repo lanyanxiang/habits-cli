@@ -26,7 +26,7 @@ const validator = (schema: BaseSchema) => {
  * @param schema Validation schema for this value. Construct this schema
  * using `vschema` exported from the `services` folder.
  */
-const constructArgParser = (schema: BaseSchema) => {
+const argParser = (schema: BaseSchema) => {
   return async (value: any) => {
     try {
       await schema.validate(value);
@@ -37,4 +37,4 @@ const constructArgParser = (schema: BaseSchema) => {
   };
 };
 
-export const validation = { validator };
+export const validation = { validator, argParser };
