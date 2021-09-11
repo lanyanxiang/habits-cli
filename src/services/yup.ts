@@ -6,15 +6,21 @@ setLocale({
   },
 });
 
-function pointsChange(this: NumberSchema) {
+/* == Additional validation methods == */
+declare module "yup" {
+  interface NumberSchema {
+    propertyChange(): this;
+  }
+}
+
+function propertyChange(this: NumberSchema) {
   return this.notOneOf(
     [0],
-    "Change in points cannot be 0. Enter a positive " +
-      "number to add points, and a negative number to reduce " +
-      "points."
+    "Change in property value cannot be 0. Enter a positive " +
+      "number to add value, and a negative number to reduce value."
   );
 }
 
-yup.addMethod(yup.number, "pointsChange", pointsChange);
+yup.addMethod(yup.number, "pointsChange", propertyChange);
 
 export { yup };
