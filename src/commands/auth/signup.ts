@@ -2,7 +2,7 @@ import { QuestionCollection } from "inquirer";
 import { requiredValidator, validation } from "../../utils";
 import { Option } from "commander";
 import { BasicAuthCommand } from "./BasicAuthCommand";
-import { mainApi, network } from "../../services";
+import { mainApi, network, validator, vschema } from "../../services";
 import { RequestMethod } from "../../types";
 
 interface PromptAnswers {
@@ -17,7 +17,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: (input, _) => {
+    validate: (input) => {
       if (validation.isEmail(input)) {
         return true;
       }
@@ -29,7 +29,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     name: "password",
     message: "New Password:",
     mask: "*",
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().required()),
   },
   {
     type: "password",

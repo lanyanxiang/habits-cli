@@ -2,10 +2,8 @@ import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
 import { requiredValidator } from "../../utils";
 import { Argument, Option } from "commander";
-import { mainApi, network } from "../../services";
+import { mainApi, network, validator, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { validator } from "../../utils/validator";
-import { yup } from "../../services/yup";
 
 enum UpdateChoices {
   title = "title",
@@ -47,7 +45,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validator.construct(yup.number().propertyChange()),
+    validate: validator.construct(vschema.number().propertyChange()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.pointsChange);
     },
