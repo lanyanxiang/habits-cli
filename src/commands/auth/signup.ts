@@ -1,5 +1,5 @@
 import { QuestionCollection } from "inquirer";
-import { requiredValidator, validation } from "../../utils";
+import { validation } from "../../utils";
 import { Option } from "commander";
 import { BasicAuthCommand } from "./BasicAuthCommand";
 import { mainApi, network, validator, vschema } from "../../services";
@@ -17,12 +17,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: (input) => {
-      if (validation.isEmail(input)) {
-        return true;
-      }
-      return "Please enter a valid email address.";
-    },
+    validate: validator.construct(vschema.string().email().required()),
   },
   {
     type: "password",
@@ -47,13 +42,13 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "firstName",
     message: "First Name:",
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().required()),
   },
   {
     type: "input",
     name: "lastName",
     message: "Last Name:",
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().required()),
   },
 ];
 
