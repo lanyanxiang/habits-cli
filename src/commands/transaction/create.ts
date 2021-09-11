@@ -14,14 +14,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "title",
     message: "Transaction title:",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
     default: "Untitled transaction",
   },
   {
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validation.construct(vschema.number().propertyChange()),
+    validate: validation.validator(vschema.number().propertyChange()),
   },
 ];
 

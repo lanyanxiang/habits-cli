@@ -16,14 +16,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: validation.construct(vschema.string().email().required()),
+    validate: validation.validator(vschema.string().email().required()),
   },
   {
     type: "password",
     name: "password",
     message: "New Password:",
     mask: "*",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
   },
   {
     type: "password",
@@ -41,13 +41,13 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "firstName",
     message: "First Name:",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
   },
   {
     type: "input",
     name: "lastName",
     message: "Last Name:",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
   },
 ];
 

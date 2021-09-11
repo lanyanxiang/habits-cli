@@ -15,11 +15,11 @@ const transactionIdQuestion = {
   // key in `PromptAnswers`.
   name: "transactionId",
   message: "Transaction ID:",
-  validate: validation.construct(vschema.string().objectId()),
+  validate: validation.validator(vschema.string().objectId()),
 };
 const transactionIdRequiredQuestion = {
   ...transactionIdQuestion,
-  validate: validation.construct(vschema.string().objectId().required()),
+  validate: validation.validator(vschema.string().objectId().required()),
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {

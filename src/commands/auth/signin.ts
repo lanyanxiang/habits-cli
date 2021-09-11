@@ -14,14 +14,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: validation.construct(vschema.string().email().required()),
+    validate: validation.validator(vschema.string().email().required()),
   },
   {
     type: "password",
     name: "password",
     message: "Password:",
     mask: "*",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
   },
 ];
 

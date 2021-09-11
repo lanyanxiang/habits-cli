@@ -8,7 +8,7 @@ import { InvalidArgumentError } from "commander";
  * @param schema Validation schema for this value. Construct this schema
  * using `vschema` exported from the `services` folder.
  */
-const construct = (schema: BaseSchema) => {
+const validator = (schema: BaseSchema) => {
   return async (value: any) => {
     try {
       await schema.validate(value);
@@ -37,4 +37,4 @@ const constructArgParser = (schema: BaseSchema) => {
   };
 };
 
-export const validation = { construct };
+export const validation = { validator };

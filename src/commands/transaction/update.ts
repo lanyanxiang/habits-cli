@@ -21,14 +21,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "transactionId",
     message: "Transaction ID:",
-    validate: validation.construct(vschema.string().objectId().required()),
+    validate: validation.validator(vschema.string().objectId().required()),
   },
   {
     type: "checkbox",
     name: "updateChoices",
     message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
-    validate: validation.construct(
+    validate: validation.validator(
       vschema.string().oneOf(Object.values(UpdateChoices)).required()
     ),
   },
@@ -36,7 +36,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "title",
     message: "Title",
-    validate: validation.construct(vschema.string().required()),
+    validate: validation.validator(vschema.string().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
     },
@@ -45,7 +45,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "number",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validation.construct(vschema.number().propertyChange()),
+    validate: validation.validator(vschema.number().propertyChange()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.pointsChange);
     },
