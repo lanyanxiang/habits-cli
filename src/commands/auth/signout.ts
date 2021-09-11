@@ -48,7 +48,6 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
     await this.promptForInputs(promptQuestions);
     if (!this.userInput?.shouldContinue) {
       console.log(

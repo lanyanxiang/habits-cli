@@ -33,7 +33,6 @@ export abstract class BasicAuthCommand<
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
     await this.promptForInputs(this.promptQuestions);
 
     const response = await this.sendRequest();
