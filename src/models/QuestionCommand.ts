@@ -1,5 +1,6 @@
+import { QuestionCollection } from "inquirer";
 import { Command } from "./Command";
-import inquirer, { QuestionCollection } from "inquirer";
+import { prompt } from "../services";
 
 /**
  * A blueprint for command that simply prompts for user inputs once, then move on
@@ -10,7 +11,6 @@ export abstract class QuestionCommand<
   T extends Record<string, any>
 > extends Command {
   protected userInput: Partial<T> | undefined;
-  protected abstract promptQuestions: QuestionCollection<T>;
 
   /** Process `this.opts` and set `this.userInput`. */
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -20,11 +20,9 @@ export abstract class QuestionCommand<
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected mapArgumentsToInputs(): void | Promise<void> {}
 
-  /** Display `promptQuestions` with `this.userInput` as the default. */
-  protected async promptForInputs() {
-    this.userInput = await inquirer.prompt<T>(
-      this.promptQuestions,
-      this.userInput
-    );
+  /** Display `questions` with `this.userInput` as the default.
+   * Set the answers to `this.userInput`. */
+  protected async promptForInput(questions: QuestionCollection<T>) {
+    this.userInput = await prompt.show<T>(questions, this.userInput);
   }
 }
