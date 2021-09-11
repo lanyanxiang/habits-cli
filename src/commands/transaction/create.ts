@@ -1,7 +1,6 @@
-import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
-import { requiredValidator } from "../../utils";
 import { Option } from "commander";
+import { QuestionCommand } from "../../models";
 import { mainApi, network, validator, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
@@ -15,7 +14,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "title",
     message: "Transaction title:",
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().required()),
     default: "Untitled transaction",
   },
   {
