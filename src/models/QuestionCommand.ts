@@ -3,8 +3,9 @@ import { Command } from "./Command";
 import { prompt } from "../services";
 
 /**
- * A blueprint for command that simply prompts for user inputs once, then move on
- * to other tasks.
+ * A blueprint for command that prompts the user for questions.
+ * This abstract class provides a structure to storing and prompting for user
+ * inputs.
  * <br/> Please pass in the structure of user input (key-value) as T.
  */
 export abstract class QuestionCommand<
