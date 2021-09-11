@@ -1,5 +1,4 @@
 import { QuestionCollection } from "inquirer";
-import { validation } from "../../utils";
 import { Option } from "commander";
 import { BasicAuthCommand } from "./BasicAuthCommand";
 import { mainApi, network, validator, vschema } from "../../services";
@@ -66,7 +65,10 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
 
   protected mapOptionsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
-    if (this.opts.email && validation.isEmail(this.opts.email)) {
+    if (
+      this.opts.email &&
+      vschema.string().email().isValidSync(this.opts.email)
+    ) {
       userInput.email = this.opts.email;
     }
     if (this.opts.firstName?.length) {
