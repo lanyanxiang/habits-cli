@@ -1,6 +1,5 @@
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
-import { requiredValidator } from "../../utils";
 import { Argument, Option } from "commander";
 import { mainApi, network, validator, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
@@ -22,21 +21,22 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "transactionId",
     message: "Transaction ID:",
-    // TODO Add validation for object IDs
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().objectId().required()),
   },
   {
     type: "checkbox",
     name: "updateChoices",
     message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
-    validate: requiredValidator,
+    validate: validator.construct(
+      vschema.string().oneOf(Object.values(UpdateChoices)).required()
+    ),
   },
   {
     type: "input",
     name: "title",
     message: "Title",
-    validate: requiredValidator,
+    validate: validator.construct(vschema.string().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
     },
@@ -52,7 +52,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-export class UpdateCommand extends QuestionCommand<any> {
+export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
   description = "update a transaction";
   aliases = ["change"];
