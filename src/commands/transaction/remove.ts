@@ -34,10 +34,6 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     ).argOptional(),
   ];
 
-  // We do not use the default prompt questions method here, so we pass
-  // in empty array.
-  protected promptQuestions = [];
-
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
 
@@ -115,7 +111,6 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInputs();
     await this.promptForInputs();
     await this._sendRequest();
   }
