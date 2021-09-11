@@ -1,6 +1,9 @@
 import * as yup from "yup";
 
 yup.setLocale({
+  mixed: {
+    required: "This field is required.",
+  },
   string: {
     email: "'${value} is not a valid email address.",
   },
