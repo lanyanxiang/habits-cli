@@ -11,6 +11,10 @@ yup.setLocale({
 
 /* == Additional validation methods == */
 declare module "yup" {
+  interface StringScchema {
+    objectId(): this;
+  }
+
   interface NumberSchema {
     propertyChange(): this;
   }
