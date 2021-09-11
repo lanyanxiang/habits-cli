@@ -1,26 +1,25 @@
 import { Argument } from "commander";
 import chalk from "chalk";
-import { requiredValidator } from "../../utils";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
-import { mainApi, network, prompt } from "../../services";
+import { mainApi, network, prompt, validator, vschema } from "../../services";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
   transactionIds: string[];
 }
 
-// TODO Add validation for object IDs
 const transactionIdQuestion = {
   type: "input",
   // Note the missing "s", in comparison to the `transactionIds`
   // key in `PromptAnswers`.
   name: "transactionId",
   message: "Transaction ID:",
+  validate: validator.construct(vschema.string().objectId()),
 };
 const transactionIdRequiredQuestion = {
   ...transactionIdQuestion,
-  validate: requiredValidator,
+  validate: validator.construct(vschema.string().objectId().required()),
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
