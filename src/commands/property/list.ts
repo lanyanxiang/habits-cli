@@ -14,8 +14,7 @@ interface Property {
 
 const displaySingleProperty = (property: Property) => {
   const { id, name, description, amount, amountInStock } = property;
-  console.log(chalk.cyan(chalk.bold(`${name} (${id})`)));
-  console.log();
+  console.log(chalk.cyan(chalk.bold(`Property "${name}" (${id})`)));
   console.log(chalk.bold("Description: ") + description);
   console.log();
   const table = display.table.createCompact();
@@ -23,6 +22,7 @@ const displaySingleProperty = (property: Property) => {
   table.push(["Amount", amount]);
   table.push(["In Stock", amountInStock]);
   display.table.print(table);
+  console.log();
 };
 
 const displayProperties = (properties: Property[]) => {
