@@ -23,7 +23,7 @@ const displaySingleProperty = (property: Property) => {
   table.push(["Name", name]);
   table.push(["Amount", amount]);
   if (amountInStock) {
-    table.push(["# In Stock", amountInStock]);
+    table.push(["In Stock", amountInStock]);
   }
   display.table.print(table);
   console.log();
