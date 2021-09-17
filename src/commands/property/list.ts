@@ -17,14 +17,12 @@ export class ListCommand extends Command {
 
   acceptOpts = [
     new Option("-s, --skip <skip>", "number of properties to skip").argParser(
-      validation.argParser(vschema.number().label("skip").paginationParam())
+      validation.argParser(vschema.number().pageSkip())
     ),
     new Option(
       "-l, --limit <limit>",
       "number of properties to display"
-    ).argParser(
-      validation.argParser(vschema.number().label("limit").paginationParam())
-    ),
+    ).argParser(validation.argParser(vschema.number().pageLimit())),
   ];
 
   protected run(): void | Promise<void> {
