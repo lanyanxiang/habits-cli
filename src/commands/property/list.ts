@@ -1,7 +1,7 @@
 import { Command } from "../../models";
 import { Option } from "commander";
-import { validation, vschema } from "../../services";
-import { ErrorResponse, SuccessResponse } from "../../types";
+import { mainApi, network, validation, vschema } from "../../services";
+import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface Property {
   id: string;
@@ -29,6 +29,19 @@ export class ListCommand extends Command {
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
+
+    return await network.request(mainApi, {
+      uri: "/properties",
+      method: RequestMethod.GET,
+      config: {
+        params: {
+          skip,
+          limit,
+        },
+      },
+      description: "Fetch properties",
+      shouldClearSpinner: true,
+    });
   }
 
   protected run(): void | Promise<void> {
