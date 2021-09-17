@@ -17,7 +17,11 @@ declare module "yup" {
   }
 
   interface NumberSchema {
+    /** Represents a change in property amount. */
     propertyChange(): this;
+
+    /** Represents a pagination parameter. */
+    paginationParam(): this;
   }
 }
 
@@ -33,12 +37,17 @@ function objectId(this: yup.StringSchema) {
 function propertyChange(this: yup.NumberSchema) {
   return this.notOneOf(
     [0],
-    "Change in property value cannot be 0. Enter a positive " +
-      "number to add value, and a negative number to reduce value."
+    "Change in property amount cannot be 0. Enter a positive " +
+      "number to add amount, and a negative number to reduce amount."
   );
+}
+
+function paginationParam(this: yup.NumberSchema) {
+  return this.integer().min(1);
 }
 
 yup.addMethod(yup.string, "objectId", objectId);
 yup.addMethod(yup.number, "propertyChange", propertyChange);
+yup.addMethod(yup.number, "paginationParam", paginationParam);
 
 export { yup as schema };
