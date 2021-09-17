@@ -1,6 +1,7 @@
 import { Command } from "../../models";
 import { Option } from "commander";
 import { validation, vschema } from "../../services";
+import { ErrorResponse, SuccessResponse } from "../../types";
 
 interface Property {
   id: string;
@@ -24,6 +25,11 @@ export class ListCommand extends Command {
       "number of properties to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
   ];
+
+  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+    const skip = this.opts.skip;
+    const limit = this.opts.limit;
+  }
 
   protected run(): void | Promise<void> {
     return undefined;
