@@ -44,6 +44,8 @@ export class ListCommand extends Command {
     });
   }
 
+  private _displayProperties(response: SuccessResponse) {}
+
   protected run(): void | Promise<void> {
     return undefined;
   }
