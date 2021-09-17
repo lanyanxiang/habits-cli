@@ -1,3 +1,5 @@
+import { Command } from "../../models";
+
 interface Property {
   id: string;
   name: string;
@@ -5,3 +7,5 @@ interface Property {
   amount: string;
   amountInStock: string;
 }
+
+export class ListCommand extends Command {}
