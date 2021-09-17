@@ -19,14 +19,12 @@ export class ListCommand extends Command {
 
   acceptOpts = [
     new Option("-s, --skip <skip>", "number of transactions to skip").argParser(
-      validation.argParser(vschema.number().label("skip").paginationParam())
+      validation.argParser(vschema.number().pageSkip())
     ),
     new Option(
       "-l, --limit <limit>",
       "number of transactions to display"
-    ).argParser(
-      validation.argParser(vschema.number().label("limit").paginationParam())
-    ),
+    ).argParser(validation.argParser(vschema.number().pageLimit())),
   ];
 
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
