@@ -1,7 +1,7 @@
 import { CommandGroup } from "../../models";
-import { ShowCommand } from "./show";
 import { UpdateCommand } from "./update";
+import { ListCommand } from "./list";
 
 export const property = new CommandGroup("property", "manage your properties")
   .withAliases(["prop"])
-  .withSubcommands([new ShowCommand(), new UpdateCommand()]);
+  .withSubcommands([new ListCommand(), new UpdateCommand()]);
