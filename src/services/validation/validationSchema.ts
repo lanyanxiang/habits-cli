@@ -20,8 +20,11 @@ declare module "yup" {
     /** Represents a change in property amount. */
     propertyChange(): this;
 
-    /** Represents a pagination parameter. */
-    paginationParam(): this;
+    /** Limit parameter for pagination with habits-restapi. */
+    pageLimit(): this;
+
+    /** Skip parameter for pagination with habits-restapi. */
+    pageSkip(): this;
   }
 }
 
@@ -42,12 +45,17 @@ function propertyChange(this: yup.NumberSchema) {
   );
 }
 
-function paginationParam(this: yup.NumberSchema) {
-  return this.integer().min(1);
+function pageLimit(this: yup.NumberSchema) {
+  return this.label("limit").integer().min(1);
+}
+
+function pageSkip(this: yup.NumberSchema) {
+  return this.label("skip").integer().min(1);
 }
 
 yup.addMethod(yup.string, "objectId", objectId);
 yup.addMethod(yup.number, "propertyChange", propertyChange);
-yup.addMethod(yup.number, "paginationParam", paginationParam);
+yup.addMethod(yup.number, "pageLimit", pageLimit);
+yup.addMethod(yup.number, "pageSkip", pageSkip);
 
 export { yup as schema };
