@@ -64,7 +64,12 @@ export class ListCommand extends Command {
     });
   }
 
-  protected run(): void | Promise<void> {
-    return undefined;
+  protected async run(): Promise<void> {
+    const response = await this._sendRequest();
+    if (response.isError) {
+      return;
+    }
+    const properties = response.data.payload as Property[];
+    displayProperties(properties);
   }
 }
