@@ -1,15 +1,35 @@
 import { Command } from "../../models";
 import { Option } from "commander";
-import { mainApi, network, validation, vschema } from "../../services";
+import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import chalk from "chalk";
 
 interface Property {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   amount: string;
-  amountInStock: string;
+  amountInStock?: string;
 }
+
+const displaySingleProperty = (property: Property) => {
+  const { id, name, description, amount, amountInStock } = property;
+  console.log(chalk.cyan(chalk.bold(`${name} (${id})`)));
+  console.log();
+  console.log(chalk.bold("Description: ") + description);
+  console.log();
+  const table = display.table.createCompact();
+  table.push(["Name", name]);
+  table.push(["Amount", amount]);
+  table.push(["In Stock", amountInStock]);
+  display.table.print(table);
+};
+
+const displayProperties = (properties: Property[]) => {
+  properties.forEach((property) => {
+    displaySingleProperty(property);
+  });
+};
 
 export class ListCommand extends Command {
   name = "list";
@@ -43,10 +63,6 @@ export class ListCommand extends Command {
       shouldClearSpinner: true,
     });
   }
-
-  private _displaySingleProperty(property: Property) {}
-
-  private _displayProperties(response: SuccessResponse) {}
 
   protected run(): void | Promise<void> {
     return undefined;
