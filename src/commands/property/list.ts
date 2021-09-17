@@ -15,12 +15,16 @@ interface Property {
 const displaySingleProperty = (property: Property) => {
   const { id, name, description, amount, amountInStock } = property;
   console.log(chalk.cyan(chalk.bold(`Property "${name}" (${id})`)));
-  console.log(chalk.bold("Description: ") + description);
+  if (description) {
+    console.log(chalk.bold("Description: ") + description);
+  }
   console.log();
   const table = display.table.createCompact();
   table.push(["Name", name]);
   table.push(["Amount", amount]);
-  table.push(["In Stock", amountInStock]);
+  if (amountInStock) {
+    table.push(["# In Stock", amountInStock]);
+  }
   display.table.print(table);
   console.log();
 };
