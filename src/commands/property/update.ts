@@ -1,10 +1,5 @@
 import { Option } from "commander";
-import {
-  ErrorResponse,
-  RequestMethod,
-  SuccessResponse,
-  UserProperty,
-} from "../../types";
+import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
 
@@ -44,11 +39,6 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
       "new value for amount of in-stock properties"
     ).argParser(validation.argParser(vschema.number().min(0))),
   ];
-
-  /** Mapping of property names to property objects. Contains all properties
-   * that the current user has. This field will be populated after the
-   * property fetching step. */
-  private propertyMap: Record<string, UserProperty> = {};
 
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
