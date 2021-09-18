@@ -1,8 +1,8 @@
-import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, validation, vschema } from "../../services";
+import { QuestionCommand } from "../../models";
 
 interface PromptAnswers {
   points: number;
