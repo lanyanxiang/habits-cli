@@ -44,4 +44,6 @@ export const selectProperty = async (
       validate: validation.validator(vschema.string().oneOf(propertyNames)),
     },
   ]);
+  const selectedPropertyName = answer.propertyId;
+  return properties.find((property) => property.name === selectedPropertyName);
 };
