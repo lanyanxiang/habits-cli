@@ -22,7 +22,11 @@ const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
  */
 const getPropertyNameMapping = (
   properties: UserProperty[]
-): Record<string, UserProperty> => {};
+): Record<string, UserProperty> => {
+  return properties.reduce((prev, property) => {
+    return { ...prev, [property.name]: property };
+  }, {});
+};
 
 /**
  * Prompt the user to select one property from the properties that they have.
