@@ -1,20 +1,23 @@
-import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
 
-interface PromptAnswers {
-  points: number;
+enum UpdateChoices {
+  name = "name",
+  description = "description",
+  amount = "amount",
+  amountInStock = "amount in stock",
 }
 
-const promptQuestions: QuestionCollection<PromptAnswers> = [
-  {
-    type: "number",
-    name: "points",
-    message: "New total points:",
-  },
-];
+interface PromptAnswers {
+  propertyId: number;
+  updateChoices: UpdateChoices[];
+  name?: string;
+  description?: string;
+  amount?: string;
+  amountInStock?: string;
+}
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
