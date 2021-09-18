@@ -3,6 +3,7 @@ import { network } from "../network";
 import { mainApi } from "../axios";
 import { show } from "./show";
 import { matchSorter } from "match-sorter";
+import { validation, vschema } from "../validation";
 
 const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
   const response = await network.request(mainApi, {
@@ -40,6 +41,7 @@ export const selectProperty = async (
         }
         return matchSorter(propertyNames, input);
       },
+      validate: validation.validator(vschema.string().oneOf(propertyNames)),
     },
   ]);
 };
