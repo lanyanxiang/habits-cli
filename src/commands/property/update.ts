@@ -1,6 +1,6 @@
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { mainApi, network } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
 
 enum UpdateChoices {
@@ -33,11 +33,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     new Option(
       "-a, --amount <amount>",
       "new value for current amount of this property"
-    ),
+    ).argParser(validation.argParser(vschema.number())),
     new Option(
       "--in-stock <inStock>",
       "new value for amount of in-stock properties"
-    ),
+    ).argParser(validation.argParser(vschema.number().min(0))),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
@@ -81,7 +81,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    await this.promptForInputs(promptQuestions);
+    await this.promptForInputs([]);
     await this._sendRequest();
   }
 }
