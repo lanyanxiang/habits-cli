@@ -1,8 +1,8 @@
 import { Command } from "../../models";
 import { Option } from "commander";
+import chalk from "chalk";
 import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import chalk from "chalk";
 
 interface Property {
   id: string;
