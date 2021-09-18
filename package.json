@@ -38,6 +38,7 @@
     "inquirer": "^8.1.2",
     "inquirer-autocomplete-prompt": "^1.4.0",
     "keytar": "^7.7.0",
+    "match-sorter": "^6.3.1",
     "node-localstorage": "^2.2.1",
     "ora": "^5.4.1",
     "yup": "^0.32.9"
