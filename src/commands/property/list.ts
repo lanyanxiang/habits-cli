@@ -3,14 +3,7 @@ import { Option } from "commander";
 import chalk from "chalk";
 import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-
-interface Property {
-  id: string;
-  name: string;
-  description?: string;
-  amount: string;
-  amountInStock?: string;
-}
+import { Property } from "./common";
 
 const displaySingleProperty = (property: Property) => {
   const { id, name, description, amount, amountInStock } = property;
