@@ -1,8 +1,12 @@
 import { Option } from "commander";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import {
+  ErrorResponse,
+  RequestMethod,
+  SuccessResponse,
+  UserProperty,
+} from "../../types";
 import { mainApi, network, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
-import { UserProperty } from "./common";
 
 enum UpdateChoices {
   name = "name",

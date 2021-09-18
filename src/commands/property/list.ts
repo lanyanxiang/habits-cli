@@ -2,8 +2,12 @@ import { Command } from "../../models";
 import { Option } from "commander";
 import chalk from "chalk";
 import { display, mainApi, network, validation, vschema } from "../../services";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { UserProperty } from "./common";
+import {
+  ErrorResponse,
+  RequestMethod,
+  SuccessResponse,
+  UserProperty,
+} from "../../types";
 
 const displaySingleProperty = (property: UserProperty) => {
   const { id, name, description, amount, amountInStock } = property;
