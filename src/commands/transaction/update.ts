@@ -29,7 +29,11 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
     validate: validation.validator(
-      vschema.string().oneOf(Object.values(UpdateChoices)).required()
+      vschema
+        .array()
+        .of(vschema.string().oneOf(Object.values(UpdateChoices)))
+        .min(1)
+        .required()
     ),
   },
   {
