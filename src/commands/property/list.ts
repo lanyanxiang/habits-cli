@@ -3,9 +3,9 @@ import { Option } from "commander";
 import chalk from "chalk";
 import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { Property } from "./common";
+import { UserProperty } from "./common";
 
-const displaySingleProperty = (property: Property) => {
+const displaySingleProperty = (property: UserProperty) => {
   const { id, name, description, amount, amountInStock } = property;
   console.log(chalk.cyan(chalk.bold(`Property "${name}" (${id})`)));
   if (description) {
@@ -22,7 +22,7 @@ const displaySingleProperty = (property: Property) => {
   console.log();
 };
 
-const displayProperties = (properties: Property[]) => {
+const displayProperties = (properties: UserProperty[]) => {
   properties.forEach((property) => {
     displaySingleProperty(property);
   });
@@ -66,7 +66,7 @@ export class ListCommand extends Command {
     if (response.isError) {
       return;
     }
-    const properties = response.data.payload as Property[];
+    const properties = response.data.payload as UserProperty[];
     displayProperties(properties);
   }
 }

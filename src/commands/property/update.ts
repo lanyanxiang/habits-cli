@@ -2,7 +2,7 @@ import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
-import { Property } from "./common";
+import { UserProperty } from "./common";
 
 enum UpdateChoices {
   name = "name",
@@ -44,7 +44,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   /** Mapping of property names to property objects. Contains all properties
    * that the current user has. This field will be populated after the
    * property fetching step. */
-  private propertyMap: Record<string, Property> = {};
+  private propertyMap: Record<string, UserProperty> = {};
 
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
@@ -87,7 +87,18 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private async _fetchProperties(): Promise<SuccessResponse | ErrorResponse> {}
+  private async _fetchProperties() {
+    const response = await network.request(mainApi, {
+      uri: "/properties",
+      method: RequestMethod.GET,
+      description: "Fetch properties",
+      shouldClearSpinner: true,
+    });
+    if (response.isError) {
+      return;
+    }
+    const properties: UserProperty[] = response.data.payload;
+  }
 
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     return await network.request(mainApi, {
