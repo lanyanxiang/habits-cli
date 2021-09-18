@@ -1,6 +1,6 @@
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { mainApi, network, validation, vschema } from "../../services";
+import { mainApi, network } from "../../services";
 import { QuestionCommand } from "../../models";
 
 enum UpdateChoices {
@@ -25,17 +25,47 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["change"];
 
   acceptOpts = [
+    new Option("-n, --name <name>", "new value for property name"),
     new Option(
-      "-p, --points <points>",
-      "new points value to be stored"
-    ).argParser(validation.argParser(vschema.number().label("points"))),
+      "-d, --description <description>",
+      "new value for property description"
+    ),
+    new Option(
+      "-a, --amount <amount>",
+      "new value for current amount of this property"
+    ),
+    new Option(
+      "--in-stock <inStock>",
+      "new value for amount of in-stock properties"
+    ),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
+    const updateChoices: UpdateChoices[] = [];
 
-    if (this.opts.points !== undefined) {
-      userInput.points = this.opts.points;
+    if (this.opts.name) {
+      userInput.name = this.opts.name;
+      updateChoices.push(UpdateChoices.name);
+    }
+
+    if (this.opts.description) {
+      userInput.description = this.opts.description;
+      updateChoices.push(UpdateChoices.description);
+    }
+
+    if (this.opts.amount) {
+      userInput.amount = this.opts.amount;
+      updateChoices.push(UpdateChoices.amount);
+    }
+
+    if (this.opts.inStock) {
+      userInput.amountInStock = this.opts.inStock;
+      updateChoices.push(UpdateChoices.amountInStock);
+    }
+
+    if (updateChoices.length) {
+      userInput.updateChoices = updateChoices;
     }
 
     this.userInput = userInput;
