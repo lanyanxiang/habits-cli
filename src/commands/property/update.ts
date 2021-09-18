@@ -1,6 +1,6 @@
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { mainApi, network, validation, vschema } from "../../services";
+import { mainApi, network, prompt, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
 
 enum UpdateChoices {
@@ -90,7 +90,25 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
+  /** Prompt for property ID in `this.userInput`. Return a boolean
+   * value indicating whether this operation was successful. */
+  private async _promptForPropertyId(): Promise<boolean> {
+    if (!this.userInput!.propertyId) {
+      const selectedProperty = await prompt.selectProperty(
+        "What property would you like to update?"
+      );
+      if (!selectedProperty) {
+        return false;
+      }
+      this.userInput!.propertyId = selectedProperty.id;
+    }
+    return true;
+  }
+
   async run(): Promise<void> {
+    if (!(await this._promptForPropertyId())) {
+      return;
+    }
     await this.promptForInputs([]);
     await this._sendRequest();
   }
