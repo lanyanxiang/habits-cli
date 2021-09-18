@@ -1,6 +1,7 @@
 import { RequestMethod, UserProperty } from "../../types";
 import { network } from "../network";
 import { mainApi } from "../axios";
+import { show } from "./show";
 
 const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
   const response = await network.request(mainApi, {
@@ -16,7 +17,30 @@ const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
 };
 
 /**
- * Prompt the user to select one property from the properties that they have.
- * Return the user-selected property.
+ * Get a mapping between user property names and user property objects.
+ * @param properties Properties array to parse.
  */
-export const selectProperty = async (): Partial<UserProperty> => {};
+const getPropertyNameMapping = (
+  properties: UserProperty[]
+): Record<string, UserProperty> => {};
+
+/**
+ * Prompt the user to select one property from the properties that they have.
+ * Return the user-selected property, or `undefined` if an error occurred.
+ */
+export const selectProperty = async (
+  message?: string
+): Promise<Partial<UserProperty> | undefined> => {
+  const properties = await fetchProperties();
+  if (!properties) {
+    return;
+  }
+  const answer = await show([
+    {
+      type: "autocomplete",
+      name: "propertyId",
+      message: message || "Select a property:",
+      source: (answers, input) => {},
+    },
+  ]);
+};
