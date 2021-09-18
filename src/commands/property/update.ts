@@ -91,19 +91,6 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private async _fetchProperties() {
-    const response = await network.request(mainApi, {
-      uri: "/properties",
-      method: RequestMethod.GET,
-      description: "Fetch properties",
-      shouldClearSpinner: true,
-    });
-    if (response.isError) {
-      return;
-    }
-    const properties: UserProperty[] = response.data.payload;
-  }
-
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     return await network.request(mainApi, {
       uri: "/properties",
