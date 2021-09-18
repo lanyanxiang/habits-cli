@@ -3,7 +3,6 @@ import { network } from "../network";
 import { mainApi } from "../axios";
 import { show } from "./show";
 import { matchSorter } from "match-sorter";
-import { validation, vschema } from "../validation";
 
 const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
   const response = await network.request(mainApi, {
@@ -33,7 +32,7 @@ export const selectProperty = async (
   const answer = await show([
     {
       type: "autocomplete",
-      name: "propertyId",
+      name: "propertyName",
       message: message || "Select a property:",
       source: (_, input) => {
         if (!input) {
@@ -41,9 +40,7 @@ export const selectProperty = async (
         }
         return matchSorter(propertyNames, input);
       },
-      validate: validation.validator(vschema.string().oneOf(propertyNames)),
     },
   ]);
-  const selectedPropertyName = answer.propertyId;
-  return properties.find((property) => property.name === selectedPropertyName);
+  return properties.find((property) => property.name === answer.propertyName);
 };
