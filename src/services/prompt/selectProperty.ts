@@ -2,6 +2,7 @@ import { RequestMethod, UserProperty } from "../../types";
 import { network } from "../network";
 import { mainApi } from "../axios";
 import { show } from "./show";
+import { matchSorter } from "match-sorter";
 
 const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
   const response = await network.request(mainApi, {
@@ -27,12 +28,18 @@ export const selectProperty = async (
   if (!properties) {
     return;
   }
+  const propertyNames = properties.map((property) => property.name);
   const answer = await show([
     {
       type: "autocomplete",
       name: "propertyId",
       message: message || "Select a property:",
-      source:,
+      source: (_, input) => {
+        if (!input) {
+          return propertyNames;
+        }
+        return matchSorter(propertyNames, input);
+      },
     },
   ]);
 };
