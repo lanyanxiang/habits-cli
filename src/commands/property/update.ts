@@ -11,7 +11,7 @@ enum UpdateChoices {
 }
 
 interface PromptAnswers {
-  propertyId: number;
+  propertyId: string;
   updateChoices: UpdateChoices[];
   name?: string;
   description?: string;
@@ -39,6 +39,16 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
       "new value for amount of in-stock properties"
     ).argParser(validation.argParser(vschema.number().min(0))),
   ];
+
+  protected mapArgumentsToInputs(): void | Promise<void> {
+    const userInput: Partial<PromptAnswers> = this.userInput || {};
+
+    if (this.args.length) {
+      userInput.propertyId = this.args[0];
+    }
+
+    this.userInput = userInput;
+  }
 
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
