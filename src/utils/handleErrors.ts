@@ -19,4 +19,8 @@ const handleSingleError = (error: any) => {
   );
 };
 
-export const handleErrors = (errors: any) => {};
+export const handleErrors = (error: any) => {
+  if (!Array.isArray(error)) {
+    handleSingleError(error);
+  }
+};
