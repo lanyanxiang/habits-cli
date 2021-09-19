@@ -23,4 +23,5 @@ export const handleErrors = (error: any) => {
   if (!Array.isArray(error)) {
     handleSingleError(error);
   }
+  error.forEach((subError: any) => handleErrors(subError));
 };
