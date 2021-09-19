@@ -22,6 +22,8 @@ const handleSingleError = (error: any) => {
 export const handleErrors = (error: any) => {
   if (!Array.isArray(error)) {
     handleSingleError(error);
+    process.exit(1);
   }
   error.forEach((subError: any) => handleErrors(subError));
+  process.exit(1);
 };
