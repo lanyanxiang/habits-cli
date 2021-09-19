@@ -5,9 +5,6 @@ import { stringParser } from "../utils";
  * of the program. This error is meant to be thrown manually inside of the
  * program, when a logic cannot be continued. Throwing this error will trigger
  * the central error handler to log this error and exit immediately afterwards.
- *
- * Note that HTTP errors are not handled by the central error handlers, and
- * are not runtime errors.
  */
 export class RuntimeError extends Error {
   /**
