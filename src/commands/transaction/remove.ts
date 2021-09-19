@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { QuestionCommand } from "../../models";
 import { RequestMethod } from "../../types";
 import { mainApi, network, prompt, validation, vschema } from "../../services";
+import { RuntimeError } from "../../models/RuntimeError";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
@@ -93,11 +94,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
 
   private async _sendRequest(): Promise<void> {
     if (!this.userInput?.transactionIds) {
-      console.error("[Error] Please specify a transaction ID.");
-      // TODO Create a central error handler and a special type of error to
-      //  indicate command termination. Add a method to `Command` to throw this
-      //  new special error.
-      throw new Error("No transaction ID");
+      throw new RuntimeError("Please specify a transaction ID.");
     }
 
     for (const transactionId of this.userInput.transactionIds) {
