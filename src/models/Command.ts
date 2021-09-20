@@ -6,7 +6,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Argument, Help, Option, OptionValues, OutputConfiguration } from "commander";
+import {
+  Argument,
+  Help,
+  Option,
+  OptionValues,
+  OutputConfiguration,
+} from "commander";
 import { CommanderCommand, HelpTextPosition } from "../types";
 
 export interface CommandOverride {
@@ -207,12 +213,12 @@ export abstract class Command {
    * `process.argv.slice(2)`, since the first item in `argv` will be
    * a path to node, and the second item will be the program name.
    */
-  public readonly start = (rawArgs: string[]): void => {
+  public readonly start = async (rawArgs: string[]): Promise<void> => {
     this.commandWillInit(rawArgs);
     this.init(rawArgs);
     this.commandDidInit();
     this.commandWillRun();
-    this.run();
+    await this.run();
     this.commandDidRun();
   };
 }
