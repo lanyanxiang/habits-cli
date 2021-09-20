@@ -1,9 +1,9 @@
 import { silentRequest } from "./silentRequest";
 import { request } from "./request";
-import { logError } from "./logError";
+import { reportError } from "./reportError";
 
 export const network = {
   request,
   silentRequest,
-  logError,
+  logError: reportError,
 };

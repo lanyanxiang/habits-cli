@@ -3,10 +3,12 @@ import { stringParser } from "../../utils";
 import { RuntimeError } from "../../models";
 
 /**
- * Log network error to the console.
+ * Analyze network error `error` and throw the corresponding
+ * `RuntimeError` object / array.
  * @throws RuntimeError
+ * @see RuntimeError
  */
-export const logError = (error: ErrorResponse) => {
+export const reportError = (error: ErrorResponse): never => {
   const errorStatus = error.response?.status || "local";
   const errorTitle = stringParser.capitalize(
     error.response?.statusText || "An error occurred"
