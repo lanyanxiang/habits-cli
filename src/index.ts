@@ -3,6 +3,7 @@ import { version } from "../package.json";
 import { CommandGroup } from "./models";
 import { auth, property, transaction } from "./commands";
 import { invitation } from "./commands/invitation";
+import { handleErrors } from "./utils/handleErrors";
 
 const start = () => {
   const rawArgs = process.argv.slice(2);
@@ -16,7 +17,13 @@ const start = () => {
   ]);
   habits.version = version;
   habits.showHelpAfterError = true;
-  habits.start(rawArgs);
+
+  // Start program
+  try {
+    habits.start(rawArgs);
+  } catch (error: any) {
+    handleErrors(error);
+  }
 };
 
 start();
