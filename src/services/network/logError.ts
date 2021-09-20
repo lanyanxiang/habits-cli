@@ -1,6 +1,5 @@
 import { ErrorResponse } from "../../types";
 import { stringParser } from "../../utils";
-import chalk from "chalk";
 import { RuntimeError } from "../../models";
 
 /**
@@ -11,7 +10,7 @@ export const logError = (error: ErrorResponse) => {
   const errorTitle = stringParser.capitalize(
     error.response?.statusText || "An error occurred"
   );
-  console.log(chalk.red(chalk.bold(`${errorTitle} (${errorStatus})`)));
+  console.log(`${errorTitle} (${errorStatus})`);
 
   if (!error.response) {
     throw new RuntimeError("Could not connect to the server.");
