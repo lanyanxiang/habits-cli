@@ -3,7 +3,7 @@ import { version } from "../package.json";
 import { CommandGroup } from "./models";
 import { auth, property, transaction } from "./commands";
 import { invitation } from "./commands/invitation";
-import { handleErrors } from "./utils/handleErrors";
+import { handleErrors } from "./utils";
 
 const start = () => {
   const rawArgs = process.argv.slice(2);
