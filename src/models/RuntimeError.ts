@@ -32,4 +32,14 @@ export class RuntimeError extends Error {
     }
     return msg;
   }
+
+  public withName(name: string) {
+    this.name = name;
+    return this;
+  }
+
+  public withCause(cause?: string) {
+    this.cause = cause;
+    return this;
+  }
 }
