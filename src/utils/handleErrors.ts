@@ -14,8 +14,7 @@ const handleSingleError = (error: any) => {
   console.error(error);
   return console.error(
     "Sorry, something went wrong. Please report this issue to " +
-      chalk.underline(chalk.bold(repository)) +
-      "."
+      chalk.underline(chalk.bold(chalk.cyan(repository.url)))
   );
 };
 

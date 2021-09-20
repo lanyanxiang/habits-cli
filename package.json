@@ -25,7 +25,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lanyanxiang/habits-cli/tree/master"
+    "url": "https://github.com/lanyanxiang/habits-cli"
   },
   "dependencies": {
     "axios": "^0.21.1",
