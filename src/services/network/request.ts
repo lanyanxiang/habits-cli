@@ -27,9 +27,7 @@ const _handleFailure = (
   response: ErrorResponse
 ) => {
   spinner.fail(requestOptions.failureMsg);
-  if (!requestOptions.disableErrorLog) {
-    logError(response);
-  }
+  logError(response);
 };
 
 /**
