@@ -13,19 +13,11 @@ export const logError = (error: ErrorResponse) => {
   );
   console.log(chalk.red(chalk.bold(`${errorTitle} (${errorStatus})`)));
 
-  const errorsToThrow = error.response?.data.errors?.map((error) => {
-    return new RuntimeError(error.message).withCause(error.cause);
-    let msg = `[Error] ${error.message}`;
-    if (error.cause) {
-      const cause = stringParser.camelToSpaceSeparated(error.cause);
-      msg += `\n> Caused by ${cause}`;
-    }
-    return msg;
-  });
-  errorMessages?.forEach((msg) => {
-    console.log(msg);
-  });
   if (!error.response) {
-    console.log("[Error] Could not connect to the server.");
+    throw new RuntimeError("Could not connect to the server.");
   }
+
+  throw error.response?.data.errors?.map((error) => {
+    return new RuntimeError(error.message).withCause(error.cause);
+  });
 };
