@@ -4,6 +4,7 @@ import { RuntimeError } from "../../models";
 
 /**
  * Log network error to the console.
+ * @throws RuntimeError
  */
 export const logError = (error: ErrorResponse) => {
   const errorStatus = error.response?.status || "local";
