@@ -14,7 +14,7 @@ export const logError = (error: ErrorResponse) => {
   console.log(chalk.red(chalk.bold(`${errorTitle} (${errorStatus})`)));
 
   const errorsToThrow = error.response?.data.errors?.map((error) => {
-    return new RuntimeError(error.message);
+    return new RuntimeError(error.message).withCause(error.cause);
     let msg = `[Error] ${error.message}`;
     if (error.cause) {
       const cause = stringParser.camelToSpaceSeparated(error.cause);
