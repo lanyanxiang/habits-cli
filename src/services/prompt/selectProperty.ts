@@ -1,8 +1,8 @@
+import { matchSorter } from "match-sorter";
 import { RequestMethod, UserProperty } from "../../types";
 import { network } from "../network";
 import { mainApi } from "../axios";
 import { show } from "./show";
-import { matchSorter } from "match-sorter";
 
 const fetchProperties = async (): Promise<UserProperty[] | never> => {
   const response = await network.request(mainApi, {
