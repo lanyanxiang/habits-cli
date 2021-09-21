@@ -34,8 +34,8 @@ const _handleFailure = (
  * Send a request using `instance` and based on `requestOptions`.
  * Adds a spinner based on `requestOptions.description`. Calls `silentRequest`
  * under the hood.
- * **Always resolve promise.** If an error occurred, `response.isError` will
- * be set to `true`.
+ * **Always resolve promise.** If an error occurred, a runtime error
+ * will be thrown.
  * @param instance
  * @param requestOptions
  * @throws RuntimeError
@@ -43,7 +43,7 @@ const _handleFailure = (
 export const request = async (
   instance: AxiosInstance,
   requestOptions: RegularRequestOptions
-): Promise<SuccessResponse> => {
+): Promise<SuccessResponse | never> => {
   const { description, ...otherOptions } = requestOptions;
 
   const spinner = spinners.start(description);
