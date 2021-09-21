@@ -90,25 +90,18 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
-  /** Prompt for property ID in `this.userInput`. Return a boolean
-   * value indicating whether this operation was successful. */
-  private async _promptForPropertyId(): Promise<boolean> {
+  /** Prompt for property ID in `this.userInput`. */
+  private async _promptForPropertyId(): Promise<void> {
     if (!this.userInput!.propertyId) {
       const selectedProperty = await prompt.selectProperty(
         "What property would you like to update?"
       );
-      if (!selectedProperty) {
-        return false;
-      }
       this.userInput!.propertyId = selectedProperty.id;
     }
-    return true;
   }
 
   async run(): Promise<void> {
-    if (!(await this._promptForPropertyId())) {
-      return;
-    }
+    await this._promptForPropertyId();
     await this.promptForInputs([]);
     await this._sendRequest();
   }
