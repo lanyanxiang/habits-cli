@@ -2,6 +2,7 @@ import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, prompt, validation, vschema } from "../../services";
 import { QuestionCommand } from "../../models";
+import { QuestionCollection } from "inquirer";
 
 enum UpdateChoices {
   name = "name",
@@ -18,6 +19,8 @@ interface PromptAnswers {
   amount?: string;
   amountInStock?: string;
 }
+
+const promptQuestions: QuestionCollection<PromptAnswers> = [];
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
