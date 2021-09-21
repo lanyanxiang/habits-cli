@@ -4,30 +4,24 @@ import { mainApi } from "../axios";
 import { show } from "./show";
 import { matchSorter } from "match-sorter";
 
-const fetchProperties = async (): Promise<UserProperty[] | undefined> => {
+const fetchProperties = async (): Promise<UserProperty[] | never> => {
   const response = await network.request(mainApi, {
     uri: "/properties",
     method: RequestMethod.GET,
     description: "Fetch your properties",
     shouldClearSpinner: true,
   });
-  if (response.isError) {
-    return;
-  }
   return response.data.payload as UserProperty[];
 };
 
 /**
  * Prompt the user to select one property from the properties that they have.
- * Return the user-selected property, or `undefined` if an error occurred.
+ * Return the user-selected property, or throw an appropriate error.
  */
 export const selectProperty = async (
   message?: string
-): Promise<Partial<UserProperty> | undefined> => {
+): Promise<Partial<UserProperty> | never> => {
   const properties = await fetchProperties();
-  if (!properties) {
-    return;
-  }
   const propertyNames = properties.map((property) => property.name);
   const answer = await show([
     {
@@ -42,5 +36,5 @@ export const selectProperty = async (
       },
     },
   ]);
-  return properties.find((property) => property.name === answer.propertyName);
+  return properties.find((property) => property.name === answer.propertyName)!;
 };
