@@ -52,6 +52,15 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
       return answers.updateChoices.includes(UpdateChoices.description);
     },
   },
+  {
+    type: "input",
+    name: "amount",
+    message: "Amount:",
+    validate: validation.validator(vschema.number().required()),
+    when: (answers) => {
+      return answers.updateChoices.includes(UpdateChoices.amount);
+    },
+  },
 ];
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
