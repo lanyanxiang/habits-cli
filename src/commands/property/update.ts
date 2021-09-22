@@ -67,7 +67,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     message: "In stock (empty this field to remove):",
     validate: validation.validator(vschema.number().min(0).optional()),
     when: (answers) => {
-      return answers.updateChoices.includes(UpdateChoices.amount);
+      return answers.updateChoices.includes(UpdateChoices.amountInStock);
     },
   },
 ];
