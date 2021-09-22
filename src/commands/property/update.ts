@@ -134,15 +134,6 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
-    return await network.request(mainApi, {
-      uri: "/properties",
-      method: RequestMethod.PATCH,
-      data: this.userInput,
-      description: "Update properties",
-    });
-  }
-
   /** Prompt for property ID in `this.userInput`. */
   private async _promptForPropertyId(): Promise<void> {
     if (!this.userInput!.propertyId) {
@@ -151,6 +142,15 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
       );
       this.userInput!.propertyId = selectedProperty.id;
     }
+  }
+
+  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+    return await network.request(mainApi, {
+      uri: "/properties",
+      method: RequestMethod.PATCH,
+      data: this.userInput,
+      description: "Update properties",
+    });
   }
 
   async run(): Promise<void> {
