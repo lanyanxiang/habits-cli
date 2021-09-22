@@ -1,7 +1,7 @@
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import { mainApi, network, prompt, validation, vschema } from "../../services";
-import { QuestionCommand } from "../../models";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { QuestionCollection } from "inquirer";
 
 enum UpdateChoices {
@@ -145,10 +145,17 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+    if (!this.userInput?.propertyId) {
+      throw new RuntimeError("No property ID.");
+    }
+
     return await network.request(mainApi, {
-      uri: "/properties",
+      uri: `/properties/${this.userInput.propertyId}`,
       method: RequestMethod.PATCH,
-      data: this.userInput,
+      data: {
+        ...this.userInput,
+        propertyId: undefined,
+      },
       description: "Update properties",
     });
   }
