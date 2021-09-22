@@ -53,19 +53,19 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     },
   },
   {
-    type: "number",
+    type: "input",
     name: "amount",
     message: "Amount:",
-    validate: validation.validator(vschema.number().required()),
+    filter: validation.argParser(vschema.number().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.amount);
     },
   },
   {
-    type: "number",
+    type: "input",
     name: "amountInStock",
     message: "In stock (empty this field to remove):",
-    validate: validation.validator(vschema.number().min(0).optional()),
+    filter: validation.argParser(vschema.number().min(0).optional()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.amountInStock);
     },
