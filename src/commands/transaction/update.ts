@@ -39,7 +39,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "title",
-    message: "Title",
+    message: "Title:",
     validate: validation.validator(vschema.string().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
