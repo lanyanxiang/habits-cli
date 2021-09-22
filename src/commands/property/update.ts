@@ -46,17 +46,26 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "description",
-    message: "Description:",
-    validate: validation.validator(vschema.string().required()),
+    message: "Description (empty this field to remove):",
+    validate: validation.validator(vschema.string().optional()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.description);
     },
   },
   {
-    type: "input",
+    type: "number",
     name: "amount",
     message: "Amount:",
     validate: validation.validator(vschema.number().required()),
+    when: (answers) => {
+      return answers.updateChoices.includes(UpdateChoices.amount);
+    },
+  },
+  {
+    type: "number",
+    name: "amountInStock",
+    message: "In stock (empty this field to remove):",
+    validate: validation.validator(vschema.number().min(0).optional()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.amount);
     },
