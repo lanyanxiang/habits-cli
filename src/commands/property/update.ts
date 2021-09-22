@@ -20,7 +20,21 @@ interface PromptAnswers {
   amountInStock?: string;
 }
 
-const promptQuestions: QuestionCollection<PromptAnswers> = [];
+const promptQuestions: QuestionCollection<PromptAnswers> = [
+  {
+    type: "checkbox",
+    name: "updateChoices",
+    message: "What fields would you like to update? (multiple select)",
+    choices: Object.values(UpdateChoices),
+    validate: validation.validator(
+      vschema
+        .array()
+        .of(vschema.string().oneOf(Object.values(UpdateChoices)))
+        .min(1)
+        .required()
+    ),
+  },
+];
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
