@@ -1,5 +1,5 @@
 import { QuestionCollection } from "inquirer";
-import { QuestionCommand } from "../../models";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { Argument, Option } from "commander";
 import { mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
@@ -107,11 +107,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     SuccessResponse | ErrorResponse | never
   > {
     if (!this.userInput?.transactionId) {
-      console.error("[Error] Please specify a transaction ID.");
-      // TODO Create a central error handler and a special type of error to
-      //  indicate command termination. Add a method to `Command` to throw this
-      //  new special error.
-      throw new Error("No transaction ID");
+      throw new RuntimeError("No transaction ID");
     }
 
     return await network.request(mainApi, {
