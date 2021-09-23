@@ -46,10 +46,10 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     },
   },
   {
-    type: "number",
+    type: "input",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validation.validator(vschema.number().propertyChange()),
+    filter: validation.validator(vschema.number().propertyChange()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.pointsChange);
     },
