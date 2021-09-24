@@ -1,8 +1,16 @@
 import { Option } from "commander";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import { mainApi, network, prompt, validation, vschema } from "../../services";
+import {
+  display,
+  mainApi,
+  network,
+  prompt,
+  validation,
+  vschema,
+} from "../../services";
 import { QuestionCommand, RuntimeError } from "../../models";
 import { QuestionCollection } from "inquirer";
+import chalk from "chalk";
 
 enum UpdateChoices {
   name = "name",
@@ -71,6 +79,16 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     },
   },
 ];
+
+const displayUpdateResult = (response: SuccessResponse) => {
+  const payload = response.data.payload;
+  const oldProperty = payload.updatedFrom;
+  const newProperty = payload.property;
+
+  console.log(chalk.cyan(chalk.bold(oldProperty.id)));
+
+  const table = display.table.createCompact();
+};
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
@@ -160,12 +178,10 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
-  private _displayUpdateResult(response: SuccessResponse) {}
-
   async run(): Promise<void> {
     await this._promptForPropertyId();
     await this.promptForInputs(promptQuestions);
     const response = await this._sendRequest();
-    this._displayUpdateResult(response);
+    displayUpdateResult(response);
   }
 }
