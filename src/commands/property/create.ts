@@ -1,6 +1,7 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
 import { validation, vschema } from "../../services";
+import { Option } from "commander";
 
 interface PromptAnswers {
   name: string;
@@ -33,6 +34,18 @@ export class CreateCommand extends QuestionCommand {
   name = "create";
   description = "create a new property";
   aliases = ["add"];
+
+  acceptOpts = [
+    new Option("-n, --name <name>", "new value for property name"),
+    new Option(
+      "-d, --description <description>",
+      "new value for property description"
+    ),
+    new Option(
+      "--in-stock <inStock>",
+      "new value for amount of in-stock properties"
+    ).argParser(validation.argParser(vschema.number().min(0))),
+  ];
 
   protected run(): void | Promise<void> {
     return undefined;
