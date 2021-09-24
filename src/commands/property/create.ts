@@ -18,8 +18,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "description",
-    message: "Description:",
-    suffix: "(optional)",
+    message: "Description (optional):",
     validate: validation.validator(vschema.string()),
   },
 ];
