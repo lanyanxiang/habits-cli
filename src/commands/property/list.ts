@@ -2,12 +2,7 @@ import { Command } from "../../models";
 import { Option } from "commander";
 import chalk from "chalk";
 import { display, mainApi, network, validation, vschema } from "../../services";
-import {
-  ErrorResponse,
-  RequestMethod,
-  SuccessResponse,
-  UserProperty,
-} from "../../types";
+import { RequestMethod, SuccessResponse, UserProperty } from "../../types";
 
 const displaySingleProperty = (property: UserProperty) => {
   const { id, name, description, amount, amountInStock } = property;
@@ -47,7 +42,7 @@ export class ListCommand extends Command {
     ).argParser(validation.argParser(vschema.number().pageLimit())),
   ];
 
-  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+  private async _sendRequest(): Promise<SuccessResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
 
@@ -67,9 +62,6 @@ export class ListCommand extends Command {
 
   protected async run(): Promise<void> {
     const response = await this._sendRequest();
-    if (response.isError) {
-      return;
-    }
     const properties = response.data.payload as UserProperty[];
     displayProperties(properties);
   }
