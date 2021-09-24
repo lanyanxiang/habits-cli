@@ -82,8 +82,8 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
 ];
 
 const pushUpdateResultRow = (
-  table: CliTable3.Table,
   rowTitle: string,
+  table: CliTable3.Table,
   oldValue: any,
   newValue: any
 ) => {
