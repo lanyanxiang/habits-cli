@@ -97,7 +97,10 @@ const displayUpdateResult = (response: SuccessResponse) => {
   const oldProperty = payload.updatedFrom;
   const newProperty = payload.property;
 
-  console.log(chalk.cyan(chalk.bold(oldProperty.id)));
+  console.log();
+  console.log(
+    chalk.cyan(chalk.bold(`Property "${newProperty.name}" (${oldProperty.id})`))
+  );
 
   const table = display.table.createCompact();
   pushUpdateResultRow("Name:", table, oldProperty.name, newProperty.name);
