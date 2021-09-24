@@ -11,6 +11,7 @@ import {
 import { QuestionCommand, RuntimeError } from "../../models";
 import { QuestionCollection } from "inquirer";
 import chalk from "chalk";
+import CliTable3 from "cli-table3";
 
 enum UpdateChoices {
   name = "name",
@@ -79,6 +80,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     },
   },
 ];
+
+const pushUpdateResultRow = (
+  table: CliTable3.Table,
+  rowTitle: string,
+  oldValue: any,
+  newValue: any,
+  fieldKey: string
+) => {};
 
 const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
