@@ -114,6 +114,7 @@ const displayUpdateResult = (response: SuccessResponse) => {
     oldProperty.amountInStock,
     newProperty.amountInStock
   );
+  display.table.print(table);
 };
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
