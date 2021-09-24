@@ -1,10 +1,21 @@
 import { QuestionCommand } from "../../models";
+import { QuestionCollection } from "inquirer";
+import { validation, vschema } from "../../services";
 
 interface PromptAnswers {
   name: string;
   description?: string;
   amountInStock?: number;
 }
+
+const promptQuestions: QuestionCollection<PromptAnswers> = [
+  {
+    type: "input",
+    name: "name",
+    message: "Property name:",
+    validate: validation.validator(vschema.string().min(1).max(50).required()),
+  },
+];
 
 export class CreateCommand extends QuestionCommand {
   name = "create";
