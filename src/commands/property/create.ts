@@ -1,7 +1,8 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
-import { validation, vschema } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { Option } from "commander";
+import { RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
   name: string;
@@ -61,6 +62,15 @@ export class CreateCommand extends QuestionCommand {
     }
 
     this.userInput = userInput;
+  }
+
+  private async _sendRequest(): Promise<SuccessResponse> {
+    return network.request(mainApi, {
+      uri: "/properties",
+      method: RequestMethod.POST,
+      data: this.userInput,
+      description: "Create property",
+    });
   }
 
   protected run(): void | Promise<void> {
