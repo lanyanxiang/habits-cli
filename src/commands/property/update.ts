@@ -1,5 +1,5 @@
 import { Option } from "commander";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import { RequestMethod, SuccessResponse } from "../../types";
 import {
   display,
   mainApi,
@@ -189,7 +189,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     }
   }
 
-  private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
+  private async _sendRequest(): Promise<SuccessResponse> {
     if (!this.userInput?.propertyId) {
       throw new RuntimeError("No property ID.");
     }
