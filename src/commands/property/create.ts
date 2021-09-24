@@ -47,6 +47,22 @@ export class CreateCommand extends QuestionCommand {
     ).argParser(validation.argParser(vschema.number().min(0))),
   ];
 
+  protected mapOptionsToInputs(): void | Promise<void> {
+    const userInput: Partial<PromptAnswers> = this.userInput || {};
+
+    if (this.opts.name) {
+      userInput.name = this.opts.name;
+    }
+    if (this.opts.description) {
+      userInput.description = this.opts.description;
+    }
+    if (this.opts.inStock) {
+      userInput.amountInStock = this.opts.inStock;
+    }
+
+    this.userInput = userInput;
+  }
+
   protected run(): void | Promise<void> {
     return undefined;
   }
