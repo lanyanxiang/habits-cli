@@ -73,7 +73,8 @@ export class CreateCommand extends QuestionCommand {
     });
   }
 
-  protected run(): void | Promise<void> {
-    return undefined;
+  protected async run(): Promise<void> {
+    await this.promptForInputs(promptQuestions);
+    await this._sendRequest();
   }
 }
