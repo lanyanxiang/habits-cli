@@ -15,6 +15,13 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     message: "Property name:",
     validate: validation.validator(vschema.string().min(1).max(50).required()),
   },
+  {
+    type: "input",
+    name: "description",
+    message: "Description:",
+    suffix: "(optional)",
+    validate: validation.validator(vschema.string()),
+  },
 ];
 
 export class CreateCommand extends QuestionCommand {
