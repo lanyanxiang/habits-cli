@@ -1,4 +1,7 @@
 import { Option } from "commander";
+import { QuestionCollection } from "inquirer";
+import chalk from "chalk";
+import CliTable3 from "cli-table3";
 import { RequestMethod, SuccessResponse } from "../../types";
 import {
   display,
@@ -9,9 +12,6 @@ import {
   vschema,
 } from "../../services";
 import { QuestionCommand, RuntimeError } from "../../models";
-import { QuestionCollection } from "inquirer";
-import chalk from "chalk";
-import CliTable3 from "cli-table3";
 
 enum UpdateChoices {
   name = "name",
