@@ -160,6 +160,8 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
+  private _displayUpdateResult(response: SuccessResponse) {}
+
   async run(): Promise<void> {
     await this._promptForPropertyId();
     await this.promptForInputs(promptQuestions);
