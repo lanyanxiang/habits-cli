@@ -114,6 +114,9 @@ const displayUpdateResult = (response: SuccessResponse) => {
     oldProperty.amountInStock,
     newProperty.amountInStock
   );
+  if (!table.length) {
+    console.log(chalk.bold("No changes applied."));
+  }
   display.table.print(table);
 };
 
