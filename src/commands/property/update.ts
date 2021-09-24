@@ -165,6 +165,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   async run(): Promise<void> {
     await this._promptForPropertyId();
     await this.promptForInputs(promptQuestions);
-    await this._sendRequest();
+    const response = await this._sendRequest();
+    this._displayUpdateResult(response);
   }
 }
