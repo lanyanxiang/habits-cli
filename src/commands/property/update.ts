@@ -85,9 +85,12 @@ const pushUpdateResultRow = (
   table: CliTable3.Table,
   rowTitle: string,
   oldValue: any,
-  newValue: any,
-  fieldKey: string
-) => {};
+  newValue: any
+) => {
+  if (oldValue !== newValue) {
+    table.push([rowTitle, oldValue, "->", newValue]);
+  }
+};
 
 const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
