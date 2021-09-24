@@ -46,7 +46,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "description",
-    message: "Description (empty this field to remove):",
+    message: "Description (leave empty to remove field):",
     validate: validation.validator(vschema.string().optional()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.description);
@@ -64,8 +64,8 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "amountInStock",
-    message: "In stock (empty this field to remove):",
-    filter: validation.argParser(vschema.number().min(0).optional()),
+    message: "In stock (enter a negative value to remove field):",
+    filter: validation.argParser(vschema.number().optional()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.amountInStock);
     },
