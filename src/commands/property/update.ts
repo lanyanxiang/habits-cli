@@ -100,6 +100,20 @@ const displayUpdateResult = (response: SuccessResponse) => {
   console.log(chalk.cyan(chalk.bold(oldProperty.id)));
 
   const table = display.table.createCompact();
+  pushUpdateResultRow("Name:", table, oldProperty.name, newProperty.name);
+  pushUpdateResultRow(
+    "Description:",
+    table,
+    oldProperty.description,
+    newProperty.description
+  );
+  pushUpdateResultRow("Amount:", table, oldProperty.amount, newProperty.amount);
+  pushUpdateResultRow(
+    "In stock:",
+    table,
+    oldProperty.amountInStock,
+    newProperty.amountInStock
+  );
 };
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
