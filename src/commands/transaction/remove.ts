@@ -22,6 +22,24 @@ const transactionIdRequiredQuestion = {
   validate: validation.validator(vschema.string().objectId().required()),
 };
 
+const printInstructions = () => {
+  console.log(
+    "Please enter the IDs of the transactions that you would like to remove.\n"
+  );
+  console.log(chalk.italic(chalk.bold("Instructions: ")));
+  console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
+  console.log(
+    `- Press ${chalk.cyan(
+      chalk.bold("enter")
+    )} without entering anything to finish.`
+  );
+  console.log(
+    `- Enter ${chalk.cyan(
+      chalk.bold("at least one")
+    )} transaction ID to remove.`
+  );
+};
+
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   name = "remove";
   description = "remove one or more transactions";
@@ -43,31 +61,13 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private _printInstructions() {
-    console.log(
-      "Please enter the IDs of the transactions that you would like to remove.\n"
-    );
-    console.log(chalk.italic(chalk.bold("Instructions: ")));
-    console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
-    console.log(
-      `- Press ${chalk.cyan(
-        chalk.bold("enter")
-      )} without entering anything to finish.`
-    );
-    console.log(
-      `- Enter ${chalk.cyan(
-        chalk.bold("at least one")
-      )} transaction ID to remove.`
-    );
-  }
-
   protected async promptForInputs(): Promise<void> {
     if (this.userInput?.transactionIds) {
       // This means transaction IDs were passed in using variadic arguments
       return;
     }
 
-    this._printInstructions();
+    printInstructions();
     console.log();
     const userInput = this.userInput || {};
     const { transactionId: initialTranId } = await prompt.show([
