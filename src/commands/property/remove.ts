@@ -112,7 +112,10 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
         break;
       }
 
-      const property = await this.promptProperty(remainingPropertyNames);
+      const property = await this.promptProperty([
+        "",
+        ...remainingPropertyNames,
+      ]);
       if (!property) {
         shouldContinuePrompting = false;
         break;
