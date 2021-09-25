@@ -19,8 +19,8 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
   {
     type: "input",
-    name: "pointsChange",
-    message: "Change in points:",
+    name: "amountChange",
+    message: "Change in amount:",
     filter: validation.argParser(vschema.number().propertyChange()),
   },
 ];
