@@ -90,7 +90,8 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     }
   }
 
-  protected run(): void | Promise<void> {
-    return undefined;
+  protected async run(): Promise<void> {
+    await this.promptForInputs();
+    await this._sendRequest();
   }
 }
