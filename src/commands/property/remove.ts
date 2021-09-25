@@ -52,6 +52,16 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
       return;
     }
 
+    // Fetch properties
+    const {
+      data: { payload: properties },
+    } = await network.request(mainApi, {
+      uri: "/properties",
+      method: RequestMethod.GET,
+      description: "Fetch your properties",
+      shouldClearSpinner: true,
+    });
+
     printInstructions();
     console.log();
     const userInput = this.userInput || {};
@@ -64,7 +74,6 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     while (shouldContinuePrompting) {
       const property = await prompt.selectProperty({
         message: promptMessage,
-        emptyText: true,
       });
       if (!property) {
         shouldContinuePrompting = false;
