@@ -1,7 +1,8 @@
-import { QuestionCommand } from "../../models";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { Argument } from "commander";
 import chalk from "chalk";
-import { prompt } from "../../services";
+import { mainApi, network, prompt } from "../../services";
+import { RequestMethod } from "../../types";
 
 interface PromptAnswers {
   /** Property IDs to perform delete on. */
@@ -75,7 +76,19 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private async _sendRequest(): Promise<void> {}
+  private async _sendRequest(): Promise<void> {
+    if (!this.userInput?.propertyIds) {
+      throw new RuntimeError("Please specify a property ID.");
+    }
+
+    for (const propertyId of this.userInput.propertyIds) {
+      await network.request(mainApi, {
+        uri: `/properties/${propertyId}`,
+        method: RequestMethod.DELETE,
+        description: `Remove property ${propertyId}`,
+      });
+    }
+  }
 
   protected run(): void | Promise<void> {
     return undefined;
