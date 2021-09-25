@@ -23,7 +23,7 @@ const printInstructions = () => {
   );
 };
 
-export class RemoveCommand extends QuestionCommand {
+export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   name = "remove";
   description = "remove one or more properties";
   aliases = ["delete", "rm"];
@@ -42,6 +42,13 @@ export class RemoveCommand extends QuestionCommand {
     }
 
     this.userInput = userInput;
+  }
+
+  protected async promptForInputs(): Promise<void> {
+    if (this.userInput?.propertyIds) {
+      // This means property IDs were passed in using variadic arguments
+      return;
+    }
   }
 
   protected run(): void | Promise<void> {
