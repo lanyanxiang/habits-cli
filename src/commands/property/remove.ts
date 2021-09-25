@@ -1,25 +1,26 @@
 import { QuestionCommand } from "../../models";
 import { Argument } from "commander";
 import chalk from "chalk";
+import { prompt } from "../../services";
 
 interface PromptAnswers {
   /** Property IDs to perform delete on. */
   propertyIds: string[];
 }
 
+const promptMessage = "Which property would you like to delete?";
+
 const printInstructions = () => {
-  console.log(
-    "Please enter the IDs of the properties that you would like to remove.\n"
-  );
+  console.log("Please enter the properties that you would like to remove.\n");
   console.log(chalk.italic(chalk.bold("Instructions: ")));
-  console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
+  console.log(`- Enter ${chalk.cyan(chalk.bold("one property"))} per row. `);
   console.log(
     `- Press ${chalk.cyan(
       chalk.bold("enter")
     )} without entering anything to finish.`
   );
   console.log(
-    `- Enter ${chalk.cyan(chalk.bold("at least one"))} property ID to remove.`
+    `- Enter ${chalk.cyan(chalk.bold("at least one"))} property to remove.`
   );
 };
 
@@ -49,6 +50,14 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
       // This means property IDs were passed in using variadic arguments
       return;
     }
+
+    printInstructions();
+    console.log();
+    const userInput = this.userInput || {};
+    const { id: initialPropId } = await prompt.selectProperty({
+      message: promptMessage,
+    });
+    userInput.propertyIds = [initialPropId!];
   }
 
   protected run(): void | Promise<void> {
