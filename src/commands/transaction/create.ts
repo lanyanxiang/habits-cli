@@ -7,7 +7,7 @@ import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 interface PromptAnswers {
   propertyId: string;
   title: string;
-  pointsChange: number;
+  amountChange: number;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
@@ -50,7 +50,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
       userInput.title = this.opts.title;
     }
     if (this.opts.points) {
-      userInput.pointsChange = Number(this.opts.points);
+      userInput.amountChange = Number(this.opts.amount);
     }
 
     this.userInput = userInput;
