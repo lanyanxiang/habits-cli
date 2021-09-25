@@ -186,9 +186,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   /** Prompt for property ID in `this.userInput`. */
   private async _promptForPropertyId(): Promise<void> {
     if (!this.userInput!.propertyId) {
-      const selectedProperty = await prompt.selectProperty(
-        "What property would you like to update?"
-      );
+      const selectedProperty = await prompt.selectProperty({
+        message: "What property would you like to update?",
+      });
       this.userInput!.propertyId = selectedProperty.id;
     }
   }
