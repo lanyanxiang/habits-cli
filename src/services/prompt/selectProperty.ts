@@ -20,7 +20,7 @@ const fetchProperties = async (): Promise<UserProperty[] | never> => {
  * Return the user-selected property, or throw an appropriate error.
  */
 export const selectProperty = async (
-  options?: Partial<AutocompleteQuestionOptions>
+  options?: Partial<Omit<AutocompleteQuestionOptions, "type">>
 ): Promise<Partial<UserProperty> | never> => {
   const properties = await fetchProperties();
   const propertyNames = properties.map((property) => property.name);
