@@ -5,6 +5,7 @@ import { mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
+  propertyId: string;
   title: string;
   pointsChange: number;
 }
@@ -31,9 +32,10 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["add"];
 
   acceptOpts = [
+    new Option("--property-id <propertyId>", "ID of the property involved"),
     new Option("-t, --title <title>", "title this transaction"),
     new Option(
-      "-p, --points <points>",
+      "-a, --amount <amount>",
       "change in points for this transaction"
     ),
   ];
