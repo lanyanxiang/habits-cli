@@ -21,7 +21,7 @@ const fetchProperties = async (): Promise<UserProperty[] | never> => {
  */
 export const selectProperty = async (
   options?: Partial<Omit<AutocompleteQuestionOptions, "type">>
-): Promise<Partial<UserProperty> | undefined | never> => {
+): Promise<Partial<UserProperty> | never> => {
   const properties = await fetchProperties();
   const propertyNames = properties.map((property) => property.name);
   const answer = await show([
@@ -38,5 +38,5 @@ export const selectProperty = async (
       },
     },
   ]);
-  return properties.find((property) => property.name === answer.propertyName);
+  return properties.find((property) => property.name === answer.propertyName)!;
 };
