@@ -1,7 +1,7 @@
 import { QuestionCommand, RuntimeError } from "../../models";
 import { Argument } from "commander";
 import chalk from "chalk";
-import { mainApi, network, prompt } from "../../services";
+import { mainApi, network } from "../../services";
 import { RequestMethod, UserProperty } from "../../types";
 import { show } from "../../services/prompt/show";
 import { matchSorter } from "match-sorter";
@@ -71,7 +71,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     const answer = await show([
       {
         name: "propertyName",
-        message: "Select a property:",
+        message: promptMessage,
         type: "autocomplete",
         source: (_, input) => {
           if (!input) {
@@ -92,19 +92,27 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
       return;
     }
 
+    // Get list of properties
+    await this.fetchProperties();
+    const propertyNames = this.properties.map((property) => property.name);
+
+    // Ask for initial property
     printInstructions();
     console.log();
-    const userInput = this.userInput || {};
-    const property = await prompt.selectProperty({
-      message: promptMessage,
-    });
-    userInput.propertyIds = [property!.id!];
+    const property = await this.promptProperty(propertyNames);
+    const userInput = { ...this.userInput, propertyIds: [property.id] };
 
     let shouldContinuePrompting = true;
     while (shouldContinuePrompting) {
-      const property = await prompt.selectProperty({
-        message: promptMessage,
-      });
+      const remainingPropertyNames = this.properties
+        .filter((property) => userInput.propertyIds.includes(property.id))
+        .map((property) => property.name);
+      if (!remainingPropertyNames.length) {
+        shouldContinuePrompting = false;
+        break;
+      }
+
+      const property = await this.promptProperty(remainingPropertyNames);
       if (!property) {
         shouldContinuePrompting = false;
         break;
