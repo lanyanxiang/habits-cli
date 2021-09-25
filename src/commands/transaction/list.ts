@@ -7,7 +7,7 @@ import chalk from "chalk";
 type ListResponsePayload = {
   id: string;
   title: string;
-  pointsChange: number;
+  amountChange: number;
   createdAt: string;
   updatedAt: string;
 }[];
