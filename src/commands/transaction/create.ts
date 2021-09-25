@@ -1,7 +1,7 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
-import { mainApi, network, validation, vschema } from "../../services";
+import { mainApi, network, prompt, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
@@ -66,6 +66,14 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
+    // Prompt for property selection if no option is specified.
+    if (!this.userInput?.propertyId) {
+      const property = await prompt.selectProperty({
+        message: "What property is involved in this transaction?",
+      });
+      this.userInput = { ...this.userInput, propertyId: property.id };
+    }
+    // Prompt for other inputs and send request.
     await this.promptForInputs(promptQuestions);
     await this._sendRequest();
   }
