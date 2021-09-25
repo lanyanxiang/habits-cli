@@ -43,6 +43,9 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = {};
 
+    if (this.opts.propertyId) {
+      userInput.propertyId = this.opts.propertyId;
+    }
     if (this.opts.title) {
       userInput.title = this.opts.title;
     }
