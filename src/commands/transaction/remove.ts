@@ -1,9 +1,8 @@
 import { Argument } from "commander";
 import chalk from "chalk";
-import { QuestionCommand } from "../../models";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { RequestMethod } from "../../types";
 import { mainApi, network, prompt, validation, vschema } from "../../services";
-import { RuntimeError } from "../../models/RuntimeError";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
