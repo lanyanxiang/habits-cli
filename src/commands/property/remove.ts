@@ -2,7 +2,9 @@ import { QuestionCommand, RuntimeError } from "../../models";
 import { Argument } from "commander";
 import chalk from "chalk";
 import { mainApi, network, prompt } from "../../services";
-import { RequestMethod } from "../../types";
+import { RequestMethod, UserProperty } from "../../types";
+import { show } from "../../services/prompt/show";
+import { matchSorter } from "match-sorter";
 
 interface PromptAnswers {
   /** Property IDs to perform delete on. */
@@ -29,6 +31,8 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   name = "remove";
   description = "remove one or more properties";
   aliases = ["delete", "rm"];
+  private properties: UserProperty[] = [];
+
   acceptArgs = [
     new Argument(
       "<propertyId...>",
@@ -46,13 +50,8 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  protected async promptForInputs(): Promise<void> {
-    if (this.userInput?.propertyIds) {
-      // This means property IDs were passed in using variadic arguments
-      return;
-    }
-
-    // Fetch properties
+  /** Fetch properties and save to `this.properties` array. */
+  async fetchProperties() {
     const {
       data: { payload: properties },
     } = await network.request(mainApi, {
@@ -61,6 +60,37 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
       description: "Fetch your properties",
       shouldClearSpinner: true,
     });
+    this.properties = properties;
+  }
+
+  /**
+   * Prompt for a property from `names`.
+   * @param names An array of property names available to be selected.
+   */
+  async promptProperty(names: string[]) {
+    const answer = await show([
+      {
+        name: "propertyName",
+        message: "Select a property:",
+        type: "autocomplete",
+        source: (_, input) => {
+          if (!input) {
+            return names;
+          }
+          return matchSorter(names, input);
+        },
+      },
+    ]);
+    return this.properties.find(
+      (property) => property.name === answer.propertyName
+    )!;
+  }
+
+  protected async promptForInputs(): Promise<void> {
+    if (this.userInput?.propertyIds) {
+      // This means property IDs were passed in using variadic arguments
+      return;
+    }
 
     printInstructions();
     console.log();
