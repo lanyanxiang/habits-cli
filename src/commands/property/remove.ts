@@ -75,6 +75,8 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
+  private async _sendRequest(): Promise<void> {}
+
   protected run(): void | Promise<void> {
     return undefined;
   }
