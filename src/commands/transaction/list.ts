@@ -48,11 +48,11 @@ export class ListCommand extends Command {
   private static _displayTransactions(response: SuccessResponse) {
     const transactions = response.data.payload as ListResponsePayload;
     const table = display.table.create({
-      head: ["NO.", "Title", "Points", "Created At"],
+      head: ["NO.", "Title", "Amount", "Created At"],
       colWidths: [5, 20, 10, 18],
       colAligns: ["left", "left", "right", "left"],
     });
-    transactions.forEach(({ id, title, pointsChange, createdAt }, index) => {
+    transactions.forEach(({ id, title, amountChange, createdAt }, index) => {
       table.push([
         {
           colSpan: 4,
@@ -63,7 +63,7 @@ export class ListCommand extends Command {
       table.push([
         index,
         title,
-        display.values.formatPointsChange(pointsChange),
+        display.values.formatPointsChange(amountChange),
         display.datetime.format(new Date(createdAt)),
       ]);
     });
