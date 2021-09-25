@@ -3,6 +3,7 @@ import { RequestMethod, UserProperty } from "../../types";
 import { network } from "../network";
 import { mainApi } from "../axios";
 import { show } from "./show";
+import { AutocompleteQuestionOptions } from "inquirer-autocomplete-prompt";
 
 const fetchProperties = async (): Promise<UserProperty[] | never> => {
   const response = await network.request(mainApi, {
@@ -19,15 +20,16 @@ const fetchProperties = async (): Promise<UserProperty[] | never> => {
  * Return the user-selected property, or throw an appropriate error.
  */
 export const selectProperty = async (
-  message?: string
+  options?: Partial<AutocompleteQuestionOptions>
 ): Promise<Partial<UserProperty> | never> => {
   const properties = await fetchProperties();
   const propertyNames = properties.map((property) => property.name);
   const answer = await show([
     {
-      type: "autocomplete",
       name: "propertyName",
-      message: message || "Select a property:",
+      message: "Select a property:",
+      ...options,
+      type: "autocomplete",
       source: (_, input) => {
         if (!input) {
           return propertyNames;
