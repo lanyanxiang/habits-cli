@@ -18,10 +18,10 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     default: "Untitled transaction",
   },
   {
-    type: "number",
+    type: "input",
     name: "pointsChange",
     message: "Change in points:",
-    validate: validation.validator(vschema.number().propertyChange()),
+    filter: validation.argParser(vschema.number().propertyChange()),
   },
 ];
 
