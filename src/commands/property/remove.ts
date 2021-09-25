@@ -55,10 +55,10 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     printInstructions();
     console.log();
     const userInput = this.userInput || {};
-    const { id: initialPropId } = await prompt.selectProperty({
+    const property = await prompt.selectProperty({
       message: promptMessage,
     });
-    userInput.propertyIds = [initialPropId!];
+    userInput.propertyIds = [property!.id!];
 
     let shouldContinuePrompting = true;
     while (shouldContinuePrompting) {
