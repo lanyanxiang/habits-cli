@@ -105,7 +105,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   async run(): Promise<void> {
     if (this.opts.propertyId && !this.userInput?.propertyId) {
       const property = await prompt.selectProperty({
-        message: "Please select a property to view its transactions:",
+        message: "Please select a property to view transactions:",
       });
       this.userInput = { propertyId: property.id };
     }
