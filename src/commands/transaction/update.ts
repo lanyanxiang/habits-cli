@@ -48,10 +48,10 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   {
     type: "input",
     name: "pointsChange",
-    message: "Change in points:",
+    message: "Change in amount:",
     filter: validation.validator(vschema.number().propertyChange()),
     when: (answers) => {
-      return answers.updateChoices.includes(UpdateChoices.pointsChange);
+      return answers.updateChoices.includes(UpdateChoices.amountChange);
     },
   },
 ];
@@ -69,7 +69,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   ];
   acceptOpts = [
     new Option("-t, --title <title>", "new title for the target transaction"),
-    new Option("-p, --points <points>", "new value for change in points"),
+    new Option("-a, --amount <points>", "new value for change in amount"),
   ];
 
   protected mapArgumentsToInputs(): void | Promise<void> {
