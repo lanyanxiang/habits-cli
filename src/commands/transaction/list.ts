@@ -16,6 +16,33 @@ type ListResponsePayload = {
   updatedAt: string;
 }[];
 
+const displayTransactions = (response: SuccessResponse) => {
+  const transactions = response.data.payload as ListResponsePayload;
+  const table = display.table.create({
+    head: ["NO.", "Title", "Amount", "Created At"],
+    colWidths: [5, 20, 10, 18],
+    colAligns: ["left", "left", "right", "left"],
+  });
+  transactions.forEach(
+    ({ id, title, amountChange, property, createdAt }, index) => {
+      table.push([
+        {
+          colSpan: 4,
+          hAlign: "center",
+          content: chalk.cyan(`Transaction ID ${id}`),
+        },
+      ]);
+      table.push([
+        index,
+        title,
+        display.values.formatPointsChange(amountChange),
+        display.datetime.format(new Date(createdAt)),
+      ]);
+    }
+  );
+  display.table.print(table);
+};
+
 export class ListCommand extends Command {
   name = "list";
   description = "list recent transactions";
@@ -49,38 +76,11 @@ export class ListCommand extends Command {
     });
   }
 
-  private static _displayTransactions(response: SuccessResponse) {
-    const transactions = response.data.payload as ListResponsePayload;
-    const table = display.table.create({
-      head: ["NO.", "Title", "Amount", "Created At"],
-      colWidths: [5, 20, 10, 18],
-      colAligns: ["left", "left", "right", "left"],
-    });
-    transactions.forEach(
-      ({ id, title, amountChange, property, createdAt }, index) => {
-        table.push([
-          {
-            colSpan: 4,
-            hAlign: "center",
-            content: chalk.cyan(`Transaction ID ${id}`),
-          },
-        ]);
-        table.push([
-          index,
-          title,
-          display.values.formatPointsChange(amountChange),
-          display.datetime.format(new Date(createdAt)),
-        ]);
-      }
-    );
-    display.table.print(table);
-  }
-
   async run(): Promise<void> {
     const response = await this._sendRequest();
     if (response.isError) {
       return;
     }
-    ListCommand._displayTransactions(response);
+    displayTransactions(response);
   }
 }
