@@ -1,5 +1,5 @@
 import { Option } from "commander";
-import { Command } from "../../models";
+import { QuestionCommand } from "../../models";
 import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import chalk from "chalk";
@@ -15,6 +15,10 @@ type ListResponsePayload = {
   createdAt: string;
   updatedAt: string;
 }[];
+
+interface PromptAnswers {
+  propertyId?: string;
+}
 
 const displayTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
@@ -44,7 +48,7 @@ const displayTransactions = (response: SuccessResponse) => {
   display.table.print(table);
 };
 
-export class ListCommand extends Command {
+export class ListCommand extends QuestionCommand<PromptAnswers> {
   name = "list";
   description = "list recent transactions";
   aliases = ["ls"];
