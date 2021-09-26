@@ -1,6 +1,6 @@
+import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand, RuntimeError } from "../../models";
-import { Argument, Option } from "commander";
 import { mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 

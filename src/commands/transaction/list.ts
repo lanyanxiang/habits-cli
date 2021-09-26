@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
 import {
@@ -9,7 +10,6 @@ import {
   vschema,
 } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import chalk from "chalk";
 
 type ListResponsePayload = {
   id: string;
