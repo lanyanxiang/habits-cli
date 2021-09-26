@@ -2,7 +2,7 @@ import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand, RuntimeError } from "../../models";
 import { display, mainApi, network, validation, vschema } from "../../services";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import { RequestMethod, SuccessResponse } from "../../types";
 import CliTable3 from "cli-table3";
 import chalk from "chalk";
 
@@ -149,9 +149,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private async _sendRequest(): Promise<
-    SuccessResponse | ErrorResponse | never
-  > {
+  private async _sendRequest(): Promise<SuccessResponse> {
     if (!this.userInput?.transactionId) {
       throw new RuntimeError("No transaction ID");
     }
@@ -169,6 +167,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
 
   async run(): Promise<void> {
     await this.promptForInputs(promptQuestions);
-    await this._sendRequest();
+    const response = await this._sendRequest();
+    await displayUpdateResult(response);
   }
 }
