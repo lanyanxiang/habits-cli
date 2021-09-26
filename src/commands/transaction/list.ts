@@ -57,6 +57,9 @@ export class ListCommand extends Command {
       "-l, --limit <limit>",
       "number of transactions to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
+    new Option("-p, --property-id [propertyId]").argParser(
+      validation.argParser(vschema.string().objectId())
+    ),
   ];
 
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
