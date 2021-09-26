@@ -66,6 +66,15 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
     ),
   ];
 
+  protected mapOptionsToInputs(): void | Promise<void> {
+    if (
+      this.opts.propertyId &&
+      vschema.string().objectId().isValidSync(this.opts.propertyId)
+    ) {
+      this.userInput = { propertyId: this.opts.propertyId };
+    }
+  }
+
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
