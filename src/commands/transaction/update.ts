@@ -13,7 +13,7 @@ interface PromptAnswers {
   transactionId: string;
   updateChoices: UpdateChoices[];
   title?: string;
-  pointsChange?: number;
+  amountChange?: number;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
