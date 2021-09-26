@@ -19,15 +19,15 @@ type ListResponsePayload = {
 const displayTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
   const table = display.table.create({
-    head: ["NO.", "Title", "Amount", "Created At"],
-    colWidths: [5, 20, 10, 18],
-    colAligns: ["left", "left", "right", "left"],
+    head: ["#", "Title", "Amount", "Property", "Created At"],
+    colWidths: [3, 18, 10, 12, 17],
+    colAligns: ["left", "left", "right", "left", "left"],
   });
   transactions.forEach(
     ({ id, title, amountChange, property, createdAt }, index) => {
       table.push([
         {
-          colSpan: 4,
+          colSpan: 5,
           hAlign: "center",
           content: chalk.cyan(`Transaction ID ${id}`),
         },
@@ -36,6 +36,7 @@ const displayTransactions = (response: SuccessResponse) => {
         index,
         title,
         display.values.formatPointsChange(amountChange),
+        property.name,
         display.datetime.format(new Date(createdAt)),
       ]);
     }
