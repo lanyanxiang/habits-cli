@@ -82,6 +82,20 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
     }
   }
 
+  /**
+   * Prompt for property ID if a property option is specified, but
+   * an ID is not provided. e.g., when running `habits property ls -p`.
+   * @private
+   */
+  private async _promptForProperty(): Promise<void> {
+    if (this.opts.propertyId && !this.userInput?.propertyId) {
+      const property = await prompt.selectProperty({
+        message: "Please select a property to view transactions:",
+      });
+      this.userInput = { propertyId: property.id };
+    }
+  }
+
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
@@ -103,12 +117,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    if (this.opts.propertyId && !this.userInput?.propertyId) {
-      const property = await prompt.selectProperty({
-        message: "Please select a property to view transactions:",
-      });
-      this.userInput = { propertyId: property.id };
-    }
+    await this._promptForProperty();
     const response = await this._sendRequest();
     if (response.isError) {
       return;
