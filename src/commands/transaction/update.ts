@@ -91,9 +91,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
       updateChoices.push(UpdateChoices.title);
     }
 
-    if (this.opts.points) {
-      userInput.pointsChange = Number(this.opts.points);
-      updateChoices.push(UpdateChoices.pointsChange);
+    if (this.opts.amount) {
+      userInput.amountChange = Number(this.opts.points);
+      updateChoices.push(UpdateChoices.amountChange);
     }
 
     if (updateChoices.length) {
