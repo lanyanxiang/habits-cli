@@ -49,7 +49,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "amountChange",
     message: "Change in amount:",
-    filter: validation.validator(vschema.number().propertyChange().required()),
+    filter: validation.argParser(vschema.number().propertyChange().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.amountChange);
     },
