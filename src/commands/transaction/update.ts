@@ -6,7 +6,7 @@ import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 enum UpdateChoices {
   title = "title",
-  pointsChange = "change in points",
+  amountChange = "change in points",
 }
 
 interface PromptAnswers {
