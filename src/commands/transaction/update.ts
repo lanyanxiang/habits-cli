@@ -1,8 +1,10 @@
 import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import { QuestionCommand, RuntimeError } from "../../models";
-import { mainApi, network, validation, vschema } from "../../services";
+import { display, mainApi, network, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import CliTable3 from "cli-table3";
+import chalk from "chalk";
 
 enum UpdateChoices {
   title = "title",
@@ -55,6 +57,44 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     },
   },
 ];
+
+const pushUpdateResultRow = (
+  rowTitle: string,
+  table: CliTable3.Table,
+  oldValue: any,
+  newValue: any
+) => {
+  if (oldValue !== newValue) {
+    table.push([rowTitle, oldValue, "->", newValue]);
+  }
+};
+
+const displayUpdateResult = (response: SuccessResponse) => {
+  const payload = response.data.payload;
+  const oldTransaction = payload.updatedFrom;
+  const newTransaction = payload.transaction;
+
+  console.log();
+  console.log(chalk.cyan(chalk.bold(`Transaction ID ${oldTransaction.id}`)));
+
+  const table = display.table.createCompact();
+  pushUpdateResultRow(
+    "Title:",
+    table,
+    oldTransaction.title,
+    newTransaction.title
+  );
+  pushUpdateResultRow(
+    "Change in amount:",
+    table,
+    oldTransaction.amountChange,
+    newTransaction.amountChange
+  );
+  if (!table.length) {
+    console.log(chalk.bold("No changes applied."));
+  }
+  display.table.print(table);
+};
 
 export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
