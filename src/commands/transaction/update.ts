@@ -68,8 +68,14 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     ).argOptional(),
   ];
   acceptOpts = [
-    new Option("-t, --title <title>", "new title for the target transaction"),
-    new Option("-a, --amount <points>", "new value for change in amount"),
+    new Option(
+      "-t, --title <title>",
+      "new title for the target transaction"
+    ).argParser(validation.argParser(vschema.string().min(2).max(80))),
+    new Option(
+      "-a, --amount <points>",
+      "new value for change in amount"
+    ).argParser(validation.argParser(vschema.number().notOneOf([0]))),
   ];
 
   protected mapArgumentsToInputs(): void | Promise<void> {
@@ -92,7 +98,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     }
 
     if (this.opts.amount) {
-      userInput.amountChange = Number(this.opts.points);
+      userInput.amountChange = this.opts.points;
       updateChoices.push(UpdateChoices.amountChange);
     }
 
