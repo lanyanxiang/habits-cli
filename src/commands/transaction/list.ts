@@ -1,6 +1,13 @@
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
-import { display, mainApi, network, validation, vschema } from "../../services";
+import {
+  display,
+  mainApi,
+  network,
+  prompt,
+  validation,
+  vschema,
+} from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import chalk from "chalk";
 
@@ -78,6 +85,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
+    const propertyId = this.userInput?.propertyId;
 
     return await network.request(mainApi, {
       uri: "/transactions",
@@ -86,6 +94,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
         params: {
           skip,
           limit,
+          propertyId,
         },
       },
       description: "Fetch transactions",
@@ -94,6 +103,12 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
+    if (this.opts.propertyId && !this.userInput?.propertyId) {
+      const property = await prompt.selectProperty({
+        message: "Please select a property to view its transactions:",
+      });
+      this.userInput = { propertyId: property.id };
+    }
     const response = await this._sendRequest();
     if (response.isError) {
       return;
