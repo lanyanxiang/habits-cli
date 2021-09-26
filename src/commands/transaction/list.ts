@@ -8,6 +8,10 @@ type ListResponsePayload = {
   id: string;
   title: string;
   amountChange: number;
+  property: {
+    id: string;
+    name: string;
+  };
   createdAt: string;
   updatedAt: string;
 }[];
@@ -52,21 +56,23 @@ export class ListCommand extends Command {
       colWidths: [5, 20, 10, 18],
       colAligns: ["left", "left", "right", "left"],
     });
-    transactions.forEach(({ id, title, amountChange, createdAt }, index) => {
-      table.push([
-        {
-          colSpan: 4,
-          hAlign: "center",
-          content: chalk.cyan(`Transaction ID ${id}`),
-        },
-      ]);
-      table.push([
-        index,
-        title,
-        display.values.formatPointsChange(amountChange),
-        display.datetime.format(new Date(createdAt)),
-      ]);
-    });
+    transactions.forEach(
+      ({ id, title, amountChange, property, createdAt }, index) => {
+        table.push([
+          {
+            colSpan: 4,
+            hAlign: "center",
+            content: chalk.cyan(`Transaction ID ${id}`),
+          },
+        ]);
+        table.push([
+          index,
+          title,
+          display.values.formatPointsChange(amountChange),
+          display.datetime.format(new Date(createdAt)),
+        ]);
+      }
+    );
     display.table.print(table);
   }
 
