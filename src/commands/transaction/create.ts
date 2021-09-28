@@ -1,12 +1,13 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
 import { QuestionCommand } from "../../models";
-import { mainApi, network, validation, vschema } from "../../services";
+import { mainApi, network, prompt, validation, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 
 interface PromptAnswers {
+  propertyId: string;
   title: string;
-  pointsChange: number;
+  amountChange: number;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
@@ -18,10 +19,10 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     default: "Untitled transaction",
   },
   {
-    type: "number",
-    name: "pointsChange",
-    message: "Change in points:",
-    validate: validation.validator(vschema.number().propertyChange()),
+    type: "input",
+    name: "amountChange",
+    message: "Change in amount:",
+    filter: validation.argParser(vschema.number().propertyChange()),
   },
 ];
 
@@ -31,9 +32,10 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["add"];
 
   acceptOpts = [
+    new Option("--property-id <propertyId>", "ID of the property involved"),
     new Option("-t, --title <title>", "title this transaction"),
     new Option(
-      "-p, --points <points>",
+      "-a, --amount <amount>",
       "change in points for this transaction"
     ),
   ];
@@ -41,11 +43,14 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   protected mapOptionsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = {};
 
+    if (this.opts.propertyId) {
+      userInput.propertyId = this.opts.propertyId;
+    }
     if (this.opts.title) {
       userInput.title = this.opts.title;
     }
     if (this.opts.points) {
-      userInput.pointsChange = Number(this.opts.points);
+      userInput.amountChange = Number(this.opts.amount);
     }
 
     this.userInput = userInput;
@@ -61,6 +66,14 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
+    // Prompt for property selection if no option is specified.
+    if (!this.userInput?.propertyId) {
+      const property = await prompt.selectProperty({
+        message: "What property is involved in this transaction?",
+      });
+      this.userInput = { ...this.userInput, propertyId: property.id };
+    }
+    // Prompt for other inputs and send request.
     await this.promptForInputs(promptQuestions);
     await this._sendRequest();
   }

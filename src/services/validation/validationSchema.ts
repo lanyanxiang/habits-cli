@@ -17,7 +17,14 @@ declare module "yup" {
   }
 
   interface NumberSchema {
+    /** Represents a change in property amount. */
     propertyChange(): this;
+
+    /** Limit parameter for pagination with habits-restapi. */
+    pageLimit(): this;
+
+    /** Skip parameter for pagination with habits-restapi. */
+    pageSkip(): this;
   }
 }
 
@@ -33,12 +40,22 @@ function objectId(this: yup.StringSchema) {
 function propertyChange(this: yup.NumberSchema) {
   return this.notOneOf(
     [0],
-    "Change in property value cannot be 0. Enter a positive " +
-      "number to add value, and a negative number to reduce value."
+    "Change in property amount cannot be 0. Enter a positive " +
+      "number to add amount, and a negative number to reduce amount."
   );
+}
+
+function pageLimit(this: yup.NumberSchema) {
+  return this.label("limit").integer().min(1);
+}
+
+function pageSkip(this: yup.NumberSchema) {
+  return this.label("skip").integer().min(1);
 }
 
 yup.addMethod(yup.string, "objectId", objectId);
 yup.addMethod(yup.number, "propertyChange", propertyChange);
+yup.addMethod(yup.number, "pageLimit", pageLimit);
+yup.addMethod(yup.number, "pageSkip", pageSkip);
 
 export { yup as schema };

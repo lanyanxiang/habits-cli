@@ -85,7 +85,7 @@ export class CommandGroup extends Command {
     return this.rawArgs.slice(0, 1);
   }
 
-  run(): void | Promise<void> {
+  async run(): Promise<void> {
     const subcommandName = this.args[0]; // By argument definition.
     const subcommandArgs = this.rawArgs.slice(1);
 
@@ -96,6 +96,6 @@ export class CommandGroup extends Command {
       );
     }
     const subcommand = this._subcommands_map[subcommandName];
-    subcommand.start(subcommandArgs);
+    await subcommand.start(subcommandArgs);
   }
 }

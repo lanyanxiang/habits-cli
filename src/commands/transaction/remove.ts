@@ -1,6 +1,6 @@
 import { Argument } from "commander";
 import chalk from "chalk";
-import { QuestionCommand } from "../../models";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { RequestMethod } from "../../types";
 import { mainApi, network, prompt, validation, vschema } from "../../services";
 
@@ -20,6 +20,24 @@ const transactionIdQuestion = {
 const transactionIdRequiredQuestion = {
   ...transactionIdQuestion,
   validate: validation.validator(vschema.string().objectId().required()),
+};
+
+const printInstructions = () => {
+  console.log(
+    "Please enter the IDs of the transactions that you would like to remove.\n"
+  );
+  console.log(chalk.italic(chalk.bold("Instructions: ")));
+  console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
+  console.log(
+    `- Press ${chalk.cyan(
+      chalk.bold("enter")
+    )} without entering anything to finish.`
+  );
+  console.log(
+    `- Enter ${chalk.cyan(
+      chalk.bold("at least one")
+    )} transaction ID to remove.`
+  );
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
@@ -43,31 +61,13 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private _printInstructions() {
-    console.log(
-      "Please enter the IDs of the transactions that you would like to remove.\n"
-    );
-    console.log(chalk.italic(chalk.bold("Instructions: ")));
-    console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
-    console.log(
-      `- Press ${chalk.cyan(
-        chalk.bold("enter")
-      )} without entering anything to finish.`
-    );
-    console.log(
-      `- Enter ${chalk.cyan(
-        chalk.bold("at least one")
-      )} transaction ID to remove.`
-    );
-  }
-
   protected async promptForInputs(): Promise<void> {
     if (this.userInput?.transactionIds) {
       // This means transaction IDs were passed in using variadic arguments
       return;
     }
 
-    this._printInstructions();
+    printInstructions();
     console.log();
     const userInput = this.userInput || {};
     const { transactionId: initialTranId } = await prompt.show([
@@ -93,11 +93,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
 
   private async _sendRequest(): Promise<void> {
     if (!this.userInput?.transactionIds) {
-      console.error("[Error] Please specify a transaction ID.");
-      // TODO Create a central error handler and a special type of error to
-      //  indicate command termination. Add a method to `Command` to throw this
-      //  new special error.
-      throw new Error("No transaction ID");
+      throw new RuntimeError("Please specify a transaction ID.");
     }
 
     for (const transactionId of this.userInput.transactionIds) {
