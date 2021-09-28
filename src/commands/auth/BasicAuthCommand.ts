@@ -1,3 +1,4 @@
+import { QuestionCollection } from "inquirer";
 import { QuestionCommand } from "../../models";
 import { ErrorResponse, SecretType, SuccessResponse } from "../../types";
 import { spinners, storage } from "../../services";
@@ -8,6 +9,8 @@ import { spinners, storage } from "../../services";
 export abstract class BasicAuthCommand<
   T extends Record<string, any>
 > extends QuestionCommand<T> {
+  protected abstract promptQuestions: QuestionCollection<T>;
+
   /** Send a request to the endpoint, using `this.userInput`, and return response. */
   protected abstract sendRequest(): Promise<SuccessResponse | ErrorResponse>;
 
@@ -30,8 +33,7 @@ export abstract class BasicAuthCommand<
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
+    await this.promptForInputs(this.promptQuestions);
 
     const response = await this.sendRequest();
     if (response.isError) {

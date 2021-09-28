@@ -23,8 +23,6 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
   description = "sign out of your habits account";
   aliases: string[] = ["logout"];
 
-  protected promptQuestions = promptQuestions;
-
   acceptOpts = [new Option("-y, --yes", "proceed without confirmation")];
 
   protected mapOptionsToInputs(): void | Promise<void> {
@@ -50,8 +48,7 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     if (!this.userInput?.shouldContinue) {
       console.log(
         chalk.red(

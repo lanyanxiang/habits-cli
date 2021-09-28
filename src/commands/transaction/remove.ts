@@ -1,27 +1,43 @@
 import { Argument } from "commander";
-import { requiredValidator } from "../../utils";
-import { QuestionCommand } from "../../models";
-import { RequestMethod } from "../../types";
-import { mainApi, network } from "../../services";
-import { inquirer } from "../../services/inquirer";
 import chalk from "chalk";
+import { QuestionCommand, RuntimeError } from "../../models";
+import { RequestMethod } from "../../types";
+import { mainApi, network, prompt, validation, vschema } from "../../services";
 
 interface PromptAnswers {
   /** Transaction IDs to perform delete on. */
   transactionIds: string[];
 }
 
-// TODO Add validation for object IDs
 const transactionIdQuestion = {
   type: "input",
   // Note the missing "s", in comparison to the `transactionIds`
   // key in `PromptAnswers`.
   name: "transactionId",
   message: "Transaction ID:",
+  validate: validation.validator(vschema.string().objectId()),
 };
 const transactionIdRequiredQuestion = {
   ...transactionIdQuestion,
-  validate: requiredValidator,
+  validate: validation.validator(vschema.string().objectId().required()),
+};
+
+const printInstructions = () => {
+  console.log(
+    "Please enter the IDs of the transactions that you would like to remove.\n"
+  );
+  console.log(chalk.italic(chalk.bold("Instructions: ")));
+  console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
+  console.log(
+    `- Press ${chalk.cyan(
+      chalk.bold("enter")
+    )} without entering anything to finish.`
+  );
+  console.log(
+    `- Enter ${chalk.cyan(
+      chalk.bold("at least one")
+    )} transaction ID to remove.`
+  );
 };
 
 export class RemoveCommand extends QuestionCommand<PromptAnswers> {
@@ -35,10 +51,6 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     ).argOptional(),
   ];
 
-  // We do not use the default prompt questions method here, so we pass
-  // in empty array.
-  protected promptQuestions = [];
-
   protected mapArgumentsToInputs(): void | Promise<void> {
     const userInput: Partial<PromptAnswers> = this.userInput || {};
 
@@ -49,34 +61,16 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     this.userInput = userInput;
   }
 
-  private _printInstructions() {
-    console.log(
-      "Please enter the IDs of the transactions that you would like to remove.\n"
-    );
-    console.log(chalk.italic(chalk.bold("Instructions: ")));
-    console.log(`- Enter ${chalk.cyan(chalk.bold("one ID"))} per row. `);
-    console.log(
-      `- Press ${chalk.cyan(
-        chalk.bold("enter")
-      )} without entering anything to finish.`
-    );
-    console.log(
-      `- Enter ${chalk.cyan(
-        chalk.bold("at least one")
-      )} transaction ID to remove.`
-    );
-  }
-
   protected async promptForInputs(): Promise<void> {
     if (this.userInput?.transactionIds) {
       // This means transaction IDs were passed in using variadic arguments
       return;
     }
 
-    this._printInstructions();
+    printInstructions();
     console.log();
     const userInput = this.userInput || {};
-    const { transactionId: initialTranId } = await inquirer.prompt([
+    const { transactionId: initialTranId } = await prompt.show([
       transactionIdRequiredQuestion,
     ]);
     userInput.transactionIds = [initialTranId];
@@ -85,7 +79,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
      * set user input when this value is `true`. */
     let shouldContinuePrompting = true;
     while (shouldContinuePrompting) {
-      const { transactionId } = await inquirer.prompt([transactionIdQuestion]);
+      const { transactionId } = await prompt.show([transactionIdQuestion]);
       if (!transactionId?.length) {
         // An empty transaction ID will make the program stop asking for more.
         shouldContinuePrompting = false;
@@ -99,11 +93,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
 
   private async _sendRequest(): Promise<void> {
     if (!this.userInput?.transactionIds) {
-      console.error("[Error] Please specify a transaction ID.");
-      // TODO Create a central error handler and a special type of error to
-      //  indicate command termination. Add a method to `Command` to throw this
-      //  new special error.
-      throw new Error("No transaction ID");
+      throw new RuntimeError("Please specify a transaction ID.");
     }
 
     for (const transactionId of this.userInput.transactionIds) {
@@ -116,7 +106,6 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInputs();
     await this.promptForInputs();
     await this._sendRequest();
   }

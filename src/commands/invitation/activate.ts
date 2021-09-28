@@ -1,8 +1,7 @@
 import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
-import { validation } from "../../utils";
 import { Argument } from "commander";
-import { display, mainApi, network } from "../../services";
+import { display, mainApi, network, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
 import chalk from "chalk";
 
@@ -15,8 +14,8 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: (input, _) => {
-      if (validation.isEmail(input)) {
+    validate: (input) => {
+      if (vschema.string().email().isValidSync(input)) {
         return true;
       }
       return "Please enter a valid email address.";
@@ -28,11 +27,9 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
   name = "activate";
   description = "activate your invitation";
 
-  protected promptQuestions = promptQuestions;
-
   acceptArgs = [new Argument("email").argOptional()];
 
-  protected mapArgumentsToInput() {
+  protected mapArgumentsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
 
     if (this.args.length) {
@@ -88,8 +85,7 @@ export class ActivateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInput();
-    await this.promptForInputs();
+    await this.promptForInputs(promptQuestions);
     const response = await this._sendRequest();
     if (response.isError) {
       return;

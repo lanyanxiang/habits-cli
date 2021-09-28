@@ -11,8 +11,8 @@ export class CommandGroup extends Command {
   // This class represents a group of commands (or even group of
   // group of commands), so excess arguments and excess options
   // should be passed to the commands handling them.
-  allowExcessArguments: boolean = true;
-  allowUnknownOption: boolean = true;
+  allowExcessArguments = true;
+  allowUnknownOption = true;
 
   constructor(public name: string, public description: string) {
     super();
@@ -85,7 +85,7 @@ export class CommandGroup extends Command {
     return this.rawArgs.slice(0, 1);
   }
 
-  run(): void | Promise<void> {
+  async run(): Promise<void> {
     const subcommandName = this.args[0]; // By argument definition.
     const subcommandArgs = this.rawArgs.slice(1);
 
@@ -96,6 +96,6 @@ export class CommandGroup extends Command {
       );
     }
     const subcommand = this._subcommands_map[subcommandName];
-    subcommand.init(subcommandArgs).run();
+    await subcommand.start(subcommandArgs);
   }
 }

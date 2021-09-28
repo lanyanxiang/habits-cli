@@ -1,16 +1,17 @@
+import { QuestionCollection } from "inquirer";
 import { Command } from "./Command";
-import inquirer, { QuestionCollection } from "inquirer";
+import { prompt } from "../services";
 
 /**
- * A blueprint for command that simply prompts for user inputs once, then move on
- * to other tasks.
+ * A blueprint for command that prompts the user for questions.
+ * This abstract class provides a structure to storing and prompting for user
+ * inputs.
  * <br/> Please pass in the structure of user input (key-value) as T.
  */
 export abstract class QuestionCommand<
-  T extends Record<string, any>
+  T extends Record<string, any> = any
 > extends Command {
   protected userInput: Partial<T> | undefined;
-  protected abstract promptQuestions: QuestionCollection<T>;
 
   /** Process `this.opts` and set `this.userInput`. */
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -20,11 +21,18 @@ export abstract class QuestionCommand<
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected mapArgumentsToInputs(): void | Promise<void> {}
 
-  /** Display `promptQuestions` with `this.userInput` as the default. */
-  protected async promptForInputs() {
-    this.userInput = await inquirer.prompt<T>(
-      this.promptQuestions,
-      this.userInput
-    );
+  protected commandDidInit() {
+    super.commandDidInit();
+    this.mapOptionsToInputs();
+    this.mapArgumentsToInputs();
+  }
+
+  /** Display `questions` with `this.userInput` as the default.
+   * Set the answers to `this.userInput`. If you want to manage how
+   * the prompt result is used, please refer to the `prompt` api directly. */
+  protected async promptForInputs(
+    questions: QuestionCollection<T>
+  ): Promise<void> {
+    this.userInput = await prompt.show<T>(questions, this.userInput);
   }
 }

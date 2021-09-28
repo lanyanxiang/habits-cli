@@ -1,8 +1,7 @@
 import { QuestionCollection } from "inquirer";
-import { requiredValidator, validation } from "../../utils";
 import { Option } from "commander";
 import { BasicAuthCommand } from "./BasicAuthCommand";
-import { mainApi, network } from "../../services";
+import { mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod } from "../../types";
 
 interface PromptAnswers {
@@ -17,19 +16,14 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: (input, _) => {
-      if (validation.isEmail(input)) {
-        return true;
-      }
-      return "Please enter a valid email address.";
-    },
+    validate: validation.validator(vschema.string().email().required()),
   },
   {
     type: "password",
     name: "password",
     message: "New Password:",
     mask: "*",
-    validate: requiredValidator,
+    validate: validation.validator(vschema.string().required()),
   },
   {
     type: "password",
@@ -47,13 +41,13 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "firstName",
     message: "First Name:",
-    validate: requiredValidator,
+    validate: validation.validator(vschema.string().required()),
   },
   {
     type: "input",
     name: "lastName",
     message: "Last Name:",
-    validate: requiredValidator,
+    validate: validation.validator(vschema.string().required()),
   },
 ];
 
@@ -71,7 +65,10 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
 
   protected mapOptionsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
-    if (this.opts.email && validation.isEmail(this.opts.email)) {
+    if (
+      this.opts.email &&
+      vschema.string().email().isValidSync(this.opts.email)
+    ) {
       userInput.email = this.opts.email;
     }
     if (this.opts.firstName?.length) {

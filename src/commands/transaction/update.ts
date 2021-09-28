@@ -1,20 +1,21 @@
-import { QuestionCollection } from "inquirer";
-import { QuestionCommand } from "../../models";
-import { pointsChangeValidator, requiredValidator } from "../../utils";
 import { Argument, Option } from "commander";
-import { mainApi, network } from "../../services";
-import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
+import { QuestionCollection } from "inquirer";
+import { QuestionCommand, RuntimeError } from "../../models";
+import { display, mainApi, network, validation, vschema } from "../../services";
+import { RequestMethod, SuccessResponse } from "../../types";
+import CliTable3 from "cli-table3";
+import chalk from "chalk";
 
 enum UpdateChoices {
   title = "title",
-  pointsChange = "change in points",
+  amountChange = "change in points",
 }
 
 interface PromptAnswers {
   transactionId: string;
   updateChoices: UpdateChoices[];
   title?: string;
-  pointsChange?: number;
+  amountChange?: number;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
@@ -22,42 +23,83 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "transactionId",
     message: "Transaction ID:",
-    // TODO Add validation for object IDs
-    validate: requiredValidator,
+    validate: validation.validator(vschema.string().objectId().required()),
   },
   {
     type: "checkbox",
     name: "updateChoices",
     message: "What fields would you like to update? (multiple select)",
     choices: Object.values(UpdateChoices),
-    validate: requiredValidator,
+    validate: validation.validator(
+      vschema
+        .array()
+        .of(vschema.string().oneOf(Object.values(UpdateChoices)))
+        .min(1)
+        .required()
+    ),
   },
   {
     type: "input",
     name: "title",
-    message: "Title",
-    validate: requiredValidator,
+    message: "Title:",
+    validate: validation.validator(vschema.string().required()),
     when: (answers) => {
       return answers.updateChoices.includes(UpdateChoices.title);
     },
   },
   {
-    type: "number",
-    name: "pointsChange",
-    message: "Change in points:",
-    validate: pointsChangeValidator,
+    type: "input",
+    name: "amountChange",
+    message: "Change in amount:",
+    filter: validation.argParser(vschema.number().propertyChange().required()),
     when: (answers) => {
-      return answers.updateChoices.includes(UpdateChoices.pointsChange);
+      return answers.updateChoices.includes(UpdateChoices.amountChange);
     },
   },
 ];
 
-export class UpdateCommand extends QuestionCommand<any> {
+const pushUpdateResultRow = (
+  rowTitle: string,
+  table: CliTable3.Table,
+  oldValue: any,
+  newValue: any
+) => {
+  if (oldValue !== newValue) {
+    table.push([rowTitle, oldValue, "->", newValue]);
+  }
+};
+
+const displayUpdateResult = (response: SuccessResponse) => {
+  const payload = response.data.payload;
+  const oldTransaction = payload.updatedFrom;
+  const newTransaction = payload.transaction;
+
+  console.log();
+  console.log(chalk.cyan(chalk.bold(`Transaction ID ${oldTransaction.id}`)));
+
+  const table = display.table.createCompact();
+  pushUpdateResultRow(
+    "Title:",
+    table,
+    oldTransaction.title,
+    newTransaction.title
+  );
+  pushUpdateResultRow(
+    "Change in amount:",
+    table,
+    oldTransaction.amountChange,
+    newTransaction.amountChange
+  );
+  if (!table.length) {
+    console.log(chalk.bold("No changes applied."));
+  }
+  display.table.print(table);
+};
+
+export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   name = "update";
   description = "update a transaction";
   aliases = ["change"];
-
-  protected promptQuestions = promptQuestions;
 
   acceptArgs = [
     new Argument(
@@ -66,8 +108,14 @@ export class UpdateCommand extends QuestionCommand<any> {
     ).argOptional(),
   ];
   acceptOpts = [
-    new Option("-t, --title <title>", "new title for the target transaction"),
-    new Option("-p, --points <points>", "new value for change in points"),
+    new Option(
+      "-t, --title <title>",
+      "new title for the target transaction"
+    ).argParser(validation.argParser(vschema.string().min(2).max(80))),
+    new Option(
+      "-a, --amount <points>",
+      "new value for change in amount"
+    ).argParser(validation.argParser(vschema.number().propertyChange())),
   ];
 
   protected mapArgumentsToInputs(): void | Promise<void> {
@@ -89,9 +137,9 @@ export class UpdateCommand extends QuestionCommand<any> {
       updateChoices.push(UpdateChoices.title);
     }
 
-    if (this.opts.points) {
-      userInput.pointsChange = Number(this.opts.points);
-      updateChoices.push(UpdateChoices.pointsChange);
+    if (this.opts.amount) {
+      userInput.amountChange = this.opts.points;
+      updateChoices.push(UpdateChoices.amountChange);
     }
 
     if (updateChoices.length) {
@@ -101,15 +149,9 @@ export class UpdateCommand extends QuestionCommand<any> {
     this.userInput = userInput;
   }
 
-  private async _sendRequest(): Promise<
-    SuccessResponse | ErrorResponse | never
-  > {
+  private async _sendRequest(): Promise<SuccessResponse> {
     if (!this.userInput?.transactionId) {
-      console.error("[Error] Please specify a transaction ID.");
-      // TODO Create a central error handler and a special type of error to
-      //  indicate command termination. Add a method to `Command` to throw this
-      //  new special error.
-      throw new Error("No transaction ID");
+      throw new RuntimeError("No transaction ID");
     }
 
     return await network.request(mainApi, {
@@ -124,9 +166,8 @@ export class UpdateCommand extends QuestionCommand<any> {
   }
 
   async run(): Promise<void> {
-    this.mapArgumentsToInputs();
-    this.mapOptionsToInputs();
-    await this.promptForInputs();
-    await this._sendRequest();
+    await this.promptForInputs(promptQuestions);
+    const response = await this._sendRequest();
+    await displayUpdateResult(response);
   }
 }

@@ -1,7 +1,6 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
-import { mainApi, network } from "../../services";
-import { requiredValidator, validation } from "../../utils";
+import { mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod } from "../../types";
 import { BasicAuthCommand } from "./BasicAuthCommand";
 
@@ -15,25 +14,20 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
     type: "input",
     name: "email",
     message: "Email:",
-    validate: (input, _) => {
-      if (validation.isEmail(input)) {
-        return true;
-      }
-      return "Please enter a valid email address.";
-    },
+    validate: validation.validator(vschema.string().email().required()),
   },
   {
     type: "password",
     name: "password",
     message: "Password:",
     mask: "*",
-    validate: requiredValidator,
+    validate: validation.validator(vschema.string().required()),
   },
 ];
 
 export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
-  name: string = "signin";
-  description: string = "sign in to your habits account";
+  name = "signin";
+  description = "sign in to your habits account";
   aliases: string[] = ["login"];
 
   protected promptQuestions = promptQuestions;
@@ -41,7 +35,10 @@ export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
   acceptOpts = [new Option("-e, --email <email>", "email of user")];
 
   protected mapOptionsToInputs() {
-    if (this.opts.email && validation.isEmail(this.opts.email)) {
+    if (
+      this.opts.email &&
+      vschema.string().email().isValidSync(this.opts.email)
+    ) {
       this.userInput = {
         email: this.opts.email,
       };
