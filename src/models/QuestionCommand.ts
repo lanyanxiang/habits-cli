@@ -37,7 +37,17 @@ export abstract class QuestionCommand<
   protected async promptForInputs(
     questions: QuestionCollection<T>
   ): Promise<void> {
-    const userInput = await prompt.show<T>(questions, this.userInput);
+    this.userInput = await prompt.show<T>(questions, this.userInput);
+    this.sanitizeUserInput();
+  }
+
+  /** Remove optional keys in `this.userInput` if they contain null values.
+   * @param fields Fields to sanitize. Defaults to `this.optionalFields`. */
+  protected sanitizeUserInput(fields?: (keyof T)[]) {
+    const userInput = this.userInput;
+    if (!userInput) {
+      return;
+    }
     this.optionalFields.forEach((field) => {
       // Remove null values if field is optional.
       if (field in userInput && !userInput[field]) {
@@ -46,8 +56,4 @@ export abstract class QuestionCommand<
     });
     this.userInput = userInput;
   }
-
-  /** Remove optional keys in `this.userInput` if they contain null values.
-   * @param fields Fields to sanitize. Defaults to `this.optionalFields`. */
-  protected sanitizeUserInput(fields?: (keyof T)[]) {}
 }
