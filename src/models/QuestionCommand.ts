@@ -48,7 +48,8 @@ export abstract class QuestionCommand<
     if (!userInput) {
       return;
     }
-    this.optionalFields.forEach((field) => {
+    const fieldsToSanitize = fields || this.optionalFields;
+    fieldsToSanitize.forEach((field) => {
       // Remove null values if field is optional.
       if (field in userInput && !userInput[field]) {
         delete userInput[field];
