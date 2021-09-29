@@ -31,10 +31,11 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-export class CreateCommand extends QuestionCommand {
+export class CreateCommand extends QuestionCommand<PromptAnswers> {
   name = "create";
   description = "create a new property";
   aliases = ["add"];
+  optionalFields: (keyof PromptAnswers)[] = ["description", "amountInStock"];
 
   acceptOpts = [
     new Option("-n, --name <name>", "new value for property name"),
