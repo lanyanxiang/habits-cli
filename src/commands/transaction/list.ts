@@ -29,6 +29,10 @@ interface PromptAnswers {
 
 const displayTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
+  if (!transactions.length) {
+    return console.log("Listed 0 transactions.");
+  }
+
   const table = display.table.create({
     head: ["#", "Title", "Amount", "Property", "Created At"],
     colWidths: [3, 18, 10, 12, 17],
