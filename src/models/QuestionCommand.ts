@@ -47,5 +47,7 @@ export abstract class QuestionCommand<
     this.userInput = userInput;
   }
 
-  protected sanitizeUserInput(optionalFields?: (keyof T)[]) {}
+  /** Remove optional keys in `this.userInput` if they contain null values.
+   * @param fields Fields to sanitize. Defaults to `this.optionalFields`. */
+  protected sanitizeUserInput(fields?: (keyof T)[]) {}
 }
