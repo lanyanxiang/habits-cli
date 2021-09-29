@@ -22,6 +22,9 @@ const displaySingleProperty = (property: UserProperty) => {
 };
 
 const displayProperties = (properties: UserProperty[]) => {
+  if (!properties.length) {
+    return console.log("Nothing to display.");
+  }
   properties.forEach((property) => {
     displaySingleProperty(property);
   });
