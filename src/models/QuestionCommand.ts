@@ -14,7 +14,7 @@ export abstract class QuestionCommand<
   protected userInput: Partial<T> | undefined;
   /** Optional keys in `userInput`. This array is used in methods such as
    * `promptForInputs` so that empty strings will not be added to `userInput`
-   * record. Also used as default keys in `sanitizeInput`. */
+   * record. This property is used as default keys in `sanitizeUserInput`. */
   protected optionalFields: (keyof T)[] = [];
 
   /** Process `this.opts` and set `this.userInput`. */
