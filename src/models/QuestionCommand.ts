@@ -37,6 +37,12 @@ export abstract class QuestionCommand<
   protected async promptForInputs(
     questions: QuestionCollection<T>
   ): Promise<void> {
-    this.userInput = await prompt.show<T>(questions, this.userInput);
+    const input = await prompt.show<T>(questions, this.userInput);
+    this.optionalFields.forEach((field) => {
+      // Remove null values if field is optional.
+      if (field in input && !input[field]) {
+        delete input[field];
+      }
+    });
   }
 }
