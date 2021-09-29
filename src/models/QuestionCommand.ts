@@ -46,4 +46,6 @@ export abstract class QuestionCommand<
     });
     this.userInput = userInput;
   }
+
+  protected sanitizeUserInput(optionalFields?: (keyof T)[]) {}
 }
