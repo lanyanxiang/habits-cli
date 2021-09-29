@@ -12,6 +12,10 @@ export abstract class QuestionCommand<
   T extends Record<string, any> = any
 > extends Command {
   protected userInput: Partial<T> | undefined;
+  /** Optional keys in `userInput`. This array is used in methods such as
+   * `promptForInputs` so that empty strings will not be added to `userInput`
+   * record. This property is used as default keys in `sanitizeUserInput`. */
+  protected optionalFields: (keyof T)[] = [];
 
   /** Process `this.opts` and set `this.userInput`. */
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -34,5 +38,23 @@ export abstract class QuestionCommand<
     questions: QuestionCollection<T>
   ): Promise<void> {
     this.userInput = await prompt.show<T>(questions, this.userInput);
+    this.sanitizeUserInput();
+  }
+
+  /** Remove optional keys in `this.userInput` if they contain null values.
+   * @param fields Fields to sanitize. Defaults to `this.optionalFields`. */
+  protected sanitizeUserInput(fields?: (keyof T)[]) {
+    const userInput = this.userInput;
+    if (!userInput) {
+      return;
+    }
+    const fieldsToSanitize = fields || this.optionalFields;
+    fieldsToSanitize.forEach((field) => {
+      // Remove null values if field is optional.
+      if (field in userInput && !userInput[field]) {
+        delete userInput[field];
+      }
+    });
+    this.userInput = userInput;
   }
 }

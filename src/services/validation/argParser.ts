@@ -11,6 +11,15 @@ import { stringParser } from "../../utils";
  */
 export const argParser = (schema: BaseSchema) => {
   return (value: any) => {
+    // Inquirer returns an empty string when the user simply presses enter
+    // without entering anything. Commander do the same in option values.
+    // As of this issue https://github.com/lanyanxiang/habits-cli/issues/25,
+    // for easier parsing & convention, we will return `null` when an empty
+    // string is processed regardless of schema.
+    if (typeof value === "string" && !value) {
+      return null;
+    }
+
     try {
       schema.validateSync(value);
     } catch (error: any) {
