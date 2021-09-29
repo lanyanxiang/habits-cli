@@ -57,6 +57,7 @@
   },
   "files": [
     "dist/**/*",
-    "bin/habits"
+    "bin/habits",
+    "docs/README.md"
   ]
 }
