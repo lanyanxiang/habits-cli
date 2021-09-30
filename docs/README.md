@@ -13,7 +13,7 @@ In this article, we will go over some high-level details of this repository.
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 
 ## Quick Start
 
@@ -47,7 +47,7 @@ Thank you for your interest in contributing to the Habits CLI!
 
 ## Overview
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 ### Purpose
 
 The habits application seeks to help individuals build up healthy habits.
@@ -73,7 +73,7 @@ clients (e.g., mobile app and web app).
 
 ## Manuals and Logs
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 
 **09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](release-plans/v0.2.md)
 for more information :D
@@ -85,7 +85,7 @@ Please refer to the most updated [change logs](change-logs) and [testing manuals
 
 ## License and Contribution Note
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 
 This repository is released under the GNU General Public License v3.0. Please find more information in the file
 named `LICENSE` or `LICENSE.md` in the root repository.
@@ -98,7 +98,7 @@ any part, or parts, of code from this repository.
 
 ## Onboard this Project
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 
 If you don't find the set-up process intuitive enough, please have a look at this [setup guide](overview/setup.md).
 Joining or extending a project may be a challenging experience for some. That's why I aim to provide a good
@@ -107,7 +107,7 @@ pages in the documentation site if you require further support.
 
 ## Commands
 
-[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+[View this documentation on a website.](https://lanyanxiang.github.io/habits-cli/)
 
 ?> You might need to use the commands below extensively throughout your contribution to this project. Therefore, I
 strongly encourage you to become familiar with them as soon as possible.
