@@ -29,6 +29,11 @@ In this article, we will go over some high-level details of this repository. If 
 
 ### Using Habits CLI
 
+Please view these guides in order:
+
+- Installation: [click here to view](installation.md)
+- Usage Quick Start: [click here to view](usage-quick-start.md)
+
 ### Contributing to Habits CLI
 
 ## Overview
