@@ -77,3 +77,8 @@ Options:
 
 This describes a procedure that you can follow to explore and learn about each command in the Habits CLI other than
 reading the documentation online.
+
+## Final Words
+
+Thank you for your interest in keeping health habits with the Habits app! Congratulations on taking a step forward to
+healthy habits.
