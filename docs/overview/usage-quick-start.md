@@ -63,7 +63,7 @@ Options:
   -h, --help    display help for command
 ```
 
-...and finally, if you run `habits auth signin -h`, you can obtain the following message:
+Finally, if you run `habits auth signin -h`, you can obtain the following message:
 
 ```bash
 Usage: signin|login [options]
