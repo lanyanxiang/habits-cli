@@ -3,9 +3,11 @@
 > Author: Jimmy Lan
 
 ## Pinned
-* Habits CLI `v0.1-alpha` release testing has been concluded by 22:00 on September 6th, 2021.
-* We have released the next steps in [Habits CLI Release Plan v0.2](release-plans/v0.2.md).
-* If you encounter an issue during testing, please [open an issue](https://github.com/lanyanxiang/habits-cli/issues). If you wish to stay anonymous, please contact Jimmy ([@lanyanxiang](https://github.com/lanyanxiang)). We will create the tickets for you as  a result. Have fun testing!
+* Habits CLI `v0.2-alpha` release testing is currently in progress and will be concluded by 22:00 on October 4th, 2021 (
+  EDT).
+* If you encounter an issue during testing, please [open an issue](https://github.com/lanyanxiang/habits-cli/issues). If
+  you wish to stay anonymous, please contact Jimmy ([@lanyanxiang](https://github.com/lanyanxiang)). We will create the
+  tickets for you as a result. Have fun testing!
 
 ---
 
@@ -33,25 +35,30 @@ The habits application allows individuals to define custom digital properties. U
 ### The habits CLI
 Before I turn this README.md text that you randomly found on GitHub into an academic paper, let's talk about the Habits command-line interface. (Let me assure you, this is not a school project. As we know, I always like to find some weird reasons when I want to code some stuff in my leisure time XD)
 
-The Habits CLI allows one to use the Habits app from the command line (isn't this obvious? :D). It is especially useful for developers or people using their command lines who do not want to switch to a browser or pick up their phone.
+The Habits CLI allows one to use the Habits app from the command line (isn't this obvious? :D). It is especially useful
+for developers or people using their command lines who do not want to switch to a browser or pick up their phone.
 
-Running simple commands such as `habits transaction add` and `habits property update`, individuals can apply rewards to themselves without leaving their comfortable command line window.
-The data will be synced across all Habits app clients (e.g., mobile app and web app).
-
+Running simple commands such as `habits transaction add` and `habits property update`, individuals can apply rewards to
+themselves without leaving their comfortable command line window. The data will be synced across all Habits app
+clients (e.g., mobile app and web app).
 
 ## Manuals and Logs
 
-**09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](release-plans/v0.2.md) for more information :D
+**09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](release-plans/v0.2.md)
+for more information :D
+
+**09/30/2021 Update:** Change logs for `v0.2-alpha` has been published! Please navigate
+to [this page](change-logs/v0.2.md) for more information.
 
 Please refer to the most updated [change logs](change-logs) and [testing manuals](testing) for more information.
 
-
 ## License and Contribution Note
 
-This repository is released under the GNU General Public License v3.0.
-Please find more information in the file named `LICENSE` or `LICENSE.md` in the root repository.
+This repository is released under the GNU General Public License v3.0. Please find more information in the file
+named `LICENSE` or `LICENSE.md` in the root repository.
 
-You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms and conditions outlined in the `LICENSE` file described above.
+You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms
+and conditions outlined in the `LICENSE` file described above.
 
 It is your responsibility to properly read and understand the terms and conditions from the license file prior to using any part, or parts, of code from this repository.
 
