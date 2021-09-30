@@ -2,6 +2,19 @@
 
 > Author: Jimmy Lan
 
+In this article, we will go over some high-level details of this repository.
+
+> We will explore:
+>
+> - [Quick Start](#quick-start)
+> - [Overview](#overview)
+> - [Manuals and Logs](#manuals-and-logs)
+> - [License and Contribution Note](#license-and-contribution-note)
+> - [Onboard this Project](#onboard-this-project)
+> - [Useful Commands](#commands)
+
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+
 ## Quick Start
 
 [Using Habits CLI](#using-habits-cli) ·
@@ -31,17 +44,6 @@ Thank you for your interest in contributing to the Habits CLI!
   tickets for you as a result. Have fun testing!
 
 ---
-
-In this article, we will go over some high-level details of this repository. If you are currently reading this document on GitHub, please note that you could [read this documentation on our website](https://lanyanxiang.github.io/habits-cli/) for better experience.
-
-> We will explore:
->
-> - [Quick Start](#quick-start)
-> - [Overview](#overview)
-> - [Manuals and Logs](#manuals-and-logs)
-> - [License and Contribution Note](#license-and-contribution-note)
-> - [Onboard this Project](#onboard-this-project)
-> - [Useful Commands](#commands)
 
 ## Overview
 
