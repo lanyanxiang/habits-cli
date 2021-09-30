@@ -24,8 +24,8 @@ In this article, we will go over some high-level details of this repository.
 
 Please view these guides in order:
 
-- Installation: [click here to view](installation.md);
-- Usage Quick Start: [click here to view](usage-quick-start.md);
+- Installation: [click here to view](overview/installation.md);
+- Usage Quick Start: [click here to view](overview/usage-quick-start.md);
 - Other Resources: [Change Logs](change-logs/README.md) · [Demos](demo/README.md)
   · [Release Plans](release-plans/README.md) · [Testing Manuals](testing/README.md).
 
@@ -100,14 +100,10 @@ any part, or parts, of code from this repository.
 
 [View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
 
-Are you reading this page on GitHub? Consider viewing the documentation from a website for better experience. Clone this
-repository and run `npm run doc` to read the documentation locally on your machine. Alternatively, you can use the
-following link: https://lanyanxiang.github.io/habits-cli.
-
-If you don't find the set-up process intuitive enough, please have a look at this [setup guide](setup.md). Joining or
-extending a project may be a challenging experience for some. That's why I aim to provide a good documentation so that
-you can get up to speed regardless of your prior experience. Please read some more documentation pages in the
-documentation site if you require further support.
+If you don't find the set-up process intuitive enough, please have a look at this [setup guide](overview/setup.md).
+Joining or extending a project may be a challenging experience for some. That's why I aim to provide a good
+documentation so that you can get up to speed regardless of your prior experience. Please read some more documentation
+pages in the documentation site if you require further support.
 
 ## Commands
 
