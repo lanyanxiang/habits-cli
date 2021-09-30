@@ -35,7 +35,7 @@ Please navigate to the [Onboard this Project](#onboard-this-project) section bel
 
 Thank you for your interest in contributing to the Habits CLI!
 
-## Pinned
+### Announcements
 
 * Habits CLI `v0.2-alpha` release testing is currently in progress and will be concluded by 22:00 on October 4th, 2021
   (EDT).
@@ -47,6 +47,7 @@ Thank you for your interest in contributing to the Habits CLI!
 
 ## Overview
 
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
 ### Purpose
 
 The habits application seeks to help individuals build up healthy habits.
@@ -72,6 +73,8 @@ clients (e.g., mobile app and web app).
 
 ## Manuals and Logs
 
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+
 **09/06/2021 Update:** Release plan for `v0.2-alpha` has been published! Please see [this page](release-plans/v0.2.md)
 for more information :D
 
@@ -82,29 +85,36 @@ Please refer to the most updated [change logs](change-logs) and [testing manuals
 
 ## License and Contribution Note
 
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+
 This repository is released under the GNU General Public License v3.0. Please find more information in the file
 named `LICENSE` or `LICENSE.md` in the root repository.
 
 You are always free to use or modify this code in your own project(s), if applicable, as long as you follow the terms
 and conditions outlined in the `LICENSE` file described above.
 
-It is your responsibility to properly read and understand the terms and conditions from the license file prior to using any part, or parts, of code from this repository.
+It is your responsibility to properly read and understand the terms and conditions from the license file prior to using
+any part, or parts, of code from this repository.
 
 ## Onboard this Project
 
-Are you reading this page on GitHub? Consider viewing the documentation from a website for better experience.
-Clone this repository and run `npm run doc` to read the documentation locally on your machine.
-Alternatively, you can use the following link: https://lanyanxiang.github.io/habits-cli.
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
 
-If you don't find the set-up process intuitive enough, please have a look at this [setup guide](setup.md).
-Joining or extending a project may be a challenging experience for some.
-That's why I aim to provide a good documentation so that you can get up to speed regardless of your prior experience.
-Please read some more documentation pages in the documentation site if you require further support.
+Are you reading this page on GitHub? Consider viewing the documentation from a website for better experience. Clone this
+repository and run `npm run doc` to read the documentation locally on your machine. Alternatively, you can use the
+following link: https://lanyanxiang.github.io/habits-cli.
+
+If you don't find the set-up process intuitive enough, please have a look at this [setup guide](setup.md). Joining or
+extending a project may be a challenging experience for some. That's why I aim to provide a good documentation so that
+you can get up to speed regardless of your prior experience. Please read some more documentation pages in the
+documentation site if you require further support.
 
 ## Commands
 
-?> You might need to use the commands below extensively throughout your contribution to this project.
-Therefore, I strongly encourage you to become familiar with them as soon as possible.
+[View this documentation on my website.](https://lanyanxiang.github.io/habits-cli/)
+
+?> You might need to use the commands below extensively throughout your contribution to this project. Therefore, I
+strongly encourage you to become familiar with them as soon as possible.
 
 ### Set up project
 
