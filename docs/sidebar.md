@@ -6,6 +6,7 @@
 
 - [Overview](/README.md)
 - [Installation](/installation.md)
+- [Usage Quick Start](/usage-quick-start.md)
 - [Setup Guide](/setup.md)
 
 **Change Logs**
