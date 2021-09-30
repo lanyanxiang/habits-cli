@@ -15,6 +15,7 @@ In this article, we will go over some high-level details of this repository. If 
 
 > We will explore:
 >
+> - [Quick Start](#quick-start)
 > - [Overview](#overview)
 > - [Manuals and Logs](#manuals-and-logs)
 > - [License and Contribution Note](#license-and-contribution-note)
