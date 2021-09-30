@@ -24,12 +24,12 @@ In this article, we will go over some high-level details of this repository. If 
 
 ## Quick Start
 
-[Use Habits CLI](#use-habits-cli) ·
-[Contribute to Habits CLI](#contribute-to-habits-cli)
+[Using Habits CLI](#using-habits-cli) ·
+[Contributing to Habits CLI](#contributing-to-habits-cli)
 
-### Use Habits CLI
+### Using Habits CLI
 
-### Contribute to Habits CLI
+### Contributing to Habits CLI
 
 ## Overview
 
