@@ -22,13 +22,26 @@ In this article, we will go over some high-level details of this repository. If 
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
 
+## Quick Start
+
+[Use Habits CLI](#use-habits-cli) ·
+[Contribute to Habits CLI](#contribute-to-habits-cli)
+
+### Use Habits CLI
+
+### Contribute to Habits CLI
+
 ## Overview
 
 ### Purpose
+
 The habits application seeks to help individuals build up healthy habits.
 
 ### Background
-Based on existing psychological research, one feels more motivated when the reward of keeping healthy habits and completing daily tasks is quantified. Further, one's desire to complete a TODO item might become higher when some randomness of rewards is involved.
+
+Based on existing psychological research, one feels more motivated when the reward of keeping healthy habits and
+completing daily tasks is quantified. Further, one's desire to complete a TODO item might become higher when some
+randomness of rewards is involved.
 
 ### The habits app
 The habits application allows individuals to define custom digital properties. Users may use the application to reward themselves with digital properties whenever they achieve goals, complete tasks, etc. Optionally, the user may also deduct some digital assets whenever they perform bad habits. The user may define the exchange rate between digital properties and real-world items.
