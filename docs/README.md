@@ -36,6 +36,8 @@ Please view these guides in order:
 
 ### Contributing to Habits CLI
 
+Please navigate to the [Onboard this Project](#onboard-this-project) section below.
+
 ## Overview
 
 ### Purpose
