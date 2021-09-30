@@ -3,8 +3,8 @@
 > Author: Jimmy Lan
 
 ## Pinned
-* Habits CLI `v0.2-alpha` release testing is currently in progress and will be concluded by 22:00 on October 4th, 2021 (
-  EDT).
+* Habits CLI `v0.2-alpha` release testing is currently in progress and will be concluded by 22:00 on October 4th, 2021
+  (EDT).
 * If you encounter an issue during testing, please [open an issue](https://github.com/lanyanxiang/habits-cli/issues). If
   you wish to stay anonymous, please contact Jimmy ([@lanyanxiang](https://github.com/lanyanxiang)). We will create the
   tickets for you as a result. Have fun testing!
