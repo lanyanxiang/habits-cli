@@ -5,7 +5,7 @@
 ## Quick Start
 
 [Using Habits CLI](#using-habits-cli) ·
-[Contributing to Habits CLI](#contributing-to-habits-cli)
+[Contributing to Habits CLI](#contributing-to-habits-cli) · [Why Habits CLI?](#overview)
 
 ### Using Habits CLI
 
