@@ -2,7 +2,28 @@
 
 > Author: Jimmy Lan
 
+## Quick Start
+
+[Using Habits CLI](#using-habits-cli) ·
+[Contributing to Habits CLI](#contributing-to-habits-cli)
+
+### Using Habits CLI
+
+Please view these guides in order:
+
+- Installation: [click here to view](installation.md);
+- Usage Quick Start: [click here to view](usage-quick-start.md);
+- Other Resources: [Change Logs](change-logs/README.md) · [Demos](demo/README.md)
+  · [Release Plans](release-plans/README.md) · [Testing Manuals](testing/README.md).
+
+### Contributing to Habits CLI
+
+Please navigate to the [Onboard this Project](#onboard-this-project) section below.
+
+Thank you for your interest in contributing to the Habits CLI!
+
 ## Pinned
+
 * Habits CLI `v0.2-alpha` release testing is currently in progress and will be concluded by 22:00 on October 4th, 2021
   (EDT).
 * If you encounter an issue during testing, please [open an issue](https://github.com/lanyanxiang/habits-cli/issues). If
@@ -21,22 +42,6 @@ In this article, we will go over some high-level details of this repository. If 
 > - [License and Contribution Note](#license-and-contribution-note)
 > - [Onboard this Project](#onboard-this-project)
 > - [Useful Commands](#commands)
-
-## Quick Start
-
-[Using Habits CLI](#using-habits-cli) ·
-[Contributing to Habits CLI](#contributing-to-habits-cli)
-
-### Using Habits CLI
-
-Please view these guides in order:
-
-- Installation: [click here to view](installation.md)
-- Usage Quick Start: [click here to view](usage-quick-start.md)
-
-### Contributing to Habits CLI
-
-Please navigate to the [Onboard this Project](#onboard-this-project) section below.
 
 ## Overview
 
