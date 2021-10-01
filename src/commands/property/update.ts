@@ -210,7 +210,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    await this._promptForPropertyId();
+    if (!this.userInput?.propertyId) {
+      await this._promptForPropertyId();
+    }
     await this.promptForInputs(promptQuestions);
     const response = await this._sendRequest();
     displayUpdateResult(response);
