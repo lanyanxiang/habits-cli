@@ -14,7 +14,7 @@ const displaySingleProperty = (property: UserProperty) => {
   const table = display.table.createCompact();
   table.push(["Name", name]);
   table.push(["Amount", amount]);
-  if (amountInStock) {
+  if (amountInStock !== undefined) {
     table.push(["In Stock", amountInStock]);
   }
   display.table.print(table);
