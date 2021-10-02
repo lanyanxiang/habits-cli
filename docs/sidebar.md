@@ -5,9 +5,9 @@
 **Onboard**
 
 - [Overview](/README.md)
-- [Installation](/installation.md)
-- [Usage Quick Start](/usage-quick-start.md)
-- [Setup Guide](/setup.md)
+- [Installation](/overview/installation.md)
+- [Usage Quick Start](/overview/usage-quick-start.md)
+- [Setup Guide](/overview/setup.md)
 
 **Change Logs**
 
