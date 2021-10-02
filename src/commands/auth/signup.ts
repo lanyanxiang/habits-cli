@@ -58,17 +58,16 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
   protected promptQuestions = promptQuestions;
 
   acceptOpts = [
-    new Option("-e, --email <email>", "email of new user"),
+    new Option("-e, --email <email>", "email of new user").argParser(
+      validation.argParser(vschema.string().email())
+    ),
     new Option("-f, --first-name <firstName>", "first name of new user"),
     new Option("-l, --last-name <lastName>", "last name of new user"),
   ];
 
   protected mapOptionsToInputs() {
     const userInput: Partial<PromptAnswers> = {};
-    if (
-      this.opts.email &&
-      vschema.string().email().isValidSync(this.opts.email)
-    ) {
+    if (this.opts.email) {
       userInput.email = this.opts.email;
     }
     if (this.opts.firstName?.length) {
