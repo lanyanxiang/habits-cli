@@ -61,7 +61,7 @@ export abstract class QuestionCommand<
   /** Set `fields` of `this.userInput` from options with the same name.
    * `fields` will only be set to `this.userInput` if they are defined
    * in processable options.*/
-  protected copyOptionsToInput(fields: (keyof T)[]) {
+  protected populateInputFromOptions(fields: (keyof T)[]) {
     for (const field of fields) {
       const opt = this.opts[field as string];
       if (opt !== undefined) {
