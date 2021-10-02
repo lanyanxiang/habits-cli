@@ -46,3 +46,5 @@ dump.rdb
 
 # Local storage content
 bin/storage
+
+# Ignore

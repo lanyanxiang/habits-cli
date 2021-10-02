@@ -16,9 +16,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.17.6
-      - run: npm install
-      - name: Copy README.md
-        run: cp docs/README.md .
-      - run: npm publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Upgrade npm
+        run: npm install -g npm
+      - run: npm install --quiet
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
