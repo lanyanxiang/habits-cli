@@ -27,16 +27,19 @@ jobs:
         run: cp docs/README.md .
   publish:
     runs-on: ubuntu-20.04
-    needs:
-      - build
-      - copy_docs
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Check out Habits CLI code
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
       - run: npm install
       - run: npm run build
+      - name: Check out Habits CLI code
+        uses: actions/checkout@v1
+      - name: Copy README.md
+        run: cp docs/README.md .
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
