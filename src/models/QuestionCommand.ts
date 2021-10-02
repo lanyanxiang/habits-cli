@@ -58,8 +58,8 @@ export abstract class QuestionCommand<
     this.userInput = userInput;
   }
 
-  /** Set `fields` in `this.userInput` from options with the same name.
+  /** Set `fields` of `this.userInput` from options with the same name.
    * `fields` will only be set to `this.userInput` if they are defined
    * in processable options.*/
-  protected setInputFromOptionFields(fields?: (keyof T)[]) {}
+  protected copyOptionsToInput(fields?: (keyof T)[]) {}
 }
