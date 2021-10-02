@@ -1,6 +1,6 @@
 {
   "name": "habits-cli",
-  "version": "v0.2.609-alpha.8",
+  "version": "v0.2.609-alpha.10",
   "author": "Jimmy Lan @lanyanxiang",
   "description": "The habits application seeks to help individuals build up healthy habits.",
   "homepage": "https://lanyanxiang.github.io/habits-cli",
@@ -27,6 +27,7 @@
     "build": "tsc -p .",
     "lint": "eslint . --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run lint && cp doc/README.md ./README.md",
     "prepare": "npm run build",
     "doc": "./scripts/open-browser.sh http://localhost:3000 && docsify serve docs/"
   },
