@@ -1,5 +1,5 @@
 # Publish to NPM: only publish if version number is different.
-name: CD - Publish to NPM
+name: CD - Build and Publish to NPM
 
 on:
   push:
@@ -7,8 +7,25 @@ on:
       - master
 
 jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out Habits CLI code
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm install
+      - run: npm run build
+  copy_docs:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Copy README.md
+        run: cp docs/README.md .
   publish:
     runs-on: ubuntu-20.04
+    needs: [ build, copy_docs ]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
