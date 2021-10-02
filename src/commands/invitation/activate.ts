@@ -1,9 +1,9 @@
-import { QuestionCommand } from "../../models";
 import { QuestionCollection } from "inquirer";
 import { Argument } from "commander";
+import chalk from "chalk";
 import { display, mainApi, network, vschema } from "../../services";
 import { ErrorResponse, RequestMethod, SuccessResponse } from "../../types";
-import chalk from "chalk";
+import { QuestionCommand } from "../../models";
 
 interface PromptAnswers {
   email: string;
