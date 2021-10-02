@@ -57,4 +57,6 @@ export abstract class QuestionCommand<
     });
     this.userInput = userInput;
   }
+
+  protected setInputFromOptionFields(fields?: (keyof T)[]) {}
 }
