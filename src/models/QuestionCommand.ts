@@ -41,9 +41,11 @@ export abstract class QuestionCommand<
     this.sanitizeUserInput();
   }
 
-  /** Remove optional keys in `this.userInput` if they contain null values.
-   * @param fields Fields to sanitize. Defaults to `this.optionalFields`. */
-  protected sanitizeUserInput(fields?: (keyof T)[]) {
+  /**
+   * Remove optional keys in `this.userInput` if they contain null values.
+   * @param fields Fields to sanitize. Defaults to `this.optionalFields`.
+   */
+  protected sanitizeUserInput(fields?: (keyof T)[]): void {
     const userInput = this.userInput;
     if (!userInput) {
       return;
@@ -58,10 +60,14 @@ export abstract class QuestionCommand<
     this.userInput = userInput;
   }
 
-  /** Set `fields` of `this.userInput` from options with the same name.
-   * `fields` will only be set to `this.userInput` if they are defined
-   * in processable options.*/
-  protected populateInputFromOptions(fields: (keyof T)[]) {
+  /**
+   * Set `fields` of `this.userInput` from options with the same name.
+   * `fields` in `this.userInput` will only be set if they are defined
+   * in processable options.
+   * @param fields Fields from `this.input` to be set depending on if
+   * options of the same names exist.
+   */
+  protected populateInputFromOptions(fields: (keyof T)[]): void {
     for (const field of fields) {
       const opt = this.opts[field as string];
       if (opt !== undefined) {
