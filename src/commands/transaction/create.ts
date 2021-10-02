@@ -67,7 +67,7 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
 
   async run(): Promise<void> {
     // Prompt for property selection if no option is specified.
-    if (!this.userInput?.propertyId) {
+    if (!this.userInput.propertyId) {
       const property = await prompt.selectProperty({
         message: "What property is involved in this transaction?",
       });

@@ -150,7 +150,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {
-    if (!this.userInput?.transactionId) {
+    if (!this.userInput.transactionId) {
       throw new RuntimeError("No transaction ID");
     }
 

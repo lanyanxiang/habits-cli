@@ -11,7 +11,7 @@ import { prompt } from "../services";
 export abstract class QuestionCommand<
   T extends Record<string, any> = any
 > extends Command {
-  protected userInput: Partial<T> | undefined;
+  protected userInput: Partial<T> = {};
   /** Optional keys in `userInput`. This array is used in methods such as
    * `promptForInputs` so that empty strings will not be added to `userInput`
    * record. This property is used as default keys in `sanitizeUserInput`. */

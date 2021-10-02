@@ -87,7 +87,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected async promptForInputs(): Promise<void> {
-    if (this.userInput?.propertyIds) {
+    if (this.userInput.propertyIds) {
       // This means property IDs were passed in using variadic arguments
       return;
     }
@@ -127,7 +127,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<void> {
-    if (!this.userInput?.propertyIds) {
+    if (!this.userInput.propertyIds) {
       throw new RuntimeError("Please specify a property ID.");
     }
 
