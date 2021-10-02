@@ -1,6 +1,6 @@
 {
   "name": "habits-cli",
-  "version": "v0.2.568-alpha",
+  "version": "v0.2.606-alpha",
   "description": "Habits cli",
   "main": "src/index.ts",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "lint": "tsc -p . --noEmit && eslint \\\"**/*.{js,ts}\\\" --quiet --fix",
+    "lint": "eslint . --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "npm run build",
     "prepublish": "npm run lint",
