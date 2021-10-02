@@ -78,6 +78,23 @@ Options:
 This describes a procedure that you can follow to explore and learn about each command in the Habits CLI other than
 reading the documentation online.
 
+## Accepting Invitations (Test Server Only)
+
+If you are working with the Habits CLI test server, you need a valid invitation to perform any operations.
+
+If you do not have a valid invitation and would like to participate in the Habits application testing, please add an
+issue to this repository and label it **"question"**. Alternatively, you can notify Jimmy.
+
+Once you obtain an invitation, you can run
+
+```bash
+habits invitation activate [your_email]
+```
+
+to activate the invitation assigned to you. You will see a screen similar to the following:
+
+![img.png](invitation-activate.png)
+
 ## Final Words
 
 Thank you for your interest in keeping health habits with the Habits app! Congratulations on taking a step forward to
