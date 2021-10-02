@@ -49,7 +49,7 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
 
   async run(): Promise<void> {
     await this.promptForInputs(promptQuestions);
-    if (!this.userInput?.shouldContinue) {
+    if (!this.userInput.shouldContinue) {
       console.log(
         chalk.red(
           "[Error] User cancelled sign out process. (You are NOT signed out)"

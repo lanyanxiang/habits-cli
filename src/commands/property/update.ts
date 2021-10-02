@@ -194,7 +194,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {
-    if (!this.userInput?.propertyId) {
+    if (!this.userInput.propertyId) {
       throw new RuntimeError("No property ID.");
     }
 
@@ -210,7 +210,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    if (!this.userInput?.propertyId) {
+    if (!this.userInput.propertyId) {
       await this._promptForPropertyId();
     }
     await this.promptForInputs(promptQuestions);

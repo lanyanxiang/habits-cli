@@ -62,7 +62,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected async promptForInputs(): Promise<void> {
-    if (this.userInput?.transactionIds) {
+    if (this.userInput.transactionIds) {
       // This means transaction IDs were passed in using variadic arguments
       return;
     }
@@ -92,7 +92,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<void> {
-    if (!this.userInput?.transactionIds) {
+    if (!this.userInput.transactionIds) {
       throw new RuntimeError("Please specify a transaction ID.");
     }
 
