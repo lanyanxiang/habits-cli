@@ -32,13 +32,14 @@ export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
 
   protected promptQuestions = promptQuestions;
 
-  acceptOpts = [new Option("-e, --email <email>", "email of user")];
+  acceptOpts = [
+    new Option("-e, --email <email>", "email of user").argParser(
+      validation.argParser(vschema.string().email())
+    ),
+  ];
 
   protected mapOptionsToInputs() {
-    if (
-      this.opts.email &&
-      vschema.string().email().isValidSync(this.opts.email)
-    ) {
+    if (this.opts.email) {
       this.userInput = {
         email: this.opts.email,
       };
