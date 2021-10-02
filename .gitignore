@@ -47,4 +47,6 @@ dump.rdb
 # Local storage content
 bin/storage
 
-# Ignore
+# Ignore root folder README.md because it's
+# only used in npm packages
+README.md
