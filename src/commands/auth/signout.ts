@@ -1,7 +1,6 @@
 import { QuestionCollection } from "inquirer";
 import { Option } from "commander";
-import { QuestionCommand } from "../../models";
-import chalk from "chalk";
+import { QuestionCommand, RuntimeError } from "../../models";
 import { mainApi, network, storage } from "../../services";
 import { RequestMethod, SecretType } from "../../types";
 
@@ -50,12 +49,9 @@ export class SignOutCommand extends QuestionCommand<PromptAnswers> {
   async run(): Promise<void> {
     await this.promptForInputs(promptQuestions);
     if (!this.userInput.shouldContinue) {
-      console.log(
-        chalk.red(
-          "[Error] User cancelled sign out process. (You are NOT signed out)"
-        )
+      throw new RuntimeError(
+        "User cancelled sign out process. (You are NOT signed out)"
       );
-      return;
     }
     const response = await this._sendRequest();
     if (!response.isError) {
