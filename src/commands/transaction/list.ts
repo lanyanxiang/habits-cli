@@ -72,9 +72,10 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "-l, --limit <limit>",
       "number of transactions to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
-    new Option("-p, --property-id [propertyId]").argParser(
-      validation.argParser(vschema.string().objectId())
-    ),
+    new Option(
+      "-p, --property-id [propertyId]",
+      "ID of the property involved in this transaction"
+    ).argParser(validation.argParser(vschema.string().objectId())),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
