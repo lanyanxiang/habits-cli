@@ -66,17 +66,7 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
   ];
 
   protected mapOptionsToInputs() {
-    const userInput: Partial<PromptAnswers> = {};
-    if (this.opts.email) {
-      userInput.email = this.opts.email;
-    }
-    if (this.opts.firstName) {
-      userInput.firstName = this.opts.firstName;
-    }
-    if (this.opts.lastName) {
-      userInput.lastName = this.opts.lastName;
-    }
-    this.userInput = userInput;
+    this.populateInputFromOptions(["email", "firstName", "lastName"]);
   }
 
   protected async sendRequest() {
