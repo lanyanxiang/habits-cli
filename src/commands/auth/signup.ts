@@ -70,10 +70,10 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
     if (this.opts.email) {
       userInput.email = this.opts.email;
     }
-    if (this.opts.firstName?.length) {
+    if (this.opts.firstName) {
       userInput.firstName = this.opts.firstName;
     }
-    if (this.opts.lastName?.length) {
+    if (this.opts.lastName) {
       userInput.lastName = this.opts.lastName;
     }
     this.userInput = userInput;
