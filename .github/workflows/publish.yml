@@ -21,11 +21,15 @@ jobs:
   copy_docs:
     runs-on: ubuntu-20.04
     steps:
+      - name: Check out Habits CLI code
+        uses: actions/checkout@v1
       - name: Copy README.md
         run: cp docs/README.md .
   publish:
     runs-on: ubuntu-20.04
-    needs: [ build, copy_docs ]
+    needs:
+      - build
+      - copy_docs
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
