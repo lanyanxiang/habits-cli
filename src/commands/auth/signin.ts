@@ -39,7 +39,7 @@ export class SignInCommand extends BasicAuthCommand<PromptAnswers> {
   ];
 
   protected mapOptionsToInputs() {
-    this.populateInputFromOptions(["email"]);
+    this.populateInputFromOptions("email");
   }
 
   protected async sendRequest() {

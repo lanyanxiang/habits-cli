@@ -61,17 +61,31 @@ export abstract class QuestionCommand<
   }
 
   /**
-   * Set `fields` of `this.userInput` from options with the same name.
-   * `fields` in `this.userInput` will only be set if they are defined
-   * in processable options.
-   * @param fields Fields from `this.input` to be set depending on if
-   * options of the same names exist.
+   * Set `fields` of `this.userInput` from currently defined options.
+   * If a field corresponds to an undefined option value, then that
+   * field will not be set.
+   *
+   * @param fields A variadic argument where each element is a string OR
+   * an object with keys `inputName` AND `optionName`. When an element is
+   * an object, input with `inputName` in `this.userInput` will be set to
+   * the value passed in by the option with `optionName`. When an
+   * element is a string, it will be regarded as if `inputName` and `optionName`
+   * are the same.
    */
-  protected populateInputFromOptions(fields: (keyof T)[]): void {
+  protected populateInputFromOptions(
+    ...fields: (
+      | (keyof T & string)
+      | { inputName: keyof T & string; optionName: string }
+    )[]
+  ): void {
     for (const field of fields) {
-      const opt = this.opts[field as string];
+      const isFieldString = typeof field === "string";
+      const optionName = isFieldString ? field : field.optionName;
+      const inputName = isFieldString ? field : field.inputName;
+
+      const opt = this.opts[optionName];
       if (opt !== undefined) {
-        this.userInput[field] = opt;
+        this.userInput[inputName] = opt;
       }
     }
   }

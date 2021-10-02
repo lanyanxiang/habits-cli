@@ -66,7 +66,7 @@ export class SignUpCommand extends BasicAuthCommand<PromptAnswers> {
   ];
 
   protected mapOptionsToInputs() {
-    this.populateInputFromOptions(["email", "firstName", "lastName"]);
+    this.populateInputFromOptions("email", "firstName", "lastName");
   }
 
   protected async sendRequest() {
