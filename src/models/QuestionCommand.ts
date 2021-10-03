@@ -2,6 +2,11 @@ import { QuestionCollection } from "inquirer";
 import { Command } from "./Command";
 import { prompt } from "../services";
 
+type PopulateFieldConfig<T> = {
+  inputName: keyof T & string;
+  optionName: string;
+};
+
 /**
  * A blueprint for command that prompts the user for questions.
  * This abstract class provides a structure to storing and prompting for user
@@ -71,13 +76,12 @@ export abstract class QuestionCommand<
    * the value passed in by the option with `optionName`. When an
    * element is a string, it will be regarded as if `inputName` and `optionName`
    * are the same.
+   * @return populatedFields An array of fields successfully populated.
    */
   protected populateInputFromOptions(
-    ...fields: (
-      | (keyof T & string)
-      | { inputName: keyof T & string; optionName: string }
-    )[]
-  ): void {
+    ...fields: ((keyof T & string) | PopulateFieldConfig<T>)[]
+  ): PopulateFieldConfig<T>[] {
+    const populatedFields: PopulateFieldConfig<T>[] = [];
     for (const field of fields) {
       const isFieldString = typeof field === "string";
       const optionName = isFieldString ? field : field.optionName;
@@ -86,7 +90,9 @@ export abstract class QuestionCommand<
       const opt = this.opts[optionName];
       if (opt !== undefined) {
         this.userInput[inputName] = opt;
+        populatedFields.push({ inputName, optionName });
       }
     }
+    return populatedFields;
   }
 }
