@@ -129,24 +129,17 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    const userInput: Partial<PromptAnswers> = this.userInput || {};
-    const updateChoices: UpdateChoices[] = [];
-
-    if (this.opts.title) {
-      userInput.title = this.opts.title;
-      updateChoices.push(UpdateChoices.title);
-    }
-
-    if (this.opts.amount) {
-      userInput.amountChange = this.opts.points;
-      updateChoices.push(UpdateChoices.amountChange);
-    }
-
+    const populatedFields = this.populateInputFromOptions("title", {
+      inputName: "amountChange",
+      optionName: "amount",
+    });
+    const updateChoices: UpdateChoices[] = populatedFields.map(
+      (field) => UpdateChoices[field.inputName]
+    );
     if (updateChoices.length) {
       // This will also mute the question for `updateChoices`.
-      userInput.updateChoices = updateChoices;
+      this.userInput.updateChoices = updateChoices;
     }
-    this.userInput = userInput;
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {
