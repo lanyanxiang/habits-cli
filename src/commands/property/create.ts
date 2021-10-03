@@ -50,19 +50,10 @@ export class CreateCommand extends QuestionCommand<PromptAnswers> {
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    const userInput: Partial<PromptAnswers> = this.userInput || {};
-
-    if (this.opts.name) {
-      userInput.name = this.opts.name;
-    }
-    if (this.opts.description) {
-      userInput.description = this.opts.description;
-    }
-    if (this.opts.inStock) {
-      userInput.amountInStock = this.opts.inStock;
-    }
-
-    this.userInput = userInput;
+    this.populateInputFromOptions("name", "description", {
+      inputName: "amountInStock",
+      optionName: "inStock",
+    });
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {

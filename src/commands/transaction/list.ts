@@ -79,10 +79,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    if (
-      this.opts.propertyId &&
-      vschema.string().objectId().isValidSync(this.opts.propertyId)
-    ) {
+    if (this.opts.propertyId) {
       this.userInput = { propertyId: this.opts.propertyId };
     }
   }

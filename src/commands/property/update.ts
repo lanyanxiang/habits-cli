@@ -153,34 +153,21 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    const userInput: Partial<PromptAnswers> = this.userInput || {};
-    const updateChoices: UpdateChoices[] = [];
-
-    if (this.opts.name) {
-      userInput.name = this.opts.name;
-      updateChoices.push(UpdateChoices.name);
-    }
-
-    if (this.opts.description) {
-      userInput.description = this.opts.description;
-      updateChoices.push(UpdateChoices.description);
-    }
-
-    if (this.opts.amount) {
-      userInput.amount = this.opts.amount;
-      updateChoices.push(UpdateChoices.amount);
-    }
-
-    if (this.opts.inStock) {
-      userInput.amountInStock = this.opts.inStock;
-      updateChoices.push(UpdateChoices.amountInStock);
-    }
-
+    const populatedFields = this.populateInputFromOptions(
+      "name",
+      "description",
+      "amount",
+      {
+        inputName: "amountInStock",
+        optionName: "inStock",
+      }
+    );
+    const updateChoices: UpdateChoices[] = populatedFields.map(
+      (field) => UpdateChoices[field.inputName]
+    );
     if (updateChoices.length) {
-      userInput.updateChoices = updateChoices;
+      this.userInput.updateChoices = updateChoices;
     }
-
-    this.userInput = userInput;
   }
 
   /** Prompt for property ID in `this.userInput`. */
