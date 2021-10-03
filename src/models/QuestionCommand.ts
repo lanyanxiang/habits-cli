@@ -2,9 +2,9 @@ import { QuestionCollection } from "inquirer";
 import { Command } from "./Command";
 import { prompt } from "../services";
 
-type PopulateFieldConfig<T> = {
-  inputName: keyof T & string;
-  optionName: string;
+type PopulateFieldConfig<T, P = string> = {
+  inputName: T;
+  optionName: P;
 };
 
 /**
@@ -78,13 +78,14 @@ export abstract class QuestionCommand<
    * are the same.
    * @return populatedFields An array of fields successfully populated.
    */
-  protected populateInputFromOptions(
-    ...fields: ((keyof T & string) | PopulateFieldConfig<T>)[]
-  ): PopulateFieldConfig<T>[] {
-    const populatedFields: PopulateFieldConfig<T>[] = [];
+  protected populateInputFromOptions<
+    S extends keyof T & string,
+    P extends string = S
+  >(...fields: (S | PopulateFieldConfig<S, P>)[]): PopulateFieldConfig<S, P>[] {
+    const populatedFields: PopulateFieldConfig<S, P>[] = [];
     for (const field of fields) {
       const isFieldString = typeof field === "string";
-      const optionName = isFieldString ? field : field.optionName;
+      const optionName = (isFieldString ? field : field.optionName) as P;
       const inputName = isFieldString ? field : field.inputName;
 
       const opt = this.opts[optionName];
