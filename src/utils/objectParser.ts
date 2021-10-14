@@ -12,6 +12,13 @@ const selectKeys = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
   }, {} as Pick<T, K>);
 };
 
+/**
+ * Return a **new** object containing content from `obj` except
+ * for keys `keys`. That is, the **new** object returned will be a
+ * **subset** of the original object `obj`.
+ * @param obj Object to parse.
+ * @param keys Keys in `obj` to exclude in the newly returned object.
+ */
 const excludeKeys = <T, K extends keyof T>(
   obj: T,
   ...keys: K[]
