@@ -15,12 +15,12 @@ const selectKeys = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
 const excludeKeys = <T, K extends keyof T>(
   obj: T,
   ...keys: K[]
-): Exclude<T, K> => {
+): Omit<T, K> => {
   const objKeysExcluded = { ...obj };
   keys.forEach((key) => {
     delete objKeysExcluded[key];
   });
-  return objKeysExcluded as Exclude<T, K>;
+  return objKeysExcluded as Omit<T, K>;
 };
 
 export const objectParser = {
