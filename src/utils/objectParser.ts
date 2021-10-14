@@ -5,14 +5,11 @@
  * @param obj Object to parse.
  * @param keys Keys in `obj` to include in the newly returned object.
  */
-const selectKeys = <T, K extends keyof T>(
-  obj: T,
-  ...keys: K[]
-): Record<K, T[K]> => {
-  return keys.reduce<Record<K, T[K]>>((accumulator, key) => {
+const selectKeys = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
+  return keys.reduce<Pick<T, K>>((accumulator, key) => {
     accumulator[key] = obj[key];
     return accumulator;
-  }, {} as Record<K, T[K]>);
+  }, {} as Pick<T, K>);
 };
 
 export const objectParser = {
