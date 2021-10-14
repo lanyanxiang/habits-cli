@@ -12,6 +12,13 @@ const selectKeys = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
   }, {} as Pick<T, K>);
 };
 
+const excludeKeys = <T, K extends keyof T>(
+  obj: T,
+  ...keys: K[]
+): Exclude<T, K> => {
+  return {} as Exclude<T, K>;
+};
+
 export const objectParser = {
   selectKeys,
 };
