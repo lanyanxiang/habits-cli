@@ -25,4 +25,5 @@ const excludeKeys = <T, K extends keyof T>(
 
 export const objectParser = {
   selectKeys,
+  excludeKeys,
 };
