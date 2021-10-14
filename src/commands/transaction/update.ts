@@ -151,7 +151,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     return await network.request(mainApi, {
       uri: `/transactions/${this.userInput.transactionId}`,
       method: RequestMethod.PATCH,
-      data: objectParser.selectKeys(this.userInput, "title", "amountChange"),
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "transactionId",
+        "updateChoices"
+      ),
       description: `Update transaction ${this.userInput.transactionId}`,
     });
   }

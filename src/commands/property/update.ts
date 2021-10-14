@@ -12,6 +12,7 @@ import {
   vschema,
 } from "../../services";
 import { QuestionCommand, RuntimeError } from "../../models";
+import { objectParser } from "../../utils";
 
 enum UpdateChoices {
   name = "name",
@@ -188,10 +189,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     return await network.request(mainApi, {
       uri: `/properties/${this.userInput.propertyId}`,
       method: RequestMethod.PATCH,
-      data: {
-        ...this.userInput,
-        propertyId: undefined,
-      },
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "propertyId",
+        "updateChoices"
+      ),
       description: "Update properties",
     });
   }
