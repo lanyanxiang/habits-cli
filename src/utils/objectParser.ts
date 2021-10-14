@@ -16,7 +16,11 @@ const excludeKeys = <T, K extends keyof T>(
   obj: T,
   ...keys: K[]
 ): Exclude<T, K> => {
-  return {} as Exclude<T, K>;
+  const objKeysExcluded = { ...obj };
+  keys.forEach((key) => {
+    delete objKeysExcluded[key];
+  });
+  return objKeysExcluded as Exclude<T, K>;
 };
 
 export const objectParser = {
