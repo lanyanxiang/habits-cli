@@ -1,4 +1,4 @@
-import { Option } from "commander";
+import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import chalk from "chalk";
 import CliTable3 from "cli-table3";
@@ -127,6 +127,12 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   description = "update your properties";
   aliases = ["change"];
 
+  acceptArgs = [
+    new Argument(
+      "propertyId",
+      "object id of the property to be updated"
+    ).argOptional(),
+  ];
   acceptOpts = [
     new Option("-n, --name <name>", "new value for property name"),
     new Option(
