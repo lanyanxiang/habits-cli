@@ -152,6 +152,7 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
       method: RequestMethod.PATCH,
       data: {
         ...this.userInput,
+        updateChoices: undefined,
         transactionId: undefined,
       },
       description: `Update transaction ${this.userInput.transactionId}`,
