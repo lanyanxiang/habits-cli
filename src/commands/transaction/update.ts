@@ -5,6 +5,7 @@ import { display, mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod, SuccessResponse } from "../../types";
 import CliTable3 from "cli-table3";
 import chalk from "chalk";
+import { objectParser } from "../../utils";
 
 enum UpdateChoices {
   title = "title",
@@ -150,10 +151,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     return await network.request(mainApi, {
       uri: `/transactions/${this.userInput.transactionId}`,
       method: RequestMethod.PATCH,
-      data: {
-        ...this.userInput,
-        transactionId: undefined,
-      },
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "transactionId",
+        "updateChoices"
+      ),
       description: `Update transaction ${this.userInput.transactionId}`,
     });
   }

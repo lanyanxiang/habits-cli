@@ -1,4 +1,4 @@
-import { Option } from "commander";
+import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import chalk from "chalk";
 import CliTable3 from "cli-table3";
@@ -12,6 +12,7 @@ import {
   vschema,
 } from "../../services";
 import { QuestionCommand, RuntimeError } from "../../models";
+import { objectParser } from "../../utils";
 
 enum UpdateChoices {
   name = "name",
@@ -126,6 +127,12 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   description = "update your properties";
   aliases = ["change"];
 
+  acceptArgs = [
+    new Argument(
+      "propertyId",
+      "object id of the property to be updated"
+    ).argOptional(),
+  ];
   acceptOpts = [
     new Option("-n, --name <name>", "new value for property name"),
     new Option(
@@ -188,10 +195,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
     return await network.request(mainApi, {
       uri: `/properties/${this.userInput.propertyId}`,
       method: RequestMethod.PATCH,
-      data: {
-        ...this.userInput,
-        propertyId: undefined,
-      },
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "propertyId",
+        "updateChoices"
+      ),
       description: "Update properties",
     });
   }
