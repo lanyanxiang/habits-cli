@@ -128,10 +128,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["change"];
 
   acceptArgs = [
-    new Argument(
-      "propertyId",
-      "object id of the property to be updated"
-    ).argOptional(),
+    new Argument("propertyId", "object id of the property to be updated")
+      .argOptional()
+      .argParser(validation.argParser(vschema.string().objectId())),
   ];
   acceptOpts = [
     new Option("-n, --name <name>", "new value for property name"),

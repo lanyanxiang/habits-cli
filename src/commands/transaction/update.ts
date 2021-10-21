@@ -103,10 +103,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["change"];
 
   acceptArgs = [
-    new Argument(
-      "transactionId",
-      "object id of the transaction to be updated"
-    ).argOptional(),
+    new Argument("transactionId", "object id of the transaction to be updated")
+      .argOptional()
+      .argParser(validation.argParser(vschema.string().objectId())),
   ];
   acceptOpts = [
     new Option(
