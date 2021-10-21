@@ -35,7 +35,7 @@ const displayTransactions = (response: SuccessResponse) => {
 
   const table = display.table.create({
     head: ["#", "Title", "Amount", "Property", "Created At"],
-    colWidths: [3, 18, 10, 12, 17],
+    colWidths: [5, 18, 10, 12, 17],
     colAligns: ["left", "left", "right", "left", "left"],
   });
   transactions.forEach(
@@ -73,8 +73,9 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "number of transactions to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
     new Option(
-      "-p, --property-id [propertyId]",
-      "ID of the property involved in this transaction"
+      "-p, --property [propertyId]",
+      "ID of the property involved in this transaction - " +
+        "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
   ];
 
