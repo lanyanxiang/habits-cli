@@ -73,7 +73,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "number of transactions to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
     new Option(
-      "-p, --property-id [propertyId]",
+      "-p, --property [propertyId]",
       "ID of the property involved in this transaction - " +
         "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
