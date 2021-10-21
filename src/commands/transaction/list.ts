@@ -35,7 +35,7 @@ const displayTransactions = (response: SuccessResponse) => {
 
   const table = display.table.create({
     head: ["#", "Title", "Amount", "Property", "Created At"],
-    colWidths: [3, 18, 10, 12, 17],
+    colWidths: [5, 18, 10, 12, 17],
     colAligns: ["left", "left", "right", "left", "left"],
   });
   transactions.forEach(
