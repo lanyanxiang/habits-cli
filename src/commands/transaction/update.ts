@@ -5,6 +5,7 @@ import { display, mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod, SuccessResponse } from "../../types";
 import CliTable3 from "cli-table3";
 import chalk from "chalk";
+import { objectParser } from "../../utils";
 
 enum UpdateChoices {
   title = "title",
@@ -102,10 +103,9 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   aliases = ["change"];
 
   acceptArgs = [
-    new Argument(
-      "transactionId",
-      "object id of the transaction to be updated"
-    ).argOptional(),
+    new Argument("transactionId", "object id of the transaction to be updated")
+      .argOptional()
+      .argParser(validation.argParser(vschema.string().objectId())),
   ];
   acceptOpts = [
     new Option(
@@ -129,38 +129,32 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    const userInput: Partial<PromptAnswers> = this.userInput || {};
-    const updateChoices: UpdateChoices[] = [];
-
-    if (this.opts.title) {
-      userInput.title = this.opts.title;
-      updateChoices.push(UpdateChoices.title);
-    }
-
-    if (this.opts.amount) {
-      userInput.amountChange = this.opts.points;
-      updateChoices.push(UpdateChoices.amountChange);
-    }
-
+    const populatedFields = this.populateInputFromOptions("title", {
+      inputName: "amountChange",
+      optionName: "amount",
+    });
+    const updateChoices: UpdateChoices[] = populatedFields.map(
+      (field) => UpdateChoices[field.inputName]
+    );
     if (updateChoices.length) {
       // This will also mute the question for `updateChoices`.
-      userInput.updateChoices = updateChoices;
+      this.userInput.updateChoices = updateChoices;
     }
-    this.userInput = userInput;
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {
-    if (!this.userInput?.transactionId) {
+    if (!this.userInput.transactionId) {
       throw new RuntimeError("No transaction ID");
     }
 
     return await network.request(mainApi, {
       uri: `/transactions/${this.userInput.transactionId}`,
       method: RequestMethod.PATCH,
-      data: {
-        ...this.userInput,
-        transactionId: undefined,
-      },
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "transactionId",
+        "updateChoices"
+      ),
       description: `Update transaction ${this.userInput.transactionId}`,
     });
   }

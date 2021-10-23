@@ -35,7 +35,7 @@ const displayTransactions = (response: SuccessResponse) => {
 
   const table = display.table.create({
     head: ["#", "Title", "Amount", "Property", "Created At"],
-    colWidths: [3, 18, 10, 12, 17],
+    colWidths: [5, 18, 10, 12, 17],
     colAligns: ["left", "left", "right", "left", "left"],
   });
   transactions.forEach(
@@ -73,16 +73,14 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "number of transactions to display"
     ).argParser(validation.argParser(vschema.number().pageLimit())),
     new Option(
-      "-p, --property-id [propertyId]",
-      "ID of the property involved in this transaction"
+      "-p, --property [propertyId]",
+      "ID of the property involved in this transaction - " +
+        "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    if (
-      this.opts.propertyId &&
-      vschema.string().objectId().isValidSync(this.opts.propertyId)
-    ) {
+    if (this.opts.propertyId) {
       this.userInput = { propertyId: this.opts.propertyId };
     }
   }
@@ -93,7 +91,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
    * @private
    */
   private async _promptForProperty(): Promise<void> {
-    if (this.opts.propertyId && !this.userInput?.propertyId) {
+    if (this.opts.propertyId && !this.userInput.propertyId) {
       const property = await prompt.selectProperty({
         message: "Please select a property to view transactions:",
       });
@@ -104,7 +102,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   private async _sendRequest(): Promise<SuccessResponse | ErrorResponse> {
     const skip = this.opts.skip;
     const limit = this.opts.limit;
-    const propertyId = this.userInput?.propertyId;
+    const propertyId = this.userInput.propertyId;
 
     return await network.request(mainApi, {
       uri: "/transactions",

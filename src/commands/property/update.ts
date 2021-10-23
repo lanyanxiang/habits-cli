@@ -1,4 +1,4 @@
-import { Option } from "commander";
+import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import chalk from "chalk";
 import CliTable3 from "cli-table3";
@@ -12,6 +12,7 @@ import {
   vschema,
 } from "../../services";
 import { QuestionCommand, RuntimeError } from "../../models";
+import { objectParser } from "../../utils";
 
 enum UpdateChoices {
   name = "name",
@@ -126,6 +127,11 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   description = "update your properties";
   aliases = ["change"];
 
+  acceptArgs = [
+    new Argument("propertyId", "object id of the property to be updated")
+      .argOptional()
+      .argParser(validation.argParser(vschema.string().objectId())),
+  ];
   acceptOpts = [
     new Option("-n, --name <name>", "new value for property name"),
     new Option(
@@ -153,34 +159,21 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   protected mapOptionsToInputs(): void | Promise<void> {
-    const userInput: Partial<PromptAnswers> = this.userInput || {};
-    const updateChoices: UpdateChoices[] = [];
-
-    if (this.opts.name) {
-      userInput.name = this.opts.name;
-      updateChoices.push(UpdateChoices.name);
-    }
-
-    if (this.opts.description) {
-      userInput.description = this.opts.description;
-      updateChoices.push(UpdateChoices.description);
-    }
-
-    if (this.opts.amount) {
-      userInput.amount = this.opts.amount;
-      updateChoices.push(UpdateChoices.amount);
-    }
-
-    if (this.opts.inStock) {
-      userInput.amountInStock = this.opts.inStock;
-      updateChoices.push(UpdateChoices.amountInStock);
-    }
-
+    const populatedFields = this.populateInputFromOptions(
+      "name",
+      "description",
+      "amount",
+      {
+        inputName: "amountInStock",
+        optionName: "inStock",
+      }
+    );
+    const updateChoices: UpdateChoices[] = populatedFields.map(
+      (field) => UpdateChoices[field.inputName]
+    );
     if (updateChoices.length) {
-      userInput.updateChoices = updateChoices;
+      this.userInput.updateChoices = updateChoices;
     }
-
-    this.userInput = userInput;
   }
 
   /** Prompt for property ID in `this.userInput`. */
@@ -194,23 +187,24 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
   }
 
   private async _sendRequest(): Promise<SuccessResponse> {
-    if (!this.userInput?.propertyId) {
+    if (!this.userInput.propertyId) {
       throw new RuntimeError("No property ID.");
     }
 
     return await network.request(mainApi, {
       uri: `/properties/${this.userInput.propertyId}`,
       method: RequestMethod.PATCH,
-      data: {
-        ...this.userInput,
-        propertyId: undefined,
-      },
+      data: objectParser.excludeKeys(
+        this.userInput,
+        "propertyId",
+        "updateChoices"
+      ),
       description: "Update properties",
     });
   }
 
   async run(): Promise<void> {
-    if (!this.userInput?.propertyId) {
+    if (!this.userInput.propertyId) {
       await this._promptForPropertyId();
     }
     await this.promptForInputs(promptQuestions);
