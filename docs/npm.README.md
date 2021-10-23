@@ -4,8 +4,8 @@
 
 ## Getting Started
 
-Please refer to the documentation in the [the official website](https://habits-cli.jimmy-lan.com)
-or [GitHub repository](https://github.com/lanyanxiang/habits-cli).
+Please refer to the documentation in [the official website](https://habits-cli.jimmy-lan.com)
+or [the GitHub repository](https://github.com/lanyanxiang/habits-cli).
 
 ## Overview
 
