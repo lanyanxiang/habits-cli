@@ -27,7 +27,7 @@
     "build": "tsc -p .",
     "lint": "eslint . --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run lint && cp docs/README.md ./README.md",
+    "prepublish": "npm run lint && cp docs/npm.README.md ./README.md",
     "prepare": "npm run build",
     "doc": "./scripts/open-browser.sh http://localhost:3000 && docsify serve docs/"
   },
