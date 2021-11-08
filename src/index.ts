@@ -1,8 +1,7 @@
 import { version } from "../package.json";
 
 import { CommandGroup } from "./models";
-import { auth, property, transaction } from "./commands";
-import { invitation } from "./commands/invitation";
+import { auth, config, invitation, property, transaction } from "./commands";
 import { handleErrors } from "./utils";
 
 const start = async () => {
@@ -14,6 +13,7 @@ const start = async () => {
     transaction,
     property,
     invitation,
+    config,
   ]);
   habits.version = version;
   habits.showHelpAfterError = true;
