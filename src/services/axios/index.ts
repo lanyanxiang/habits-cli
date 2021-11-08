@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../../config";
+import { generalConfig } from "../../config";
 import {
   storeTokensOnFulfill,
   storeTokensOnReject,
@@ -17,7 +17,7 @@ declare module "axios" {
 }
 
 export const mainApi = axios.create({
-  baseURL: config.baseURL,
+  baseURL: generalConfig.baseURL,
   timeout: 20 * 1000,
 });
 
