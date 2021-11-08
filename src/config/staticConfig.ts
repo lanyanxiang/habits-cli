@@ -4,6 +4,6 @@
  * completely visible to the user. Do not keep secrets here!
  */
 
-export const generalConfig = {
+export const staticConfig = {
   service: "habits",
 };
