@@ -11,7 +11,7 @@ export interface UserConfig {
  */
 const configMemo: { [p: string]: any } = {};
 
-const get = (key: keyof UserConfig & string) => {
+const get = <T extends keyof UserConfig & string>(key: T): UserConfig[T] => {
   if (!(key in configMemo)) {
     /* Note that when a user-defined config is not found on disk,
      * a `null` value will be inserted into config memoization and
