@@ -3,7 +3,7 @@ import { storage } from "../services";
 
 export interface UserConfig {
   /** Endpoint to send requests to. */
-  endpoint: Endpoints;
+  endpoint: keyof typeof Endpoints;
 }
 
 /**
