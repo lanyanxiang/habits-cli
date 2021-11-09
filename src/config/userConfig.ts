@@ -1,7 +1,7 @@
 import { Endpoints } from "../enums";
 import { storage } from "../services";
 
-export interface UserConfig extends Record<string, any> {
+export interface UserConfig {
   /** Endpoint to send requests to. */
   endpoint: Endpoints;
 }
