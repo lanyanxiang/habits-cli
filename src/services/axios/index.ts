@@ -5,6 +5,7 @@ import {
   storeTokensOnReject,
 } from "./storeTokensInterceptor";
 import { appendTokensOnFulfill } from "./appendTokensInterceptor";
+import { Endpoints } from "../../enums";
 
 declare module "axios" {
   interface AxiosResponse {
@@ -17,7 +18,7 @@ declare module "axios" {
 }
 
 export const mainApi = axios.create({
-  baseURL: userConfig.get("endpoint") || defaultConfig.endpoint,
+  baseURL: Endpoints[userConfig.get("endpoint")] || defaultConfig.endpoint,
   timeout: 20 * 1000,
 });
 
