@@ -2,8 +2,8 @@ import { QuestionCommand } from "../../../models";
 import { Argument } from "commander";
 import { validation, vschema } from "../../../services";
 import { matchSorter } from "match-sorter";
-import { Endpoints } from "../../../enums";
-import { UserConfig, userConfig } from "../../../config";
+import { userConfig } from "../../../config";
+import { Endpoints, UserConfig } from "../../../types";
 
 interface PromptAnswers {
   endpointName: UserConfig["endpointName"];

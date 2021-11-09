@@ -1,10 +1,5 @@
-import { Endpoints } from "../enums";
 import { storage } from "../services";
-
-export interface UserConfig {
-  /** Endpoint to send requests to. */
-  endpoint: keyof typeof Endpoints;
-}
+import { UserConfig } from "../types";
 
 /**
  * A private memoization of previously loaded configurations.
