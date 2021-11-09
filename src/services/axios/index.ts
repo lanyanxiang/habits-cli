@@ -18,7 +18,6 @@ declare module "axios" {
 }
 
 export const mainApi = axios.create({
-  baseURL: Endpoints[userConfig.get("endpointName")] || defaultConfig.endpoint,
   timeout: 20 * 1000,
 });
 
@@ -33,6 +32,15 @@ mainApi.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Determine base URL by loading in user settings.
+mainApi.interceptors.request.use((config) => {
+  if (!config.baseURL) {
+    config.baseURL =
+      Endpoints[userConfig.get("endpointName")] || defaultConfig.endpoint;
+  }
+  return config;
+});
 
 // Handles store and use of access / refresh tokens.
 mainApi.interceptors.response.use(storeTokensOnFulfill, storeTokensOnReject);
