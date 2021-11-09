@@ -3,10 +3,10 @@ import { Argument } from "commander";
 import { validation, vschema } from "../../../services";
 import { matchSorter } from "match-sorter";
 import { Endpoints } from "../../../enums";
-import { userConfig } from "../../../config";
+import { UserConfig, userConfig } from "../../../config";
 
 interface PromptAnswers {
-  endpointName: Endpoints;
+  endpointName: UserConfig["endpointName"];
 }
 
 export class SetEndpointCommand extends QuestionCommand<PromptAnswers> {
@@ -23,7 +23,7 @@ export class SetEndpointCommand extends QuestionCommand<PromptAnswers> {
 
   protected mapArgumentsToInputs(): void | Promise<void> {
     if (this.args.length > 0) {
-      this.userInput.endpointName = this.args[0] as Endpoints;
+      this.userInput.endpointName = this.args[0] as UserConfig["endpointName"];
     }
   }
 
@@ -47,6 +47,6 @@ export class SetEndpointCommand extends QuestionCommand<PromptAnswers> {
 
   protected async run(): Promise<void> {
     await this._askForInput();
-    userConfig.set("endpoint", this.userInput.endpointName!);
+    userConfig.set("endpointName", this.userInput.endpointName!);
   }
 }
