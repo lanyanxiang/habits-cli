@@ -1,5 +1,5 @@
 import axios from "axios";
-import { defaultConfig, userConfig } from "../../config";
+import { defaultValues, userConfig } from "../../config";
 import {
   storeTokensOnFulfill,
   storeTokensOnReject,
@@ -38,7 +38,7 @@ mainApi.interceptors.request.use((config) => {
   if (!config.baseURL) {
     config.baseURL =
       Endpoints[userConfig.get("endpointName")] ||
-      Endpoints[defaultConfig.endpointName];
+      Endpoints[defaultValues.endpointName];
   }
   return config;
 });

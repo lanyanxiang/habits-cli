@@ -5,12 +5,12 @@
  */
 import { Endpoints } from "../types";
 
-interface DefaultConfig {
+interface DefaultValues {
   service: string;
   endpointName: keyof typeof Endpoints;
 }
 
-export const defaultConfig: DefaultConfig = {
+export const defaultValues: DefaultValues = {
   service: "habits",
   endpointName: "test",
 };
