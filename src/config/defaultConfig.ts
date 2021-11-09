@@ -3,7 +3,9 @@
  * While editing this file, please keep in mind that these values are
  * completely visible to the user. Do not keep secrets here!
  */
+import { Endpoints } from "../enums";
 
-export const staticConfig = {
+export const defaultConfig = {
   service: "habits",
+  endpoint: Endpoints.test,
 };

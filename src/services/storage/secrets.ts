@@ -4,10 +4,10 @@ import {
   getPassword,
   setPassword,
 } from "keytar";
-import { staticConfig } from "../../config";
+import { defaultConfig } from "../../config";
 
 const get = async (key: string) => {
-  return await getPassword(staticConfig.service, key);
+  return await getPassword(defaultConfig.service, key);
 };
 
 /**
@@ -15,7 +15,7 @@ const get = async (key: string) => {
  */
 const getAll = async () => {
   const secrets: Record<string, any> = {};
-  const credentials = await findCredentials(staticConfig.service);
+  const credentials = await findCredentials(defaultConfig.service);
   credentials.forEach(({ account, password }) => {
     secrets[account] = password;
   });
@@ -23,11 +23,11 @@ const getAll = async () => {
 };
 
 const set = async (key: string, value: string) => {
-  await setPassword(staticConfig.service, key, value);
+  await setPassword(defaultConfig.service, key, value);
 };
 
 const remove = async (key: string) => {
-  return await deletePassword(staticConfig.service, key);
+  return await deletePassword(defaultConfig.service, key);
 };
 
 /**
