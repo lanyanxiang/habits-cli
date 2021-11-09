@@ -37,7 +37,8 @@ mainApi.interceptors.response.use(
 mainApi.interceptors.request.use((config) => {
   if (!config.baseURL) {
     config.baseURL =
-      Endpoints[userConfig.get("endpointName")] || defaultConfig.endpoint;
+      Endpoints[userConfig.get("endpointName")] ||
+      Endpoints[defaultConfig.endpointName];
   }
   return config;
 });
