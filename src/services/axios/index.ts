@@ -1,10 +1,11 @@
 import axios from "axios";
-import { config } from "../../config";
+import { defaultConfig, userConfig } from "../../config";
 import {
   storeTokensOnFulfill,
   storeTokensOnReject,
 } from "./storeTokensInterceptor";
 import { appendTokensOnFulfill } from "./appendTokensInterceptor";
+import { Endpoints } from "../../types";
 
 declare module "axios" {
   interface AxiosResponse {
@@ -17,7 +18,7 @@ declare module "axios" {
 }
 
 export const mainApi = axios.create({
-  baseURL: config.baseURL,
+  baseURL: Endpoints[userConfig.get("endpointName")] || defaultConfig.endpoint,
   timeout: 20 * 1000,
 });
 
