@@ -1,2 +1,2 @@
-export * from "./defaultConfig";
+export * from "./defaultValues";
 export * from "./userConfig";
