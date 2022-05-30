@@ -67,6 +67,8 @@ const pushUpdateResultRow = (
 ) => {
   if (oldValue !== newValue) {
     table.push([rowTitle, oldValue, "->", newValue]);
+  } else {
+    table.push(["Error:", rowTitle, "Did not update because the values are identical."]);
   }
 };
 
