@@ -1,10 +1,11 @@
 import axios from "axios";
-import { config } from "../../config";
+import { defaultValues, userConfig } from "../../config";
 import {
   storeTokensOnFulfill,
   storeTokensOnReject,
 } from "./storeTokensInterceptor";
 import { appendTokensOnFulfill } from "./appendTokensInterceptor";
+import { Endpoints } from "../../types";
 
 declare module "axios" {
   interface AxiosResponse {
@@ -17,7 +18,6 @@ declare module "axios" {
 }
 
 export const mainApi = axios.create({
-  baseURL: config.baseURL,
   timeout: 20 * 1000,
 });
 
@@ -32,6 +32,16 @@ mainApi.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Determine base URL by loading in user settings.
+mainApi.interceptors.request.use((config) => {
+  if (!config.baseURL) {
+    config.baseURL =
+      Endpoints[userConfig.get("endpointName")] ||
+      Endpoints[defaultValues.endpointName];
+  }
+  return config;
+});
 
 // Handles store and use of access / refresh tokens.
 mainApi.interceptors.response.use(storeTokensOnFulfill, storeTokensOnReject);
