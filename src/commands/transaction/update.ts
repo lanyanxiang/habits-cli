@@ -70,13 +70,6 @@ const pushUpdateResultRow = (
   };
 };
 
-const pushUpdateError = (
-  table: CliTable3.Table,
-  errorMsg: string
-) => {
-  table.push([errorMsg]);
-};
-
 const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
   const oldTransaction = payload.updatedFrom;
@@ -86,15 +79,14 @@ const displayUpdateResult = (response: SuccessResponse) => {
   console.log(chalk.cyan(chalk.bold(`Transaction ID ${oldTransaction.id}`)));
 
   const table = display.table.createCompact();
-  if (oldTransaction.title === newTransaction.title && oldTransaction.amountChange === newTransaction.amountChange) {
-    pushUpdateError(table, "Error: Updated title or change in amount values are identical.");
-  } else {
+  if (oldTransaction.title !== newTransaction.title) {
     pushUpdateResultRow(
       "Title:",
       table,
       oldTransaction.title,
       newTransaction.title
     );
+  } else if (oldTransaction.amountChange !== newTransaction.amountChange) {
     pushUpdateResultRow(
       "Change in amount:",
       table,
@@ -104,7 +96,7 @@ const displayUpdateResult = (response: SuccessResponse) => {
   };
   
   if (!table.length) {
-    console.log(chalk.bold("No changes applied."));
+    console.log(chalk.bold("Warning: The values you are trying to update is the same as before, no changes applied."));
   }
   display.table.print(table);
 };
