@@ -27,10 +27,33 @@ interface PromptAnswers {
   propertyId?: string;
 }
 
+const displayConciseTransactions = (response: SuccessResponse) => {
+  const transactions = response.data.payload as ListResponsePayload;
+  if (!transactions.length) {
+    return console.log(chalk.cyan("No transactions to display"));
+  }
+
+  const table = display.table.create({
+    head: ["Trans ID", "Title", "Amount"],
+    colWidths: [28, 18, 10],
+    colAligns: ["center", "left", "right"],
+  });
+  transactions.forEach(
+    ({ id, title, amountChange }) => {
+      table.push([
+        id,
+        title,
+        display.values.formatPointsChange(amountChange),
+      ]);
+    }
+  );
+  display.table.print(table);
+};
+
 const displayTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
   if (!transactions.length) {
-    return console.log("Listed 0 transactions.");
+    return console.log(chalk.cyan("No transactions to display"));
   }
 
   const table = display.table.create({
@@ -77,6 +100,10 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "ID of the property involved in this transaction - " +
         "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
+    new Option(
+      "-c, --concise",
+      "display a compact and concise table of transactions"
+    ),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
@@ -120,11 +147,16 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
+    const concise = this.opts.concise;
     await this._promptForProperty();
     const response = await this._sendRequest();
     if (response.isError) {
       return;
     }
-    displayTransactions(response);
+    if (!concise) {
+      displayTransactions(response);
+    } else {
+      displayConciseTransactions(response);
+    }
   }
 }
