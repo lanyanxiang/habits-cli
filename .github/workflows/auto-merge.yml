@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |
-          git config --local user.email "thepolyteam.tech@gmail.com"
+          git config --local user.email "github@thepolyteam.com"
           git config --local user.name "Happy Poly Team Bot"
       - name: automerge
         uses: "pascalgn/automerge-action@v0.14.2"
