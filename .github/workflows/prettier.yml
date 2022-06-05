@@ -27,5 +27,4 @@ jobs:
           only_changed: True
           commit_message: "Prettify changed files"
           commit_options: "--author='poly-team-bot <thepolyteam.tech@gmail.com>'"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ROBOT_TOKEN }}
