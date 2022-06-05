@@ -21,7 +21,7 @@ const set = <T extends keyof UserConfig & string>(
   value: UserConfig[T]
 ) => {
   storage.local.set(key, value);
-  const a = ""
+  const a = "";
 };
 
 export const userConfig = {
