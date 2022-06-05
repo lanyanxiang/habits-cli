@@ -35,7 +35,6 @@ jobs:
         env:
           MERGE_LABELS: "ready"
           MERGE_REMOVE_LABELS: "ready"
-          MERGE_REQUIRED_APPROVALS: 1
           MERGE_DELETE_BRANCH: true
           MERGE_DELETE_BRANCH_FILTER: "develop,master"
           GITHUB_TOKEN: "${{ secrets.ROBOT_TOKEN }}"
