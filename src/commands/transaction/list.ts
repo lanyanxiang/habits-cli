@@ -33,17 +33,18 @@ const displayConciseTransactions = (response: SuccessResponse) => {
     return console.log(chalk.cyan("No transactions to display"));
   }
 
-  const table = display.table.create({
-    head: ["Trans ID", "Title", "Amount"],
-    colWidths: [28, 18, 10],
-    colAligns: ["center", "left", "right"],
+  const table = display.table.createCompact({
+    head: ["Trans ID", "Title", "Amount", "Property"],
+    colWidths: [28, 18, 10, 12],
+    colAligns: ["center", "left", "left", "left"],
   });
   transactions.forEach(
-    ({ id, title, amountChange }) => {
+    ({ id, title, amountChange, property }) => {
       table.push([
         id,
         title,
         display.values.formatPointsChange(amountChange),
+        property.name,
       ]);
     }
   );
