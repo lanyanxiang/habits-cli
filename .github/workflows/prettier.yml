@@ -1,20 +1,24 @@
 # This GitHub action prettifies code.
 name: CI-Prettier
 on:
+  push:
   pull_request:
     branches:
       - master
       - develop
 jobs:
   prettier:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    # Prettier can only run directly on the PR when the origin is not from a fork due to current
+    # limitations in actions/checkout@v2. As a result, for PRs coming from external forks, prettier
+    # will only run when the code is merged.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           # Make sure the actual branch is checked out when running on pull requests
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
           # This is important to fetch the changes to the previous commit
           fetch-depth: 0
       - name: Prettify code
