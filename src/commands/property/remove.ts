@@ -105,7 +105,7 @@ export class RemoveCommand extends QuestionCommand<PromptAnswers> {
     let shouldContinuePrompting = true;
     while (shouldContinuePrompting) {
       const remainingPropertyNames = this.properties
-        .filter((property) => userInput.propertyIds.includes(property.id))
+        .filter((property) => !userInput.propertyIds.includes(property.id))
         .map((property) => property.name);
       if (!remainingPropertyNames.length) {
         shouldContinuePrompting = false;
