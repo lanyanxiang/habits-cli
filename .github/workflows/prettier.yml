@@ -28,4 +28,4 @@ jobs:
           commit_message: "Prettify changed files"
           commit_options: "--author='poly-team-bot <thepolyteam.tech@gmail.com>'"
         env:
-          GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
