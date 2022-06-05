@@ -6,6 +6,7 @@ import { handleErrors } from "./utils";
 
 const start = async () => {
   const rawArgs = process.argv.slice(2);
+  const a = ""
 
   // Initialize top-level command
   const habits = new CommandGroup("habits", "the habits cli").withSubcommands([
