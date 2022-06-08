@@ -1,0 +1,35 @@
+# Workflow to automatically merge pull requests when ready
+# WARNING: Do not use this workflow if reviews are not required!
+
+name: MS - Automerge
+
+on:
+  pull_request_target:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: { }
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        if: github.event.pull_request.head.repo.full_name == github.repository || github.event.action != "pull_request_review"
+        uses: "pascalgn/automerge-action@v0.15.3"
+        env:
+          MERGE_LABELS: "ready"
+          MERGE_REMOVE_LABELS: "ready"
+          GITHUB_TOKEN: "${{ secrets.ROBOT_TOKEN }}"
