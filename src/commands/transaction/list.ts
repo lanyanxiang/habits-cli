@@ -30,7 +30,7 @@ interface PromptAnswers {
 const displayConciseTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
   if (!transactions.length) {
-    return console.log(chalk.cyan("No transactions to display"));
+    return console.log(chalk.cyan("Listed 0 transactions"));
   }
 
   const table = display.table.createCompact({
