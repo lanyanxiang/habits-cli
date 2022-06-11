@@ -38,16 +38,14 @@ const displayConciseTransactions = (response: SuccessResponse) => {
     colWidths: [28, 18, 10, 12],
     colAligns: ["center", "left", "left", "left"],
   });
-  transactions.forEach(
-    ({ id, title, amountChange, property }) => {
-      table.push([
-        id,
-        title,
-        display.values.formatPointsChange(amountChange),
-        property.name,
-      ]);
-    }
-  );
+  transactions.forEach(({ id, title, amountChange, property }) => {
+    table.push([
+      id,
+      title,
+      display.values.formatPointsChange(amountChange),
+      property.name,
+    ]);
+  });
   display.table.print(table);
 };
 
