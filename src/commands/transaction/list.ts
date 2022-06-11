@@ -148,13 +148,12 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
   }
 
   async run(): Promise<void> {
-    const concise = this.opts.concise;
     await this._promptForProperty();
     const response = await this._sendRequest();
     if (response.isError) {
       return;
     }
-    if (!concise) {
+    if (!this.opts.concise) {
       displayTransactions(response);
     } else {
       displayConciseTransactions(response);
