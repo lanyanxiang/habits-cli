@@ -54,7 +54,7 @@ const displayConciseTransactions = (response: SuccessResponse) => {
 const displayTransactions = (response: SuccessResponse) => {
   const transactions = response.data.payload as ListResponsePayload;
   if (!transactions.length) {
-    return console.log("Listed 0 transactions.");
+    return console.log(chalk.cyan("No transactions to display"));
   }
 
   const table = display.table.create({
