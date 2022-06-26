@@ -64,7 +64,7 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
  * the value change from `oldValue` to `newValue`. If `oldValue` is equal to
  * `newValue`, print a warning to the console.
  */
-const pushUpdateResultRow = (
+const pushUpdateOrWarn = (
   rowTitle: string,
   table: CliTable3.Table,
   oldValue: any,
@@ -86,13 +86,8 @@ const displayUpdateResult = (response: SuccessResponse) => {
   const newTransaction = payload.transaction;
 
   const table = display.table.createCompact();
-  pushUpdateResultRow(
-    "Title",
-    table,
-    oldTransaction.title,
-    newTransaction.title
-  );
-  pushUpdateResultRow(
+  pushUpdateOrWarn("Title", table, oldTransaction.title, newTransaction.title);
+  pushUpdateOrWarn(
     "Change in amount",
     table,
     oldTransaction.amountChange,
