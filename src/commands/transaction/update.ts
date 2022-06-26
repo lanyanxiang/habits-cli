@@ -59,6 +59,11 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
+/**
+ * Push one row of update result to `table` with row title `rowTitle` and show
+ * the value change from `oldValue` to `newValue`. If `oldValue` is equal to
+ * `newValue`, print a warning to the console.
+ */
 const pushUpdateResultRow = (
   rowTitle: string,
   table: CliTable3.Table,
@@ -66,7 +71,13 @@ const pushUpdateResultRow = (
   newValue: any
 ) => {
   if (oldValue !== newValue) {
-    table.push([rowTitle, oldValue, "->", newValue]);
+    table.push([`${rowTitle}:`, oldValue, "->", newValue]);
+  } else {
+    // Warning proposed by Evence in https://github.com/lanyanxiang/habits-cli/pull/67.
+    console.warn(
+      `${chalk.bgYellow("WARN")} "${rowTitle}" was not updated ` +
+        `because its current value is equal to the value entered (value: ${oldValue}).`
+    );
   }
 };
 
@@ -80,13 +91,13 @@ const displayUpdateResult = (response: SuccessResponse) => {
 
   const table = display.table.createCompact();
   pushUpdateResultRow(
-    "Title:",
+    "Title",
     table,
     oldTransaction.title,
     newTransaction.title
   );
   pushUpdateResultRow(
-    "Change in amount:",
+    "Change in amount",
     table,
     oldTransaction.amountChange,
     newTransaction.amountChange
