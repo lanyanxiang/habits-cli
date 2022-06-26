@@ -6,10 +6,12 @@ import { RequestMethod, SuccessResponse } from "../../types";
 import CliTable3 from "cli-table3";
 import chalk from "chalk";
 import { objectParser } from "../../utils";
+import { prompt } from "../../services";
 
 enum UpdateChoices {
   title = "title",
   amountChange = "change in points",
+  propertyId = "property",
 }
 
 interface PromptAnswers {
@@ -17,6 +19,7 @@ interface PromptAnswers {
   updateChoices: UpdateChoices[];
   title?: string;
   amountChange?: number;
+  propertyId?: string;
 }
 
 const promptQuestions: QuestionCollection<PromptAnswers> = [
@@ -91,6 +94,12 @@ const displayUpdateResult = (response: SuccessResponse) => {
     oldTransaction.amountChange,
     newTransaction.amountChange
   );
+  pushUpdateResultRow(
+    "Property:",
+    table,
+    oldTransaction.property.name,
+    newTransaction.property.name
+  );
   if (!table.length) {
     console.log(chalk.bold("No changes applied."));
   }
@@ -161,6 +170,12 @@ export class UpdateCommand extends QuestionCommand<PromptAnswers> {
 
   async run(): Promise<void> {
     await this.promptForInputs(promptQuestions);
+    if (this.userInput.updateChoices?.includes(UpdateChoices.propertyId)) {
+      const selectedProperty = await prompt.selectProperty({
+        message: "What property would you like to update?",
+      });
+      this.userInput!.propertyId = selectedProperty.id;
+    }
     const response = await this._sendRequest();
     await displayUpdateResult(response);
   }
