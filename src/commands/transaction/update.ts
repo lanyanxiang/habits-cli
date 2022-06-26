@@ -75,8 +75,7 @@ const pushUpdateResultRow = (
   } else {
     // Warning proposed by Evence in https://github.com/lanyanxiang/habits-cli/pull/67.
     console.warn(
-      `${chalk.bgYellow("WARN")} "${rowTitle}" was not updated ` +
-        `because its current value is equal to the value entered (value: ${oldValue}).`
+      `${chalk.bgYellow("WARN")} "${rowTitle}" already has value ${oldValue}.`
     );
   }
 };
@@ -85,9 +84,6 @@ const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
   const oldTransaction = payload.updatedFrom;
   const newTransaction = payload.transaction;
-
-  console.log();
-  console.log(chalk.cyan(chalk.bold(`Transaction ID ${oldTransaction.id}`)));
 
   const table = display.table.createCompact();
   pushUpdateResultRow(
@@ -102,6 +98,9 @@ const displayUpdateResult = (response: SuccessResponse) => {
     oldTransaction.amountChange,
     newTransaction.amountChange
   );
+
+  console.log();
+  console.log(chalk.cyan(chalk.bold(`Transaction ID ${oldTransaction.id}`)));
   if (!table.length) {
     console.log(chalk.bold("No changes applied."));
   }
