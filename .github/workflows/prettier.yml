@@ -9,10 +9,6 @@ on:
 jobs:
   prettier:
     runs-on: ubuntu-latest
-    # Prettier can only run directly on the PR when the origin is not from a fork due to current
-    # limitations in actions/checkout@v2. As a result, for PRs coming from external forks, prettier
-    # will only run when the code is merged.
-    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout
         uses: actions/checkout@v2
