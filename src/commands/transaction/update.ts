@@ -3,7 +3,6 @@ import { QuestionCollection } from "inquirer";
 import { QuestionCommand, RuntimeError } from "../../models";
 import { display, mainApi, network, validation, vschema } from "../../services";
 import { RequestMethod, SuccessResponse } from "../../types";
-import CliTable3 from "cli-table3";
 import chalk from "chalk";
 import { objectParser } from "../../utils";
 
@@ -59,37 +58,21 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-/**
- * Push one row of update result to `table` with row title `rowTitle` and show
- * the value change from `oldValue` to `newValue`. If `oldValue` is equal to
- * `newValue`, print a warning to the console.
- */
-const pushUpdateOrWarn = (
-  rowTitle: string,
-  table: CliTable3.Table,
-  oldValue: any,
-  newValue: any
-) => {
-  if (oldValue !== newValue) {
-    table.push([`${rowTitle}:`, oldValue, "->", newValue]);
-  } else {
-    // Warning proposed by Evence in https://github.com/lanyanxiang/habits-cli/pull/67.
-    console.warn(
-      `${chalk.bgYellow("WARN")} "${rowTitle}" already has value ${oldValue}.`
-    );
-  }
-};
-
 const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
   const oldTransaction = payload.updatedFrom;
   const newTransaction = payload.transaction;
 
   const table = display.table.createCompact();
-  pushUpdateOrWarn("Title", table, oldTransaction.title, newTransaction.title);
-  pushUpdateOrWarn(
-    "Change in amount",
+  display.table.pushValueUpdateRow(
     table,
+    "Title",
+    oldTransaction.title,
+    newTransaction.title
+  );
+  display.table.pushValueUpdateRow(
+    table,
+    "Change in amount",
     oldTransaction.amountChange,
     newTransaction.amountChange
   );
