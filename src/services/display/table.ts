@@ -4,6 +4,7 @@
 
 import Table from "cli-table3";
 import chalk from "chalk";
+import { ValueUpdateRowOptions } from "../../types/display";
 
 const create = (options?: Partial<Table.TableConstructorOptions>) => {
   return new Table({
@@ -36,22 +37,23 @@ const createCompact = (options?: Partial<Table.TableConstructorOptions>) => {
   });
 };
 
-interface PushValueUpdateRowOptions {
-  disableEqValueWarning: boolean;
-  shouldIncludeEqValue: boolean;
-}
-
 /**
- * Push one row of value update result to `table` with row title `rowTitle` and
- * show the value change from `oldValue` to `newValue`. If `oldValue` is equal
- * to `newValue`, print a warning to the console.
+ * Push a standard value-update row to `table`. A value-update row indicates
+ * to the user on how the value of a field changes.
+ *
+ * @param table The table to work with.
+ * @param rowTitle The title of the value-update row. This is usually set to
+ *  the specific field being updated.
+ * @param oldValue Old value of the field.
+ * @param newValue New value of the field.
+ * @param options
  */
 const pushValueUpdateRow = (
   table: Table.Table,
   rowTitle: string,
   oldValue: any,
   newValue: any,
-  options?: Partial<PushValueUpdateRowOptions>
+  options?: Partial<ValueUpdateRowOptions>
 ) => {
   if (oldValue === newValue && !options?.disableEqValueWarning) {
     console.warn(
