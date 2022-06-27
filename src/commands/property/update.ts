@@ -1,7 +1,6 @@
 import { Argument, Option } from "commander";
 import { QuestionCollection } from "inquirer";
 import chalk from "chalk";
-import CliTable3 from "cli-table3";
 import { RequestMethod, SuccessResponse } from "../../types";
 import {
   display,
@@ -82,17 +81,6 @@ const promptQuestions: QuestionCollection<PromptAnswers> = [
   },
 ];
 
-const pushUpdateResultRow = (
-  rowTitle: string,
-  table: CliTable3.Table,
-  oldValue: any,
-  newValue: any
-) => {
-  if (oldValue !== newValue) {
-    table.push([rowTitle, oldValue, "->", newValue]);
-  }
-};
-
 const displayUpdateResult = (response: SuccessResponse) => {
   const payload = response.data.payload;
   const oldProperty = payload.updatedFrom;
@@ -102,17 +90,27 @@ const displayUpdateResult = (response: SuccessResponse) => {
   console.log(chalk.cyan(chalk.bold(`Property ID ${oldProperty.id}`)));
 
   const table = display.table.createCompact();
-  pushUpdateResultRow("Name:", table, oldProperty.name, newProperty.name);
-  pushUpdateResultRow(
-    "Description:",
+  display.table.pushValueUpdateRow(
     table,
+    "Name",
+    oldProperty.name,
+    newProperty.name
+  );
+  display.table.pushValueUpdateRow(
+    table,
+    "Description",
     oldProperty.description,
     newProperty.description
   );
-  pushUpdateResultRow("Amount:", table, oldProperty.amount, newProperty.amount);
-  pushUpdateResultRow(
-    "In stock:",
+  display.table.pushValueUpdateRow(
     table,
+    "Amount",
+    oldProperty.amount,
+    newProperty.amount
+  );
+  display.table.pushValueUpdateRow(
+    table,
+    "In stock",
     oldProperty.amountInStock,
     newProperty.amountInStock
   );
