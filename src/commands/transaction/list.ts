@@ -135,16 +135,23 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
+  private _displayTransactions(response: SuccessResponse) {
+    const transactions = response.data.payload as ListResponsePayload;
+    if (!transactions.length) {
+      console.log("Listed 0 transactions.");
+    }
+    const transactionsTable = this.opts.compact
+      ? getCompactTransactionsTable(transactions)
+      : getTransactionsTable(transactions);
+    display.table.print(transactionsTable);
+  }
+
   async run(): Promise<void> {
     await this._promptForProperty();
     const response = await this._sendRequest();
     if (response.isError) {
       return;
     }
-    if (!this.opts.concise) {
-      displayTransactions(response);
-    } else {
-      displayConciseTransactions(response);
-    }
+    this._displayTransactions(response);
   }
 }
