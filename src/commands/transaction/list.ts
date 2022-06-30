@@ -90,7 +90,7 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
         "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
     new Option(
-      "-c, --concise",
+      "-c, --compact",
       "display a compact and concise table of transactions"
     ),
   ];
