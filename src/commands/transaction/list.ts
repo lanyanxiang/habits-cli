@@ -27,12 +27,7 @@ interface PromptAnswers {
   propertyId?: string;
 }
 
-const displayTransactions = (response: SuccessResponse) => {
-  const transactions = response.data.payload as ListResponsePayload;
-  if (!transactions.length) {
-    return console.log("Listed 0 transactions.");
-  }
-
+const getTransactionsTable = (transactions: ListResponsePayload) => {
   const table = display.table.create({
     head: ["#", "Title", "Amount", "Property", "Created At"],
     colWidths: [5, 18, 10, 12, 17],
@@ -56,7 +51,24 @@ const displayTransactions = (response: SuccessResponse) => {
       ]);
     }
   );
-  display.table.print(table);
+  return table;
+};
+
+const getCompactTransactionsTable = (transactions: ListResponsePayload) => {
+  const table = display.table.createCompact({
+    head: ["Trans ID", "Title", "Amount", "Property"],
+    colWidths: [28, 18, 10, 12],
+    colAligns: ["center", "left", "left", "left"],
+  });
+  transactions.forEach(({ id, title, amountChange, property }) => {
+    table.push([
+      id,
+      title,
+      display.values.formatPointsChange(amountChange),
+      property.name,
+    ]);
+  });
+  return table;
 };
 
 export class ListCommand extends QuestionCommand<PromptAnswers> {
@@ -77,6 +89,10 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
       "ID of the property involved in this transaction - " +
         "if not provided, a select prompt will be shown."
     ).argParser(validation.argParser(vschema.string().objectId())),
+    new Option(
+      "-c, --compact",
+      "display a compact and concise table of transactions"
+    ),
   ];
 
   protected mapOptionsToInputs(): void | Promise<void> {
@@ -119,12 +135,23 @@ export class ListCommand extends QuestionCommand<PromptAnswers> {
     });
   }
 
+  private _displayTransactions(response: SuccessResponse) {
+    const transactions = response.data.payload as ListResponsePayload;
+    if (!transactions.length) {
+      console.log("Listed 0 transactions.");
+    }
+    const transactionsTable = this.opts.compact
+      ? getCompactTransactionsTable(transactions)
+      : getTransactionsTable(transactions);
+    display.table.print(transactionsTable);
+  }
+
   async run(): Promise<void> {
     await this._promptForProperty();
     const response = await this._sendRequest();
     if (response.isError) {
       return;
     }
-    displayTransactions(response);
+    this._displayTransactions(response);
   }
 }
